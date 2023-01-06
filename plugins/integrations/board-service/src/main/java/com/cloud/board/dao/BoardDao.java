@@ -24,4 +24,5 @@ import com.cloud.utils.db.GenericDao;
 
 public interface BoardDao extends GenericDao<BoardVO, Long> {
     List<BoardVO> listAllInZone(long dataCenterId);
+    int increaseHit(long id);
 }

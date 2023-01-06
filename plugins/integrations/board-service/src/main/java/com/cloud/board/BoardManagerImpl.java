@@ -19,6 +19,7 @@ package com.cloud.board;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 // import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.command.admin.board.AddBoardCmd;
@@ -61,7 +62,6 @@ public class BoardManagerImpl extends ManagerBase implements BoardService {
             throw new CloudRuntimeException("Board plugin is disabled");
         }
 
-        LOGGER.info(":::::::::::::::: " + cmd.getFiles().getName());
         final Account owner = accountService.getActiveAccountById(cmd.getEntityOwnerId());
 
         BoardVO boardVO = new BoardVO();
@@ -143,6 +143,7 @@ public class BoardManagerImpl extends ManagerBase implements BoardService {
         SearchCriteria<BoardVO> sc = sb.create();
         String keyword = cmd.getKeyword();
         if (id != null) {
+            boardDao.increaseHit(id);
             sc.setParameters("id", id);
         }
         if (type != null) {

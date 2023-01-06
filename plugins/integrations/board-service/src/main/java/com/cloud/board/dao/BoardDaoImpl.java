@@ -17,16 +17,22 @@
 
 package com.cloud.board.dao;
 
+import java.sql.PreparedStatement;
 import java.util.List;
-
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.cloud.board.BoardVO;
+import com.cloud.utils.db.DB;
 import com.cloud.utils.db.GenericDaoBase;
 import com.cloud.utils.db.SearchCriteria;
+import com.cloud.utils.db.TransactionLegacy;
 
 @Component
 public class BoardDaoImpl extends GenericDaoBase<BoardVO, Long> implements BoardDao {
+
+    private static final Logger s_logger = Logger.getLogger(BoardDaoImpl.class);
+
     public BoardDaoImpl() {
     }
 
@@ -38,6 +44,28 @@ public class BoardDaoImpl extends GenericDaoBase<BoardVO, Long> implements Board
         scc.addOr("zoneId", SearchCriteria.Op.NULL);
         sc.addAnd("zoneId", SearchCriteria.Op.SC, scc);
         return listBy(sc);
+    }
+
+    @Override
+    @DB
+    public int increaseHit(long id) {
+        TransactionLegacy txn = TransactionLegacy.currentTxn();
+        PreparedStatement pstmt = null;
+        int changedRows = 0;
+        try {
+            txn.start();
+
+            pstmt = txn.prepareAutoCloseStatement("UPDATE BOARD SET HIT=IFNULL(HIT,0)+1 WHERE ID=?");
+            pstmt.setLong(1, id);
+
+            changedRows = pstmt.executeUpdate();
+            txn.commit();
+        } catch (Exception e) {
+            s_logger.warn("Unexpected exception, ", e);
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
+        return changedRows;
     }
 }
 

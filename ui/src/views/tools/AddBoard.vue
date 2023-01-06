@@ -38,7 +38,7 @@
           </template>
           <a-radio-group v-model:value="form.type" button-style="solid" @change="selected => { changeOption(selected.target.value) }">
             <a-radio-button value="NEWS">{{ $t('label.board.news') }}</a-radio-button>
-            <a-radio-button value="SHARE">{{ $t('label.board.fileshare') }}</a-radio-button>
+            <!-- <a-radio-button value="SHARE">{{ $t('label.board.fileshare') }}</a-radio-button> -->
           </a-radio-group>
         </a-form-item>
         <a-form-item ref="content" name="content">
@@ -47,11 +47,10 @@
           </template>
           <a-textarea v-model:value="form.content" :placeholder="$t('placeholder.content')" :rows="4" />
         </a-form-item>
-        <a-form-item ref="file" name="file" :label="$t('label.file')">
+        <!-- <a-form-item ref="file" name="file" :label="$t('label.file')">
         <a-upload-dragger
-          v-model:fileList="form.file"
+          v-model:fileList="fileList"
           :multiple="false"
-          :fileList="fileList"
           :remove="handleRemove"
           :beforeUpload="beforeUpload"
           @change="handleChange"
@@ -61,7 +60,7 @@
           </p>
           <p class="ant-upload-text"> {{ $t('label.volume.volumefileupload.description') }}</p>
         </a-upload-dragger>
-      </a-form-item>
+      </a-form-item> -->
         <div :span="24" class="action-button">
           <a-button @click="closeAction">{{ $t('label.cancel') }}</a-button>
           <a-button :loading="loading" type="primary" @click="handleSubmit">{{ $t('label.ok') }}</a-button>
@@ -73,7 +72,7 @@
 <script>
 import { ref, reactive, toRaw } from 'vue'
 import { api } from '@/api'
-import { axios } from '../../utils/request'
+import axios from 'axios'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
 
 export default {
@@ -87,7 +86,8 @@ export default {
       loading: false,
       fileList: [],
       selectedType: 'NEWS',
-      uploadParams: null
+      uploadParams: null,
+      formData: new FormData()
     }
   },
   created () {
