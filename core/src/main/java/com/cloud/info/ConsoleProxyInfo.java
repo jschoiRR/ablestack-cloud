@@ -48,7 +48,7 @@ public class ConsoleProxyInfo {
 
         } else {
             proxyImageUrl = "//" + proxyAddress;
-            if (proxyUrlPort != 10080) {
+            if (proxyUrlPort == 10080) {
                 proxyImageUrl += ":" + proxyUrlPort;
             }
         }

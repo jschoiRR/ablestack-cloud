@@ -574,7 +574,7 @@ setup_sshd(){
   local ip=$1
   local eth=$2
   [ -f /etc/ssh/sshd_config ] && sed -i -e "s/^[#]*ListenAddress.*$/ListenAddress $ip/" /etc/ssh/sshd_config
-  sed -i "/13922/s/eth./$eth/" /etc/iptables/rules.v4
+  sed -i "/3922/s/eth./$eth/" /etc/iptables/rules.v4
 }
 
 setup_vpc_apache2() {
