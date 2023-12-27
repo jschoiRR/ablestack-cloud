@@ -307,7 +307,7 @@ public class LibvirtDomainXMLParser {
                     try {
                         vncPort = Integer.parseInt(port);
                         if (vncPort != -1) {
-                            vncPort = vncPort - 5900;
+                            vncPort = vncPort - 15900;
                         } else {
                             vncPort = null;
                         }
