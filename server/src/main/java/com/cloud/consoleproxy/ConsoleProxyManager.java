@@ -28,9 +28,9 @@ public interface ConsoleProxyManager extends Manager, ConsoleProxyService {
     int DEFAULT_PROXY_VM_RAMSIZE = 1024;            // 1G
     int DEFAULT_PROXY_VM_CPUMHZ = 500;                // 500 MHz
 
-    int DEFAULT_PROXY_CMD_PORT = 8001;
+    int DEFAULT_PROXY_CMD_PORT = 18001;
     int DEFAULT_PROXY_VNC_PORT = 0;
-    int DEFAULT_PROXY_URL_PORT = 80;
+    int DEFAULT_PROXY_URL_PORT = 10080;
     int DEFAULT_PROXY_SESSION_TIMEOUT = 300000;        // 5 minutes
 
     String ALERT_SUBJECT = "proxy-alert";

@@ -16,4 +16,4 @@
 # specific language governing permissions and limitations
 # under the License.
 
-ssh -i /root/.ssh/id_rsa.cloud -p 3922 root@$1
+ssh -i /root/.ssh/id_rsa.cloud -p 13922 root@$1

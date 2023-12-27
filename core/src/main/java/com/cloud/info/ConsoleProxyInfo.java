@@ -27,7 +27,7 @@ public class ConsoleProxyInfo {
     private String proxyAddress;
     private int proxyPort;
     private String proxyImageUrl;
-    private int proxyUrlPort = 8000;
+    private int proxyUrlPort = 18000;
     private String proxyName;
 
     public ConsoleProxyInfo(int proxyUrlPort) {
@@ -42,13 +42,13 @@ public class ConsoleProxyInfo {
 
         if (sslEnabled) {
             proxyImageUrl = "https://" + proxyAddress;
-            if (proxyUrlPort != 443) {
+            if (proxyUrlPort != 10443) {
                 proxyImageUrl += ":" + this.proxyUrlPort;
             }
 
         } else {
             proxyImageUrl = "//" + proxyAddress;
-            if (proxyUrlPort != 80) {
+            if (proxyUrlPort != 10080) {
                 proxyImageUrl += ":" + proxyUrlPort;
             }
         }

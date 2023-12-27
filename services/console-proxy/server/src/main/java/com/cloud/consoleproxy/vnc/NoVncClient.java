@@ -74,9 +74,9 @@ public class NoVncClient {
     public void connectTo(String host, int port, String path, String session, boolean useSSL) throws IOException {
         if (port < 0) {
             if (useSSL)
-                port = 443;
+                port = 10443;
             else
-                port = 80;
+                port = 10080;
         }
 
         RawHTTP tunnel = new RawHTTP("CONNECT", host, port, path, session, useSSL);

@@ -141,7 +141,7 @@ public class SolidFireUtil {
     public static final long MAX_MIN_IOPS_PER_VOLUME = 15000;
     public static final long MAX_IOPS_PER_VOLUME = 100000;
 
-    private static final int DEFAULT_MANAGEMENT_PORT = 443;
+    private static final int DEFAULT_MANAGEMENT_PORT = 10443;
     private static final int DEFAULT_STORAGE_PORT = 3260;
 
     private static final int MAX_NUM_VAGS_PER_VOLUME = 4;

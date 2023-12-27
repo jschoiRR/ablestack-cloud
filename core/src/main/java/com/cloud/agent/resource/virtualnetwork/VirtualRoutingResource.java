@@ -506,7 +506,7 @@ public class VirtualRoutingResource {
         _retry = NumbersUtil.parseInt(value, 36);
 
         value = (String)params.get("ssh.port");
-        _port = NumbersUtil.parseInt(value, 3922);
+        _port = NumbersUtil.parseInt(value, 13922);
 
         value = (String)params.get("router.aggregation.command.each.timeout");
         _eachTimeout = Duration.standardSeconds(NumbersUtil.parseInt(value, (int)VRScripts.VR_SCRIPT_EXEC_TIMEOUT.getStandardSeconds()));

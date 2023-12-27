@@ -343,7 +343,7 @@ public class DiagnosticsServiceImpl extends ManagerBase implements PluggableServ
                 // scp from system VM to mounted sec storage directory
                 String homeDir = System.getProperty("user.home");
                 File permKey = new File(homeDir + "/.ssh/id_rsa");
-                SshHelper.scpFrom(vmSshIp, 3922, "root", permKey, dataDirectoryInSecondaryStore, diagnosticsFile);
+                SshHelper.scpFrom(vmSshIp, 13922, "root", permKey, dataDirectoryInSecondaryStore, diagnosticsFile);
             }
 
             // Verify File copy to Secondary Storage

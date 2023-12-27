@@ -176,7 +176,7 @@ public class HypervDirectConnectResource extends ServerResourceBase implements S
 
     protected final int retry = 24;
     protected final int sleep = 10000;
-    protected static final int DEFAULT_DOMR_SSHPORT = 3922;
+    protected static final int DEFAULT_DOMR_SSHPORT = 13922;
     private String clusterGuid;
 
     // Used by initialize to assert object configured before
@@ -611,7 +611,7 @@ public class HypervDirectConnectResource extends ServerResourceBase implements S
     public ExecutionResult createFileInVR(final String routerIp, final String filePath, final String fileName, final String content) {
         final File keyFile = getSystemVMKeyFile();
         try {
-            SshHelper.scpTo(routerIp, 3922, "root", keyFile, null, filePath, content.getBytes(Charset.forName("UTF-8")), fileName, null);
+            SshHelper.scpTo(routerIp, 13922, "root", keyFile, null, filePath, content.getBytes(Charset.forName("UTF-8")), fileName, null);
         } catch (final Exception e) {
             s_logger.warn("Fail to create file " + filePath + fileName + " in VR " + routerIp, e);
             return new ExecutionResult(false, e.getMessage());

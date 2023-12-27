@@ -18,7 +18,7 @@
 # management server clustering parameters, change cluster.node.IP to the machine IP address
 # in which the management server is running
 cluster.node.IP=127.0.0.1
-cluster.servlet.port=9090
+cluster.servlet.port=19090
 region.id=1
 
 # CloudStack database settings
@@ -26,7 +26,7 @@ db.cloud.username=@DBUSER@
 db.cloud.password=@DBPW@
 db.cloud.host=@DBHOST@
 db.cloud.driver=@DBDRIVER@
-db.cloud.port=3306
+db.cloud.port=13306
 db.cloud.name=cloud
 
 # Connection URI to the database "cloud". When this property is set, only the following properties will be used along with it: db.cloud.maxActive, db.cloud.maxIdle, db.cloud.maxWait, db.cloud.username, db.cloud.password, db.cloud.driver, db.cloud.validationQuery, db.cloud.isolation.level. Other properties will be ignored.
@@ -62,7 +62,7 @@ db.usage.username=@DBUSER@
 db.usage.password=@DBPW@
 db.usage.host=@DBHOST@
 db.usage.driver=@DBDRIVER@
-db.usage.port=3306
+db.usage.port=13306
 db.usage.name=cloud_usage
 
 # Connection URI to the database "usage". When this property is set, only the following properties will be used along with it: db.usage.maxActive, db.cloud.maxIdle, db.cloud.maxWait, db.usage.username, db.usage.password, db.usage.driver, db.usage.validationQuery, db.usage.isolation.level. Other properties will be ignored.
@@ -80,7 +80,7 @@ db.simulator.username=@DBUSER@
 db.simulator.password=@DBPW@
 db.simulator.host=@DBHOST@
 db.simulator.driver=@DBDRIVER@
-db.simulator.port=3306
+db.simulator.port=13306
 db.simulator.name=simulator
 db.simulator.maxActive=250
 db.simulator.maxIdle=30

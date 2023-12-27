@@ -175,7 +175,7 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
 
     private int consoleProxyPort = ConsoleProxyManager.DEFAULT_PROXY_VNC_PORT;
 
-    private int managementPort = 8250;
+    private int managementPort = 18250;
 
     private List<ConsoleProxyAllocator> consoleProxyAllocators;
 
@@ -419,9 +419,9 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
 
         proxy.setSslEnabled(sslEnabled);
         if (sslEnabled) {
-            proxy.setPort(443);
+            proxy.setPort(10443);
         } else {
-            proxy.setPort(80);
+            proxy.setPort(10080);
         }
 
         return proxy;
@@ -1105,7 +1105,7 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
 
     @Override
     public int getVncPort() {
-        return sslEnabled && _ksDao.findByName(ConsoleProxyManager.CERTIFICATE_NAME) != null ? 8443 : 8080;
+        return sslEnabled && _ksDao.findByName(ConsoleProxyManager.CERTIFICATE_NAME) != null ? 18443 : 18080;
     }
 
     private String getAllocProxyLockName() {
@@ -1166,7 +1166,7 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
         Map<String, String> agentMgrConfigs = configurationDao.getConfiguration("AgentManager", params);
 
         value = agentMgrConfigs.get("port");
-        managementPort = NumbersUtil.parseInt(value, 8250);
+        managementPort = NumbersUtil.parseInt(value, 18250);
 
         consoleProxyListener = new ConsoleProxyListener(new VmBasedAgentHook(vmInstanceDao, hostDao, configurationDao,
                 _ksMgr, agentManager, keysManager, consoleAccessManager));
@@ -1211,7 +1211,7 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
 
         staticPublicIp = configurationDao.getValue("consoleproxy.static.publicIp");
         if (staticPublicIp != null) {
-            staticPort = NumbersUtil.parseInt(configurationDao.getValue("consoleproxy.static.port"), 8443);
+            staticPort = NumbersUtil.parseInt(configurationDao.getValue("consoleproxy.static.port"), 18443);
         }
 
         if (s_logger.isInfoEnabled()) {
@@ -1360,7 +1360,7 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
         if(profile.getHypervisorType() == HypervisorType.Hyperv) {
             controlNic = managementNic;
         }
-        CheckSshCommand check = new CheckSshCommand(profile.getInstanceName(), controlNic.getIPv4Address(), 3922);
+        CheckSshCommand check = new CheckSshCommand(profile.getInstanceName(), controlNic.getIPv4Address(), 13922);
         cmds.addCommand("checkSsh", check);
 
         return true;

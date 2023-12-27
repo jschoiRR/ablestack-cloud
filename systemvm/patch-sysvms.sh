@@ -90,7 +90,7 @@ restart_services() {
       fi
     done < "$svcfile"
     if [ "$TYPE" == "consoleproxy" ]; then
-      vncport=8080
+      vncport=18080
       if [ -f /root/vncport ]
       then
         vncport=`cat /root/vncport`

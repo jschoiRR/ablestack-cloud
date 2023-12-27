@@ -35,7 +35,7 @@ unset OPTIONS
 [ -r @SYSCONFDIR@/sysconfig/"$SHORTNAME" ] && source @SYSCONFDIR@/sysconfig/"$SHORTNAME"
 DAEMONIZE=@BINDIR@/@PACKAGE@-daemonize
 PROG=@BINDIR@/@PACKAGE@-external-ipallocator.py
-OPTIONS=8083
+OPTIONS=18083
 
 start() {
         echo -n $"Starting $PROGNAME: "

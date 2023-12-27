@@ -68,12 +68,12 @@ class cloudManagementConfig(serviceCfgBase):
             except:
                 raise e
 
-            #add DNAT 443 to 8250
-            if not bash("iptables-save |grep PREROUTING | grep 8250").isSuccess():
-                bash("iptables -A PREROUTING -t nat -p tcp --dport 443 -j REDIRECT --to-port 8250 ")
+            #add DNAT 10443 to 18250
+            if not bash("iptables-save |grep PREROUTING | grep 18250").isSuccess():
+                bash("iptables -A PREROUTING -t nat -p tcp --dport 10443 -j REDIRECT --to-port 18250 ")
         elif self.syscfg.env.svrMode == "HttpsServer":
-            if not bash("iptables-save |grep PREROUTING | grep 8443").isSuccess():
-                bash("iptables -A PREROUTING -t nat -p tcp --dport 443 -j REDIRECT --to-port 8443")
+            if not bash("iptables-save |grep PREROUTING | grep 18443").isSuccess():
+                bash("iptables -A PREROUTING -t nat -p tcp --dport 10443 -j REDIRECT --to-port 18443")
         bash("touch /var/run/cloudstack-management.pid")
         bash("chown cloud.cloud /var/run/cloudstack-management.pid")
         checkHostName()

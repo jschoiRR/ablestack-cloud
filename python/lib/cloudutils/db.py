@@ -21,7 +21,7 @@ import mysql.connector
 
 class Database(object):
     """Database connection"""
-    def __init__(self, username, password=None, host='localhost', port='3306', db="cloud"):
+    def __init__(self, username, password=None, host='localhost', port='13306', db="cloud"):
         self.host = host
         self.username = username
         self.password = password

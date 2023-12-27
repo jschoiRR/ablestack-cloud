@@ -71,7 +71,7 @@ public class AgentProperties{
      * Data type: Integer.<br>
      * Default value: <code>8250</code>
      */
-    public static final Property<Integer> PORT = new Property<>("port", 8250);
+    public static final Property<Integer> PORT = new Property<>("port", 18250);
 
     /**
      * The cluster which the agent belongs to.<br>
@@ -706,7 +706,7 @@ public class AgentProperties{
      * Data type: Integer.<br>
      * Default value: <code>443</code>
      */
-    public static final Property<Integer> CONSOLEPROXY_HTTPLISTENPORT = new Property<>("consoleproxy.httpListenPort", 443);
+    public static final Property<Integer> CONSOLEPROXY_HTTPLISTENPORT = new Property<>("consoleproxy.httpListenPort", 10443);
 
     /**
      * Data type: Integer.<br>

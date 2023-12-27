@@ -100,7 +100,7 @@ import com.cloud.vm.dao.UserVmDetailsDao;
 public class KubernetesClusterActionWorker {
 
     public static final String CLUSTER_NODE_VM_USER = "cloud";
-    public static final int CLUSTER_API_PORT = 6443;
+    public static final int CLUSTER_API_PORT = 16443;
     public static final int DEFAULT_SSH_PORT = 22;
     public static final int CLUSTER_NODES_DEFAULT_START_SSH_PORT = 2222;
     public static final int CLUSTER_NODES_DEFAULT_SSH_PORT_SG = DEFAULT_SSH_PORT;

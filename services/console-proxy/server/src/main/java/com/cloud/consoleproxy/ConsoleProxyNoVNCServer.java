@@ -35,8 +35,8 @@ import org.eclipse.jetty.util.ssl.SslContextFactory;
 public class ConsoleProxyNoVNCServer {
 
     private static final Logger s_logger = Logger.getLogger(ConsoleProxyNoVNCServer.class);
-    public static final int WS_PORT = 8080;
-    public static final int WSS_PORT = 8443;
+    public static final int WS_PORT = 18080;
+    public static final int WSS_PORT = 18443;
     private static final String VNC_CONF_FILE_LOCATION = "/root/vncport";
 
     private Server server;

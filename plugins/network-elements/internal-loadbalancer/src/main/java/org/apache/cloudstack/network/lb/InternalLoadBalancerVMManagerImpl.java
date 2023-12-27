@@ -421,7 +421,7 @@ public class InternalLoadBalancerVMManagerImpl extends ManagerBase implements In
     }
 
     protected void finalizeSshAndVersionOnStart(final Commands cmds, final VirtualMachineProfile profile, final DomainRouterVO router, final NicProfile controlNic) {
-        cmds.addCommand("checkSsh", new CheckSshCommand(profile.getInstanceName(), controlNic.getIPv4Address(), 3922));
+        cmds.addCommand("checkSsh", new CheckSshCommand(profile.getInstanceName(), controlNic.getIPv4Address(), 13922));
 
         // Update internal lb vm template/scripts version
         final GetDomRVersionCmd command = new GetDomRVersionCmd();

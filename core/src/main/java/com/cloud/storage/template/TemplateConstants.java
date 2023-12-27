@@ -27,7 +27,7 @@ public final class TemplateConstants {
 
     public static final String DEFAULT_SYSTEM_VM_TEMPLATE_PATH = "template/tmpl/1/";
 
-    public static final int DEFAULT_TMPLT_COPY_PORT = 80;
+    public static final int DEFAULT_TMPLT_COPY_PORT = 10080;
     public static final String DEFAULT_TMPLT_COPY_INTF = "eth2";
     public static final String TMPLT_COPY_INTF_PRIVATE = "eth1";
 

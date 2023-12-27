@@ -70,8 +70,8 @@ public class ConsoleProxy {
 
     static Hashtable<String, ConsoleProxyClient> connectionMap = new Hashtable<String, ConsoleProxyClient>();
     static Set<String> removedSessionsSet = ConcurrentHashMap.newKeySet();
-    static int httpListenPort = 80;
-    static int httpCmdListenPort = 8001;
+    static int httpListenPort = 10080;
+    static int httpCmdListenPort = 18001;
     static int reconnectMaxRetry = 5;
     static int readTimeoutSeconds = 90;
     static int keyboardType = KEYBOARD_RAW;
@@ -134,8 +134,8 @@ public class ConsoleProxy {
 
         s = conf.getProperty("premium");
         if (s != null && s.equalsIgnoreCase("true")) {
-            s_logger.info("Premium setting will override settings from consoleproxy.properties, listen at port 443");
-            httpListenPort = 443;
+            s_logger.info("Premium setting will override settings from consoleproxy.properties, listen at port 10443");
+            httpListenPort = 10443;
             factoryClzName = "com.cloud.consoleproxy.ConsoleProxySecureServerFactoryImpl";
         } else {
             factoryClzName = ConsoleProxyBaseServerFactoryImpl.class.getName();

@@ -17,5 +17,5 @@ apikey='DNi_vTVLPNfTEFuqu5F9MrPI3iecf8iRQ3QtGUH1IM2Nd96wNwNlf7BzmF1W8aw6cE2ejZCg
 secretkey='x4jM12uE4LNho3ZNJa8J-Ve6WsgEXd8df1mGGfeuJHMtolkaSBkD5pLX0tvj8YrWhBgtZbKgYsTB00kb7z_3BA'
 path='/client/api'
 host='localhost'
-port='8080'
+port='18080'
 protocol='http'

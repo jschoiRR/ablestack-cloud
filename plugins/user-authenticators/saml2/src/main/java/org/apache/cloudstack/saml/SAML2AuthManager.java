@@ -43,13 +43,13 @@ public interface SAML2AuthManager extends PluggableAPIAuthenticator, PluggableSe
     public static final ConfigKey<String> SAMLServiceProviderOrgUrl = new ConfigKey<String>("Advanced", String.class, "saml2.sp.org.url", "http://cloudstack.apache.org",
             "SAML2 Service Provider Organization URL", true);
 
-    public static final ConfigKey<String> SAMLServiceProviderSingleSignOnURL = new ConfigKey<String>("Advanced", String.class, "saml2.sp.sso.url", "http://localhost:8080/client/api?command=samlSso",
+    public static final ConfigKey<String> SAMLServiceProviderSingleSignOnURL = new ConfigKey<String>("Advanced", String.class, "saml2.sp.sso.url", "http://localhost:18080/client/api?command=samlSso",
             "SAML2 CloudStack Service Provider Single Sign On URL", true);
 
-    public static final ConfigKey<String> SAMLServiceProviderSingleLogOutURL = new ConfigKey<String>("Advanced", String.class, "saml2.sp.slo.url", "http://localhost:8080/client/",
+    public static final ConfigKey<String> SAMLServiceProviderSingleLogOutURL = new ConfigKey<String>("Advanced", String.class, "saml2.sp.slo.url", "http://localhost:18080/client/",
             "SAML2 CloudStack Service Provider Single Log Out URL", true);
 
-    public static final ConfigKey<String> SAMLCloudStackRedirectionUrl = new ConfigKey<String>("Advanced", String.class, "saml2.redirect.url", "http://localhost:8080/client",
+    public static final ConfigKey<String> SAMLCloudStackRedirectionUrl = new ConfigKey<String>("Advanced", String.class, "saml2.redirect.url", "http://localhost:18080/client",
             "The CloudStack UI url the SSO should redirected to when successful", true);
 
     public static final ConfigKey<String> SAMLUserAttributeName = new ConfigKey<String>("Advanced", String.class, "saml2.user.attribute", "uid",

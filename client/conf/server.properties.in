@@ -24,7 +24,7 @@ context.path=/client
 
 # The HTTP port to be used by the management server
 http.enable=true
-http.port=8080
+http.port=18080
 
 # Max inactivity time in minutes for the session
 session.timeout=10
@@ -34,7 +34,7 @@ session.timeout=10
 # For management server to pickup these configuration settings, the configured
 # keystore file should exists and be readable by the management server.
 https.enable=false
-https.port=8443
+https.port=18443
 
 # The keystore and manager passwords are assumed to be same.
 https.keystore=/etc/cloudstack/management/cloud.jks

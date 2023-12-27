@@ -360,7 +360,7 @@
                 <a-textarea
                   v-else-if="field.name==='certificate' || field.name==='privatekey' || field.name==='certchain'"
                   rows="2"
-                  v-model:value="form[field.name]"
+                  v-model:value="form[field.name]"FR
                   :placeholder="field.description"
                   v-focus="fieldIndex === firstIndex"
                 />

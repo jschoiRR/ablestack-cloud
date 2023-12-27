@@ -778,10 +778,10 @@ class firewallConfigUbuntu(serviceCfgBase):
 
     def config(self):
         try:
-            ports = "22 1798 16509 16514".split()
+            ports = "10022 1798 16509 16514".split()
             for p in ports:
                 bash("ufw allow %s"%p)
-            bash("ufw allow proto tcp from any to any port 5900:6100")
+            bash("ufw allow proto tcp from any to any port 15900:16100")
             bash("ufw allow proto tcp from any to any port 49152:49216")
             self.syscfg.svo.stopService("ufw")
             self.syscfg.svo.startService("ufw")
@@ -838,7 +838,7 @@ class firewallConfigBase(serviceCfgBase):
 class firewallConfigAgent(firewallConfigBase):
     def __init__(self, syscfg):
         super(firewallConfigAgent, self).__init__(syscfg)
-        self.ports = "22 16509 16514 5900:6100 49152:49216".split()
+        self.ports = "10022 16509 16514 15900:16100 49152:49216".split()
         if syscfg.env.distribution.getVersion() == "CentOS":
             self.rules = ["-D FORWARD -j RH-Firewall-1-INPUT"]
         else:
@@ -859,7 +859,7 @@ class cloudAgentConfig(serviceCfgBase):
             cfo = configFileOps("/etc/cloudstack/agent/agent.properties", self)
             cfo.addEntry("host", self.syscfg.env.mgtSvr)
             cfo.addEntry("zone", self.syscfg.env.zone)
-            cfo.addEntry("port", "443")
+            cfo.addEntry("port", "10443")
             cfo.addEntry("private.network.device", self.syscfg.env.nics[0])
             cfo.addEntry("public.network.device", self.syscfg.env.nics[1])
             cfo.addEntry("guest.network.device", self.syscfg.env.nics[2])
@@ -884,7 +884,7 @@ class cloudAgentConfig(serviceCfgBase):
             cfo.addEntry("pod", self.syscfg.env.pod)
             cfo.addEntry("cluster", self.syscfg.env.cluster)
             cfo.addEntry("hypervisor.type", self.syscfg.env.hypervisor)
-            cfo.addEntry("port", "8250")
+            cfo.addEntry("port", "18250")
             cfo.addEntry("private.network.device", self.syscfg.env.nics[0])
             cfo.addEntry("public.network.device", self.syscfg.env.nics[1])
             cfo.addEntry("guest.network.device", self.syscfg.env.nics[2])
@@ -909,7 +909,7 @@ class cloudAgentConfig(serviceCfgBase):
             cfo.addEntry("zone", self.syscfg.env.zone)
             cfo.addEntry("pod", self.syscfg.env.pod)
             cfo.addEntry("cluster", self.syscfg.env.cluster)
-            cfo.addEntry("port", "8250")
+            cfo.addEntry("port", "18250")
             cfo.addEntry("private.network.device", self.syscfg.env.nics[0])
             cfo.addEntry("public.network.device", self.syscfg.env.nics[1])
             cfo.addEntry("guest.network.device", self.syscfg.env.nics[2])

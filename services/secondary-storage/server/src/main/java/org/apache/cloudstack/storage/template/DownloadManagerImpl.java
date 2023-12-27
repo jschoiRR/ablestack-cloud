@@ -1219,12 +1219,12 @@ public class DownloadManagerImpl extends ManagerBase implements DownloadManager 
         Script command = new Script("/bin/bash", LOGGER);
         String intf = "eth1";
         command.add("-c");
-        command.add("iptables -A OUTPUT -o " + intf + " -p tcp -m state --state NEW -m tcp --dport " + "80" + " -j REJECT;" + "iptables -A OUTPUT -o " + intf +
-                " -p tcp -m state --state NEW -m tcp --dport " + "443" + " -j REJECT;");
+        command.add("iptables -A OUTPUT -o " + intf + " -p tcp -m state --state NEW -m tcp --dport " + "10080" + " -j REJECT;" + "iptables -A OUTPUT -o " + intf +
+                " -p tcp -m state --state NEW -m tcp --dport " + "10443" + " -j REJECT;");
 
         String result = command.execute();
         if (result != null) {
-            LOGGER.warn("Error in blocking outgoing to port 80/443 err=" + result);
+            LOGGER.warn("Error in blocking outgoing to port 10080/10443 err=" + result);
             return;
         }
     }
@@ -1258,7 +1258,7 @@ public class DownloadManagerImpl extends ManagerBase implements DownloadManager 
         command = new Script("/bin/bash", LOGGER);
         command.add("-c");
         command.add("iptables -I INPUT -i " + intf + " -p tcp -m state --state NEW -m tcp --dport " + port + " -j ACCEPT;" + "iptables -I INPUT -i " + intf +
-                " -p tcp -m state --state NEW -m tcp --dport " + "443" + " -j ACCEPT;");
+                " -p tcp -m state --state NEW -m tcp --dport " + "10443" + " -j ACCEPT;");
 
         result = command.execute();
         if (result != null) {

@@ -66,12 +66,12 @@ public class NetUtils {
     private static final int MAX_CIDR = 32;
     private static final int RFC_3021_31_BIT_CIDR = 31;
 
-    public final static int HTTP_PORT = 80;
-    public final static int HTTPS_PORT = 443;
-    public final static int VPN_PORT = 500;
-    public final static int VPN_NATT_PORT = 4500;
-    public final static int VPN_L2TP_PORT = 1701;
-    public final static int HAPROXY_STATS_PORT = 8081;
+    public final static int HTTP_PORT = 10080;
+    public final static int HTTPS_PORT = 10443;
+    public final static int VPN_PORT = 10500;
+    public final static int VPN_NATT_PORT = 14500;
+    public final static int VPN_L2TP_PORT = 11701;
+    public final static int HAPROXY_STATS_PORT = 18081;
 
     public final static String UDP_PROTO = "udp";
     public final static String TCP_PROTO = "tcp";

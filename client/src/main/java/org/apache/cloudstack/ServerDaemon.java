@@ -87,8 +87,8 @@ public class ServerDaemon implements Daemon {
     private Server server;
 
     private boolean httpEnable = true;
-    private int httpPort = 8080;
-    private int httpsPort = 8443;
+    private int httpPort = 18080;
+    private int httpsPort = 18443;
     private int sessionTimeout = 10;
     private boolean httpsEnable = false;
     private String accessLogFile = "access.log";
@@ -128,9 +128,9 @@ public class ServerDaemon implements Daemon {
             setBindInterface(properties.getProperty(BIND_INTERFACE, null));
             setContextPath(properties.getProperty(CONTEXT_PATH, "/client"));
             setHttpEnable(Boolean.valueOf(properties.getProperty(HTTP_ENABLE, "true")));
-            setHttpPort(Integer.valueOf(properties.getProperty(HTTP_PORT, "8080")));
+            setHttpPort(Integer.valueOf(properties.getProperty(HTTP_PORT, "18080")));
             setHttpsEnable(Boolean.valueOf(properties.getProperty(HTTPS_ENABLE, "false")));
-            setHttpsPort(Integer.valueOf(properties.getProperty(HTTPS_PORT, "8443")));
+            setHttpsPort(Integer.valueOf(properties.getProperty(HTTPS_PORT, "18443")));
             setKeystoreFile(properties.getProperty(KEYSTORE_FILE));
             setKeystorePassword(properties.getProperty(KEYSTORE_PASSWORD));
             setWebAppLocation(properties.getProperty(WEBAPP_DIR));

@@ -1992,7 +1992,7 @@ public class NfsSecondaryStorageResource extends ServerResourceBase implements S
     }
 
     private void startPostUploadServer() {
-        final int PORT = 8210;
+        final int PORT = 18210;
         final int NO_OF_WORKERS = 15;
         final EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         final EventLoopGroup workerGroup = new NioEventLoopGroup(NO_OF_WORKERS);
@@ -2876,7 +2876,7 @@ public class NfsSecondaryStorageResource extends ServerResourceBase implements S
         }
         command = new Script("/bin/bash", s_logger);
         command.add("-c");
-        command.add("iptables -I INPUT -i eth1 -p tcp -m state --state NEW -m tcp --dport 3922 -j ACCEPT");
+        command.add("iptables -I INPUT -i eth1 -p tcp -m state --state NEW -m tcp --dport 13922 -j ACCEPT");
         result = command.execute();
         if (result != null) {
             s_logger.warn("Error in opening up ssh port err=" + result);

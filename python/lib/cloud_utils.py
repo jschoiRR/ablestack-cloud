@@ -370,7 +370,7 @@ def remove_backup(targetdir):
 	check_call( ["rm","-rf",targetdir] )
 
 def list_zonespods(host):
-	text = urllib.request.urlopen('http://%s:8096/client/api?command=listPods'%host).read(-1)
+	text = urllib.request.urlopen('http://%s:18096/client/api?command=listPods'%host).read(-1)
 	dom = xml.dom.minidom.parseString(text)
 	x = [ (zonename,podname)
 		for pod in dom.childNodes[0].childNodes

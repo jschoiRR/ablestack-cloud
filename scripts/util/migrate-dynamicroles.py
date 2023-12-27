@@ -75,7 +75,7 @@ def main():
                         help="Password of a MySQL user with privileges on cloud database")
     parser.add_option("-H", "--host", action="store", type="string", dest="host", default="127.0.0.1",
                         help="Host or IP of the MySQL server")
-    parser.add_option("-P", "--port", action="store", type="int", dest="port", default=3306,
+    parser.add_option("-P", "--port", action="store", type="int", dest="port", default=13306,
                         help="Host or IP of the MySQL server")
     parser.add_option("-f", "--properties-file", action="store", type="string", dest="commandsfile", default="/etc/cloudstack/management/commands.properties",
                         help="The commands.properties file")

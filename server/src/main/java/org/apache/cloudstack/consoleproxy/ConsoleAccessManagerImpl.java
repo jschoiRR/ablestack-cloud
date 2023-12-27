@@ -577,7 +577,7 @@ public class ConsoleAccessManagerImpl extends ManagerBase implements ConsoleAcce
      * Format expected: wss://<ESXi_HOST_IP>:443/ticket/<TICKET_ID>
      */
     private String composeWebsocketUrlForVmwareVm(String ticket, ConsoleProxyClientParam param) {
-        param.setClientHostPort(443);
+        param.setClientHostPort(10443);
         return String.format("wss://%s:%s/ticket/%s", param.getClientHostAddress(), param.getClientHostPort(), ticket);
     }
 
