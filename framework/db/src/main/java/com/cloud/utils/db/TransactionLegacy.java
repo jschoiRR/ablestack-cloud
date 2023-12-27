@@ -1275,7 +1275,7 @@ public class TransactionLegacy implements Closeable {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     private static DataSource getDefaultDataSource(final String database) {
-        final ConnectionFactory connectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://localhost:3306/" + database, "cloud", "cloud");
+        final ConnectionFactory connectionFactory = new DriverManagerConnectionFactory("jdbc:mysql://localhost:13306/" + database, "cloud", "cloud");
         final PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory, null);
         final GenericObjectPool connectionPool = new GenericObjectPool(poolableConnectionFactory);
         return new PoolingDataSource(connectionPool);

@@ -105,7 +105,7 @@ class CsPassword(CsDataBag):
             else:
                 proc = CsProcess(['/opt/cloud/bin/passwd_server_ip.py', server_ip + "," + guest_ip])
             if proc.find():
-                url = "http://%s:8080/" % server_ip
+                url = "http://%s:18080/" % server_ip
                 payload = {"ip": vm_ip, "password": password, "token": token}
                 data = urllib.urlencode(payload)
                 request = urllib2.Request(url, data=data, headers={"DomU_Request": "save_password"})

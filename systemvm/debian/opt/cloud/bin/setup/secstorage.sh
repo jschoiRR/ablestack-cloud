@@ -40,10 +40,10 @@ setup_secstorage() {
   setup_apache2 $ETH2_IP
 
   # Deprecated, should move to Cs Python all of it
-  sed -e "s/<VirtualHost .*:8180>/<VirtualHost $ETH2_IP:80>/" \
-    -e "s/<VirtualHost .*:8443>/<VirtualHost $ETH2_IP:443>/" \
-    -e "s/Listen .*:8180/Listen $ETH2_IP:80/g" \
-    -e "s/Listen .*:8443/Listen $ETH2_IP:443/g" /etc/apache2/vhost.template > /etc/apache2/sites-enabled/vhost-${ETH2_IP}.conf
+  sed -e "s/<VirtualHost .*:8180>/<VirtualHost $ETH2_IP:10080>/" \
+    -e "s/<VirtualHost .*:8443>/<VirtualHost $ETH2_IP:10443>/" \
+    -e "s/Listen .*:8180/Listen $ETH2_IP:10080/g" \
+    -e "s/Listen .*:8443/Listen $ETH2_IP:10443/g" /etc/apache2/vhost.template > /etc/apache2/sites-enabled/vhost-${ETH2_IP}.conf
 
   log_it "Setting up apache2 for post upload of volume/template"
   a2enmod proxy
@@ -58,7 +58,7 @@ setup_secstorage() {
 RewriteEngine On
 RewriteCond %{HTTPS} =on
 RewriteCond %{REQUEST_METHOD} =POST
-RewriteRule ^/upload/(.*) http://127.0.0.1:8210/upload?uuid=\$1 [P,L]
+RewriteRule ^/upload/(.*) http://127.0.0.1:18210/upload?uuid=\$1 [P,L]
 Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Methods "POST, OPTIONS"
 Header always set Access-Control-Allow-Headers "x-requested-with, content-type, origin, authorization, accept, client-security-token, x-signature, x-metadata, x-expires, x-host"
@@ -70,7 +70,7 @@ HTTPS
       cat >/etc/apache2/http.conf <<HTTP
 RewriteEngine On
 RewriteCond %{REQUEST_METHOD} =POST
-RewriteRule ^/upload/(.*) http://127.0.0.1:8210/upload?uuid=\$1 [P,L]
+RewriteRule ^/upload/(.*) http://127.0.0.1:18210/upload?uuid=\$1 [P,L]
 Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Methods "POST, OPTIONS"
 Header always set Access-Control-Allow-Headers "x-requested-with, content-type, origin, authorization, accept, client-security-token, x-signature, x-metadata, x-expires, x-host"
