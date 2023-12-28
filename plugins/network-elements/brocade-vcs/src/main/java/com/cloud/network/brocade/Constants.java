@@ -24,7 +24,7 @@ public class Constants {
 
     public static final String STATUS_URI = "/rest/operational-state/show-vcs";
 
-    public static final int PORT = 10080;
+    public static final int PORT = 20080;
 
     public static final String PORT_PROFILE_NAME_PREFIX = "cloudstack-profile-";
 

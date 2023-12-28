@@ -286,7 +286,7 @@ public class LoadBalancingRulesManagerImpl<Type> extends ManagerBase implements 
     @Inject
     NicSecondaryIpDao _nicSecondaryIpDao;
 
-    private static final int DNS_PORT = 53;
+    private static final int DNS_PORT = 10053;
     // Will return a string. For LB Stickiness this will be a json, for
     // autoscale this will be "," separated values
     @Override

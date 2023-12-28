@@ -344,6 +344,13 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
             s_logger.warn(String.format("SSL is enabled for console proxy [%s] but no server certificate found in database.", proxy.toString()));
         }
 
+        s_logger.info("staticPublicIp:::::::::::::"+staticPublicIp);
+        s_logger.info("proxy.isSslEnabled():::::::::::::"+proxy.isSslEnabled());
+        s_logger.info("proxy.getPublicIpAddress():::::::::::::"+proxy.getPublicIpAddress());
+        s_logger.info("consoleProxyPort:::::::::::::"+consoleProxyPort);
+        s_logger.info("proxy.getPort():::::::::::::"+proxy.getPort());
+        s_logger.info("consoleProxyUrlDomain:::::::::::::"+consoleProxyUrlDomain);
+
         ConsoleProxyInfo info;
         if (staticPublicIp == null) {
             info = new ConsoleProxyInfo(proxy.isSslEnabled(), proxy.getPublicIpAddress(), consoleProxyPort, proxy.getPort(), consoleProxyUrlDomain);
@@ -421,7 +428,7 @@ public class ConsoleProxyManagerImpl extends ManagerBase implements ConsoleProxy
         if (sslEnabled) {
             proxy.setPort(10443);
         } else {
-            proxy.setPort(10080);
+            proxy.setPort(20080);
         }
 
         return proxy;

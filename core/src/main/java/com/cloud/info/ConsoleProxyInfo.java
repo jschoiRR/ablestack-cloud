@@ -40,6 +40,11 @@ public class ConsoleProxyInfo {
         this.proxyUrlPort = proxyUrlPort;
         this.proxyAddress = this.formatProxyAddress(consoleProxyUrlDomain, proxyIpAddress);
 
+        System.out.println("sslEnabled :::::::::::: "+ sslEnabled);
+        System.out.println("proxyPort :::::::::::: "+ proxyPort);
+        System.out.println("proxyUrlPort :::::::::::: "+ proxyUrlPort);
+        System.out.println("proxyAddress :::::::::::: "+ proxyAddress);
+
         if (sslEnabled) {
             proxyImageUrl = "https://" + proxyAddress;
             if (proxyUrlPort != 10443) {
@@ -48,10 +53,11 @@ public class ConsoleProxyInfo {
 
         } else {
             proxyImageUrl = "//" + proxyAddress;
-            if (proxyUrlPort == 10080) {
+            if (proxyUrlPort == 20080) {
                 proxyImageUrl += ":" + proxyUrlPort;
             }
         }
+        System.out.println("proxyImageUrl :::::::::::: "+ proxyImageUrl);
     }
 
     private String formatProxyAddress(String consoleProxyUrlDomain, String proxyIpAddress) {

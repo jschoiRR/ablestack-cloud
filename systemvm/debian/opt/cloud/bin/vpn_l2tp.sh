@@ -42,9 +42,9 @@ iptables_() {
 	is_vpc=true
    fi
 
-   sudo iptables $op INPUT -i $dev --dst $public_ip -p udp -m udp --dport 500 -j ACCEPT
-   sudo iptables $op INPUT -i $dev --dst $public_ip -p udp -m udp --dport 4500 -j ACCEPT
-   sudo iptables $op INPUT -i $dev --dst $public_ip -p udp -m udp --dport 1701 -j ACCEPT
+   sudo iptables $op INPUT -i $dev --dst $public_ip -p udp -m udp --dport 10500 -j ACCEPT
+   sudo iptables $op INPUT -i $dev --dst $public_ip -p udp -m udp --dport 14500 -j ACCEPT
+   sudo iptables $op INPUT -i $dev --dst $public_ip -p udp -m udp --dport 11701 -j ACCEPT
    sudo iptables $op INPUT -i $dev -p ah -j ACCEPT
    sudo iptables $op INPUT -i $dev -p esp -j ACCEPT
    if $is_vpc
@@ -64,10 +64,10 @@ iptables_() {
        sudo iptables $op FORWARD -s $cidr -o ppp+ -j ACCEPT
        sudo iptables $op FORWARD -i ppp+ -o ppp+ -j ACCEPT
    fi
-   sudo iptables $op INPUT -i ppp+ -m udp -p udp --dport 53 -j ACCEPT
-   sudo iptables $op INPUT -i ppp+ -m tcp -p tcp --dport 53 -j ACCEPT
-   sudo iptables -t nat $op PREROUTING -i ppp+ -p tcp -m tcp --dport 53 -j  DNAT --to-destination $local_ip
-   sudo iptables -t nat $op PREROUTING -i ppp+ -p udp -m udp --dport 53 -j  DNAT --to-destination $local_ip
+   sudo iptables $op INPUT -i ppp+ -m udp -p udp --dport 10053 -j ACCEPT
+   sudo iptables $op INPUT -i ppp+ -m tcp -p tcp --dport 10053 -j ACCEPT
+   sudo iptables -t nat $op PREROUTING -i ppp+ -p tcp -m tcp --dport 10053 -j  DNAT --to-destination $local_ip
+   sudo iptables -t nat $op PREROUTING -i ppp+ -p udp -m udp --dport 10053 -j  DNAT --to-destination $local_ip
 
    if $is_vpc
    then

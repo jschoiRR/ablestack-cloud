@@ -66,7 +66,7 @@ public class NetUtils {
     private static final int MAX_CIDR = 32;
     private static final int RFC_3021_31_BIT_CIDR = 31;
 
-    public final static int HTTP_PORT = 10080;
+    public final static int HTTP_PORT = 20080;
     public final static int HTTPS_PORT = 10443;
     public final static int VPN_PORT = 10500;
     public final static int VPN_NATT_PORT = 14500;

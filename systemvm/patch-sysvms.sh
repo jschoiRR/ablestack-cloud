@@ -96,7 +96,7 @@ restart_services() {
         vncport=`cat /root/vncport`
         log_it "vncport read: ${vncport}"
       fi
-      iptables -A INPUT -i eth2 -p tcp -m state --state NEW -m tcp --dport $vncport -j ACCEPT
+      iptables -A INPUT -i eth2 -p tcp -m state --state NEW -m tcp --dport 18080 -j ACCEPT
     fi
 }
 

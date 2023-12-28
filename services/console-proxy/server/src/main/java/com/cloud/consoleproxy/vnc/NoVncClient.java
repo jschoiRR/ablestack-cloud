@@ -76,7 +76,7 @@ public class NoVncClient {
             if (useSSL)
                 port = 10443;
             else
-                port = 10080;
+                port = 20080;
         }
 
         RawHTTP tunnel = new RawHTTP("CONNECT", host, port, path, session, useSSL);

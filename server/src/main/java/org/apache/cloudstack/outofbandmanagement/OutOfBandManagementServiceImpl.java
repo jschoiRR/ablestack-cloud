@@ -400,7 +400,7 @@ public class OutOfBandManagementServiceImpl extends ManagerBase implements OutOf
         String mgconsoleprotocol = options.get(OutOfBandManagement.Option.MGCONSOLEPROTOCOL);
         String mgconsoleport = options.get(OutOfBandManagement.Option.MGCONSOLEPORT);
         if(mgconsoleprotocol.equals("http")) {
-            mgconsoleport = (mgconsoleport == null)?"10080":mgconsoleport;
+            mgconsoleport = (mgconsoleport == null)?"20080":mgconsoleport;
         } else {
             mgconsoleport = (mgconsoleport == null)?"10443":mgconsoleport;
         }

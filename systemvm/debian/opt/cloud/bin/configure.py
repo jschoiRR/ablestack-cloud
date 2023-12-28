@@ -1019,9 +1019,9 @@ class CsRemoteAccessVpn(CsDataBag):
         localcidr = obj['local_cidr']
         local_ip = obj['local_ip']
 
-        self.fw.append(["", "", "-A INPUT -i %s --dst %s -p udp -m udp --dport 500 -j ACCEPT" % (publicdev, publicip)])
-        self.fw.append(["", "", "-A INPUT -i %s --dst %s -p udp -m udp --dport 4500 -j ACCEPT" % (publicdev, publicip)])
-        self.fw.append(["", "", "-A INPUT -i %s --dst %s -p udp -m udp --dport 1701 -j ACCEPT" % (publicdev, publicip)])
+        self.fw.append(["", "", "-A INPUT -i %s --dst %s -p udp -m udp --dport 10500 -j ACCEPT" % (publicdev, publicip)])
+        self.fw.append(["", "", "-A INPUT -i %s --dst %s -p udp -m udp --dport 14500 -j ACCEPT" % (publicdev, publicip)])
+        self.fw.append(["", "", "-A INPUT -i %s --dst %s -p udp -m udp --dport 11701 -j ACCEPT" % (publicdev, publicip)])
         self.fw.append(["", "", "-A INPUT -i %s -p ah -j ACCEPT" % publicdev])
         self.fw.append(["", "", "-A INPUT -i %s -p esp -j ACCEPT" % publicdev])
         self.fw.append(["", "", "-A OUTPUT -p ah -j ACCEPT"])
@@ -1040,9 +1040,9 @@ class CsRemoteAccessVpn(CsDataBag):
             self.fw.append(["", "", "-A FORWARD -s %s -o  ppp+ -j ACCEPT" % localcidr])
             self.fw.append(["", "", "-A FORWARD -i ppp+ -d %s  -j ACCEPT" % localcidr])
 
-        self.fw.append(["", "", "-A INPUT -i ppp+ -m udp -p udp --dport 53 -j ACCEPT"])
-        self.fw.append(["", "", "-A INPUT -i ppp+ -m tcp -p tcp --dport 53 -j ACCEPT"])
-        self.fw.append(["nat", "", "-I PREROUTING -i ppp+ -p tcp -m tcp --dport 53 -j DNAT --to-destination %s" % local_ip])
+        self.fw.append(["", "", "-A INPUT -i ppp+ -m udp -p udp --dport 10053 -j ACCEPT"])
+        self.fw.append(["", "", "-A INPUT -i ppp+ -m tcp -p tcp --dport 10053 -j ACCEPT"])
+        self.fw.append(["nat", "", "-I PREROUTING -i ppp+ -p tcp -m tcp --dport 10053 -j DNAT --to-destination %s" % local_ip])
 
         if self.config.is_vpc():
             return

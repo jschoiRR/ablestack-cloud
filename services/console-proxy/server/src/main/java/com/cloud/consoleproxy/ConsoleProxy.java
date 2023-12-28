@@ -70,7 +70,7 @@ public class ConsoleProxy {
 
     static Hashtable<String, ConsoleProxyClient> connectionMap = new Hashtable<String, ConsoleProxyClient>();
     static Set<String> removedSessionsSet = ConcurrentHashMap.newKeySet();
-    static int httpListenPort = 10080;
+    static int httpListenPort = 20080;
     static int httpCmdListenPort = 18001;
     static int reconnectMaxRetry = 5;
     static int readTimeoutSeconds = 90;

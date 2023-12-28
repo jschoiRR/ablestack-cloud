@@ -30,7 +30,7 @@ public interface ConsoleProxyManager extends Manager, ConsoleProxyService {
 
     int DEFAULT_PROXY_CMD_PORT = 18001;
     int DEFAULT_PROXY_VNC_PORT = 0;
-    int DEFAULT_PROXY_URL_PORT = 10080;
+    int DEFAULT_PROXY_URL_PORT = 20080;
     int DEFAULT_PROXY_SESSION_TIMEOUT = 300000;        // 5 minutes
 
     String ALERT_SUBJECT = "proxy-alert";

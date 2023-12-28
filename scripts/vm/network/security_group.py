@@ -599,16 +599,16 @@ def default_network_rules(vm_name, vm_id, vm_ip, vm_ip6, vm_mac, vif, brname, se
         execute("iptables -A " + brfw + "-IN" + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -j " + vmchain_default)
         execute("iptables -A " + vmchain_default + " -m state --state RELATED,ESTABLISHED -j ACCEPT")
         #allow dhcp
-        execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -p udp --dport 67 --sport 68 -j ACCEPT")
-        execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-out " + vif + " -p udp --dport 68 --sport 67  -j ACCEPT")
-        execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -p udp --sport 67 -j DROP")
+        execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -p udp --dport 10067 --sport 10068 -j ACCEPT")
+        execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-out " + vif + " -p udp --dport 10068 --sport 10067  -j ACCEPT")
+        execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -p udp --sport 10067 -j DROP")
 
         #don't let vm spoof its ip address
         if vm_ip:
             execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -m set ! --match-set " + vmipsetName + " src -j DROP")
             execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-out " + vif + " -m set ! --match-set " + vmipsetName + " dst -j DROP")
-            execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -m set --match-set " + vmipsetName + " src -p udp --dport 53  -j RETURN ")
-            execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -m set --match-set " + vmipsetName + " src -p tcp --dport 53  -j RETURN ")
+            execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -m set --match-set " + vmipsetName + " src -p udp --dport 10053  -j RETURN ")
+            execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -m set --match-set " + vmipsetName + " src -p tcp --dport 10053  -j RETURN ")
             execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-in " + vif + " -m set --match-set " + vmipsetName + " src -j " + vmchain_egress)
 
         execute("iptables -A " + vmchain_default + " -m physdev --physdev-is-bridged --physdev-out " + vif + " -j " + vmchain)
@@ -671,13 +671,13 @@ def default_network_rules(vm_name, vm_id, vm_ip, vm_ip6, vm_mac, vif, brname, se
         execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p icmpv6 --dst ff02::16 -j RETURN')
 
         # Allow Instances to send out DHCPv6 client messages, but block server messages
-        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p udp --sport 546 --dst ff02::1:2 --src ' + str(ipv6_link_local) + ' -j RETURN')
-        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-out ' + vif + ' -p udp --src fe80::/64 --dport 546 --dst ' + str(ipv6_link_local) + ' -j ACCEPT')
-        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p udp --sport 547 ! --dst fe80::/64 -j DROP')
+        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p udp --sport 10546 --dst ff02::1:2 --src ' + str(ipv6_link_local) + ' -j RETURN')
+        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-out ' + vif + ' -p udp --src fe80::/64 --dport 10546 --dst ' + str(ipv6_link_local) + ' -j ACCEPT')
+        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p udp --sport 10547 ! --dst fe80::/64 -j DROP')
 
         # Always allow outbound DNS over UDP and TCP
-        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p udp --dport 53 -m set --match-set ' + vmipsetName6 + ' src -j RETURN')
-        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p tcp --dport 53 -m set --match-set ' + vmipsetName6 + ' src -j RETURN')
+        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p udp --dport 10053 -m set --match-set ' + vmipsetName6 + ' src -j RETURN')
+        execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -p tcp --dport 10053 -m set --match-set ' + vmipsetName6 + ' src -j RETURN')
 
         # Prevent source address spoofing
         execute('ip6tables -A ' + vmchain_default + ' -m physdev --physdev-is-bridged --physdev-in ' + vif + ' -m set ! --match-set ' + vmipsetName6 + ' src -j DROP')
@@ -708,12 +708,12 @@ def post_default_network_rules(vm_name, vm_id, vm_ip, vm_mac, vif, brname, dhcpS
     except:
         pass
     try:
-        execute("iptables -t nat -A PREROUTING -p tcp -m physdev --physdev-in " + vif + " -m tcp --dport 10080 -d " + dhcpSvr + " -j DNAT --to-destination " + hostIp + ":10080")
+        execute("iptables -t nat -A PREROUTING -p tcp -m physdev --physdev-in " + vif + " -m tcp --dport 20080 -d " + dhcpSvr + " -j DNAT --to-destination " + hostIp + ":20080")
     except:
         pass
 
     try:
-        execute("ebtables -t nat -I " + vmchain_in + " -p IPv4 --ip-protocol tcp --ip-destination-port 10080 --ip-dst " + dhcpSvr + " -j dnat --to-destination " + hostMacAddr)
+        execute("ebtables -t nat -I " + vmchain_in + " -p IPv4 --ip-protocol tcp --ip-destination-port 20080 --ip-dst " + dhcpSvr + " -j dnat --to-destination " + hostMacAddr)
     except:
         pass
 

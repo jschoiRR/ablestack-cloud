@@ -479,7 +479,7 @@ class CsIP:
             self.fw.append(
                 ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10053 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 20080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
                 ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10443 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
@@ -532,7 +532,7 @@ class CsIP:
             self.fw.append(
                 ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10053 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 20080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
                 ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10443 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
