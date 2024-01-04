@@ -148,7 +148,6 @@ config_guest() {
 }
 
 setup_interface_sshd() {
-  sed -i -e "s/Port 3922/Port 13922/" /etc/ssh/sshd_config
 
   if [ "$TYPE" != "cksnode" ]; then
     log_it "Applying iptables rules"
@@ -218,6 +217,8 @@ setup_interface_sshd() {
 export HYPERVISOR=$(hypervisor)
 [ $? -ne 0 ] && log_it "Failed to detect hypervisor type, bailing out" && exit 10
 log_it "Starting guest services for $HYPERVISOR"
+
+sed -i -e "s/Port 3922/Port 13922/" /etc/ssh/sshd_config
 
 config_guest
 source /opt/cloud/bin/setup/common.sh
