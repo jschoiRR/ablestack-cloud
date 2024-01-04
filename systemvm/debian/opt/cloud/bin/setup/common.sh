@@ -573,6 +573,7 @@ setup_dnsmasq() {
 setup_sshd(){
   local ip=$1
   local eth=$2
+  sed -i -e "s/Port 3922/Port 13922/" /etc/ssh/sshd_config
   [ -f /etc/ssh/sshd_config ] && sed -i -e "s/^[#]*ListenAddress.*$/ListenAddress $ip/" /etc/ssh/sshd_config
   sed -i "/3922/s/eth./$eth/" /etc/iptables/rules.v4
 }
