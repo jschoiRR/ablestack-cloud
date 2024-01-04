@@ -148,6 +148,7 @@ config_guest() {
 }
 
 setup_interface_sshd() {
+  sed -i -e "s/Port 3922/Port 13922/" /etc/ssh/sshd_config
 
   if [ "$TYPE" != "cksnode" ]; then
     log_it "Applying iptables rules"
