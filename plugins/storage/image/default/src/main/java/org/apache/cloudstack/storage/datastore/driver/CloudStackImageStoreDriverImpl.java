@@ -97,7 +97,7 @@ public class CloudStackImageStoreDriverImpl extends NfsImageStoreDriverImpl {
 
     private String generateCopyUrl(String ipAddress, String uuid) {
 
-        String hostname = ipAddress;
+        String hostname = ipAddress + ":20080";
         String scheme = "http";
         boolean _sslCopy = false;
         String sslCfg = _configDao.getValue(Config.SecStorageEncryptCopy.toString());
