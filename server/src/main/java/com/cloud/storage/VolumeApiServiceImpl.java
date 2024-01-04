@@ -476,7 +476,7 @@ public class VolumeApiServiceImpl extends ManagerBase implements VolumeApiServic
                 String protocol = UseHttpsToUpload.value() ? "https" : "http";
 
                 String url = ImageStoreUtil.generatePostUploadUrl(ssvmUrlDomain, ep.getPublicAddr(), vol.getUuid(),  protocol);
-                String sig_url = ImageStoreUtil.generatePostUploadUrl(ssvmUrlDomain, ep.getPublicAddr(), vol.getUuid(), "https");
+                // String sig_url = ImageStoreUtil.generatePostUploadUrl(ssvmUrlDomain, ep.getPublicAddr(), vol.getUuid(), "https");
                 response.setPostURL(new URL(url));
 
                 // set the post url, this is used in the monitoring thread to determine the SSVM
@@ -516,7 +516,7 @@ public class VolumeApiServiceImpl extends ManagerBase implements VolumeApiServic
                 /*
                  * signature calculated on the url, expiry, metadata.
                  */
-                response.setSignature(EncryptionUtil.generateSignature(metadata + sig_url + expires, key));
+                response.setSignature(EncryptionUtil.generateSignature(metadata + url + expires, key));
                 return response;
             }
         });
