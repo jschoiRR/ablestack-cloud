@@ -53,7 +53,7 @@ public interface CloudianConnector extends PluggableService {
     ConfigKey<String> CloudianCmcHost = new ConfigKey<>("Advanced", String.class, "cloudian.cmc.host", "cmc.cloudian.com",
             "The hostname of the Cloudian Management Console.", true);
 
-    ConfigKey<String> CloudianCmcPort = new ConfigKey<>("Advanced", String.class, "cloudian.cmc.port", "8443",
+    ConfigKey<String> CloudianCmcPort = new ConfigKey<>("Advanced", String.class, "cloudian.cmc.port", "18443",
             "The port of the Cloudian Management Console.", true);
 
     ConfigKey<String> CloudianCmcProtocol = new ConfigKey<>("Advanced", String.class, "cloudian.cmc.protocol", "https",

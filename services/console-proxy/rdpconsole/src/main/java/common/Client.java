@@ -110,7 +110,7 @@ public class Client {
         {
             name = "--port";
             alias = "-p";
-            value = 5901;
+            value = 15901;
             description = "Port of VNC display server to connect to. Calculate as 5900 + display number, e.g. 5900 for display #0, 5901 for display #1, and so on.";
         }
     };
@@ -119,7 +119,7 @@ public class Client {
         {
             name = "--port";
             alias = "-p";
-            value = 3389;
+            value = 13389;
             description = "Port of RDP server to connect to.";
         }
     };

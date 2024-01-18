@@ -262,7 +262,7 @@ CREATE TABLE  `cloud`.`region` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `cloud`.`region` values ('1','Local','http://localhost:8080/client/');
+INSERT INTO `cloud`.`region` values ('1','Local','http://localhost:18080/client/');
 
 CREATE TABLE `cloud`.`nicira_nvp_router_map` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',

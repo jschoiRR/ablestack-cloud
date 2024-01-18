@@ -406,7 +406,7 @@ class CsIP:
         self.fw.append(
             ["filter", "", "-A FW_OUTBOUND -m state --state RELATED,ESTABLISHED -j ACCEPT"])
         self.fw.append(
-            ["filter", "", "-A INPUT -i eth1 -p tcp -m tcp --dport 3922 -m state --state NEW,ESTABLISHED -j ACCEPT"])
+            ["filter", "", "-A INPUT -i eth1 -p tcp -m tcp --dport 13922 -m state --state NEW,ESTABLISHED -j ACCEPT"])
 
         self.fw.append(["filter", "", "-P INPUT DROP"])
         self.fw.append(["filter", "", "-P FORWARD DROP"])
@@ -421,7 +421,7 @@ class CsIP:
 
         self.fw.append(["mangle", "front",
                         "-A POSTROUTING " +
-                        "-p udp -m udp --dport 68 -j CHECKSUM --checksum-fill"])
+                        "-p udp -m udp --dport 10068 -j CHECKSUM --checksum-fill"])
 
         if self.get_type() in ["public"]:
             self.fw.append(["mangle", "front",
@@ -473,17 +473,17 @@ class CsIP:
         if self.get_type() in ["guest"]:
             guestNetworkCidr = self.address['network']
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 67 -j ACCEPT" % self.dev])
+                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 10067 -j ACCEPT" % self.dev])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 53 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 10053 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 53 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10053 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 80 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 20080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 443 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10443 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 8080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 18080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
                 ["filter", "", "-A FORWARD -i %s -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT" % self.dev])
             self.fw.append(
@@ -524,19 +524,19 @@ class CsIP:
             self.fw.append(
                 ["mangle", "front", "-A ACL_OUTBOUND_%s -d 224.0.0.18/32 -j ACCEPT" % self.dev])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 67 -j ACCEPT" % self.dev])
+                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 10067 -j ACCEPT" % self.dev])
             self.fw.append(
-                ["mangle", "front", "-A POSTROUTING " + "-p udp -m udp --dport 68 -j CHECKSUM --checksum-fill"])
+                ["mangle", "front", "-A POSTROUTING " + "-p udp -m udp --dport 10068 -j CHECKSUM --checksum-fill"])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 53 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p udp -m udp --dport 10053 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 53 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10053 -s %s -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 80 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 20080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 443 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 10443 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(
-                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 8080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
+                ["filter", "", "-A INPUT -i %s -p tcp -m tcp --dport 18080 -s %s -m state --state NEW -j ACCEPT" % (self.dev, guestNetworkCidr)])
             self.fw.append(["mangle", "",
                             "-A PREROUTING -m state --state NEW -i %s -s %s ! -d %s/32 -j ACL_OUTBOUND_%s" %
                             (self.dev, guestNetworkCidr, self.address['gateway'], self.dev)])
@@ -597,7 +597,7 @@ class CsIP:
         self.fw.append(["filter", "", "-A INPUT -p icmp -j ACCEPT"])
         self.fw.append(["filter", "", "-A INPUT -i lo -j ACCEPT"])
 
-        self.fw.append(["filter", "", "-A INPUT -i eth0 -p tcp -m tcp --dport 3922 -m state --state NEW,ESTABLISHED -j ACCEPT"])
+        self.fw.append(["filter", "", "-A INPUT -i eth0 -p tcp -m tcp --dport 13922 -m state --state NEW,ESTABLISHED -j ACCEPT"])
         self.fw.append(["filter", "", "-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT"])
 
         self.fw.append(["filter", "", "-P INPUT DROP"])

@@ -357,7 +357,7 @@ public class UploadMonitorImpl extends ManagerBase implements UploadMonitor {
     }
 
     private String generateCopyUrl(String ipAddress, String uuid) {
-        String hostname = ipAddress;
+        String hostname = ipAddress + ":20080";;
         String scheme = "http";
         if (_sslCopy) {
             hostname = ipAddress.replace(".", "-");

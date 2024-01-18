@@ -71,7 +71,7 @@ public class NetworkerBackupProvider extends AdapterBase implements BackupProvid
     private static final Logger LOG = Logger.getLogger(NetworkerBackupProvider.class);
 
     public ConfigKey<String> NetworkerUrl = new ConfigKey<>("Advanced", String.class,
-            "backup.plugin.networker.url", "https://localhost:9090/nwrestapi/v3",
+            "backup.plugin.networker.url", "https://localhost:19090/nwrestapi/v3",
             "The EMC Networker API URL.", true, ConfigKey.Scope.Zone);
 
     private final ConfigKey<String> NetworkerUsername = new ConfigKey<>("Advanced", String.class,

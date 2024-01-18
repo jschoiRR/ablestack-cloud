@@ -274,9 +274,9 @@ public class UriUtils {
 
             int port = uri.getPort();
             if (port == -1 && uri.getScheme().equalsIgnoreCase("https")) {
-                port = 443;
+                port = 10443;
             } else if (port == -1 && uri.getScheme().equalsIgnoreCase("http")) {
-                port = 80;
+                port = 20080;
             }
 
             String host = uri.getHost();

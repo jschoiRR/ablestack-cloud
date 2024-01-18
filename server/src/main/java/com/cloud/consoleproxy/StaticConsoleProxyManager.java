@@ -76,9 +76,9 @@ public class StaticConsoleProxyManager extends AgentBasedConsoleProxyManager imp
         if (value != null && value.equalsIgnoreCase("true")) {
             _sslEnabled = true;
         }
-        int defaultPort = 8088;
+        int defaultPort = 18088;
         if (_sslEnabled)
-            defaultPort = 8443;
+            defaultPort = 18443;
         _consoleProxyUrlPort = NumbersUtil.parseInt(_configDao.getValue("consoleproxy.static.port"), defaultPort);
 
         _resourceMgr.registerResourceStateAdapter(this.getClass().getSimpleName(), this);

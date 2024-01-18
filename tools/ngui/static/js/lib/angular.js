@@ -5032,7 +5032,7 @@ function $InterpolateProvider() {
 var URL_MATCH = /^([^:]+):\/\/(\w+:{0,1}\w*@)?(\{?[\w\.-]*\}?)(:([0-9]+))?(\/[^\?#]*)?(\?([^#]*))?(#(.*))?$/,
     PATH_MATCH = /^([^\?#]*)?(\?([^#]*))?(#(.*))?$/,
     HASH_MATCH = PATH_MATCH,
-    DEFAULT_PORTS = {'http': 80, 'https': 443, 'ftp': 21};
+    DEFAULT_PORTS = {'http': 20080, 'https': 10443, 'ftp': 21};
 
 
 /**

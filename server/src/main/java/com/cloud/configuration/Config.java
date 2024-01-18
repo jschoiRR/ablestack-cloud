@@ -271,7 +271,7 @@ public enum Config {
             ManagementServer.class,
             String.class,
             "network.loadbalancer.haproxy.stats.port",
-            "8081",
+            "18081",
             "Load Balancer(haproxy) stats port number.",
             null),
     NetworkLBHaproxyMaxConn(
@@ -444,7 +444,7 @@ public enum Config {
             AgentManager.class,
             Integer.class,
             "consoleproxy.cmd.port",
-            "8001",
+            "18001",
             "Console proxy command port that is used to communicate with management server",
             null),
     ConsoleProxyRestart(
@@ -1687,7 +1687,7 @@ public enum Config {
             ManagementServer.class,
             Integer.class,
             "baremetal.provision.done.notification.port",
-            "8080",
+            "18080",
             "the port that listens baremetal provision done notification. Should be the same to port management server listening on for now. Please change it to management server port if it's not default 8080",
             null),
     ExternalBaremetalSystemUrl(

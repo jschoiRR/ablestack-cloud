@@ -26,6 +26,6 @@ yum -y update
 yum install -y tmux vim htop wget telnet tcpdump sed awk ssh httpd net-tools open-vm-tools
 systemctl enable httpd
 
-iptables -I INPUT -p tcp -m tcp --dport 22 -j ACCEPT
-iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+iptables -I INPUT -p tcp -m tcp --dport 10022 -j ACCEPT
+iptables -I INPUT -p tcp -m tcp --dport 20080 -j ACCEPT
 iptables-save > /etc/sysconfig/iptables

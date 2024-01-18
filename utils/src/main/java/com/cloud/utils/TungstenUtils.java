@@ -32,9 +32,9 @@ public class TungstenUtils {
     public static final String DEFAULT_FORWARDING_MODE = "l3";
     public static final int MAX_CIDR = 32;
     public static final int MAX_IPV6_CIDR = 128;
-    public static final int DNS_SERVICE_PORT = 53;
-    public static final int NTP_SERVICE_PORT = 123;
-    public static final int WEB_SERVICE_PORT = 8080;
+    public static final int DNS_SERVICE_PORT = 10053;
+    public static final int NTP_SERVICE_PORT = 10123;
+    public static final int WEB_SERVICE_PORT = 18080;
     public static final String IPV4 = "IPv4";
     public static final String IPV6 = "IPv6";
     public static final String ALL_IP4_PREFIX = "0.0.0.0";

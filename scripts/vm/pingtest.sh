@@ -39,7 +39,7 @@ check_gw() {
 ping_vm() {
   local routerIp=$1
   local vmIp=$2
-  ssh -o StrictHostKeyChecking=no -p 3922 -i /root/.ssh/id_rsa.cloud root@$routerIp "ping -c 1 -n -q $vmIp"
+  ssh -o StrictHostKeyChecking=no -p 13922 -i /root/.ssh/id_rsa.cloud root@$routerIp "ping -c 1 -n -q $vmIp"
 
   if [ $? -gt 0 ]
   then
@@ -53,7 +53,7 @@ ping_vm() {
 arping_vm() {
   local routerIp=$1
   local vmIp=$2
-  ssh -o StrictHostKeyChecking=no -p 3922 -i /root/.ssh/id_rsa.cloud root@$routerIp "arping -c 1 -q $vmIp"
+  ssh -o StrictHostKeyChecking=no -p 13922 -i /root/.ssh/id_rsa.cloud root@$routerIp "arping -c 1 -q $vmIp"
 
   # if return code of ping is > 0, the ping failed, return a result
   if [ $? -gt 0 ]

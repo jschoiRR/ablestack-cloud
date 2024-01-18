@@ -45,15 +45,15 @@ class CsApache(CsApp):
 
         file = CsFile("/etc/apache2/sites-enabled/vhost-%s.conf" % (self.ip))
         if not self.config.cl.is_redundant():
-            file.replaceIfFound("<VirtualHost.*:8180>", "<VirtualHost %s:80>" % (self.ip))
-            file.replaceIfFound("<VirtualHost.*:8443>", "\t<VirtualHost %s:443>" % (self.ip))
-            file.replaceIfFound("Listen .*:8180", "Listen %s:80" % (self.ip))
-            file.replaceIfFound("Listen .*:8443", "Listen %s:443" % (self.ip))
+            file.replaceIfFound("<VirtualHost.*:8180>", "<VirtualHost %s:20080>" % (self.ip))
+            file.replaceIfFound("<VirtualHost.*:8443>", "\t<VirtualHost %s:10443>" % (self.ip))
+            file.replaceIfFound("Listen .*:8180", "Listen %s:20080" % (self.ip))
+            file.replaceIfFound("Listen .*:8443", "Listen %s:10443" % (self.ip))
         else:
-            file.replaceIfFound("<VirtualHost.*:8180>", "<VirtualHost %s:80 %s:80>" % (self.ip, self.gateway))
-            file.replaceIfFound("<VirtualHost.*:8443>", "\t<VirtualHost %s:443 %s:443>" % (self.ip, self.gateway))
-            file.replaceIfFound("Listen .*:8180", "Listen %s:80\nListen %s:80" % (self.ip, self.gateway))
-            file.replaceIfFound("Listen .*:8443", "Listen %s:443\nListen %s:443" % (self.ip, self.gateway))
+            file.replaceIfFound("<VirtualHost.*:8180>", "<VirtualHost %s:20080 %s:20080>" % (self.ip, self.gateway))
+            file.replaceIfFound("<VirtualHost.*:8443>", "\t<VirtualHost %s:10443 %s:10443>" % (self.ip, self.gateway))
+            file.replaceIfFound("Listen .*:8180", "Listen %s:20080\nListen %s:20080" % (self.ip, self.gateway))
+            file.replaceIfFound("Listen .*:8443", "Listen %s:10443\nListen %s:10443" % (self.ip, self.gateway))
         file.search("ServerName.*", "\tServerName %s.%s" % (self.config.cl.get_type(), self.config.get_domain()))
         if file.is_changed():
             file.commit()
@@ -85,16 +85,16 @@ class CsDnsmasq(CsApp):
         """ Add the necessary firewall rules
         """
         self.fw.append(["", "front",
-                        "-A INPUT -i %s -p udp -m udp --dport 67 -j ACCEPT" % self.dev
+                        "-A INPUT -i %s -p udp -m udp --dport 10067 -j ACCEPT" % self.dev
                         ])
 
         if self.config.has_dns():
             self.fw.append([
                 "", "front",
-                "-A INPUT -i %s -d %s/32 -p udp -m udp --dport 53 -j ACCEPT" % (self.dev, self.ip)
+                "-A INPUT -i %s -d %s/32 -p udp -m udp --dport 10053 -j ACCEPT" % (self.dev, self.ip)
             ])
 
             self.fw.append([
                 "", "front",
-                "-A INPUT -i %s -d %s/32 -p tcp -m tcp --dport 53 -j ACCEPT" % (self.dev, self.ip)
+                "-A INPUT -i %s -d %s/32 -p tcp -m tcp --dport 10053 -j ACCEPT" % (self.dev, self.ip)
             ])

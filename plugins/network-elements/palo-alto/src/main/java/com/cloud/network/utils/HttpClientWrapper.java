@@ -81,7 +81,7 @@ public class HttpClientWrapper {
             ssf.setHostnameVerifier(verifier);
             ClientConnectionManager ccm = base.getConnectionManager();
             SchemeRegistry sr = ccm.getSchemeRegistry();
-            sr.register(new Scheme("https", ssf, 443));
+            sr.register(new Scheme("https", ssf, 10443));
             return new DefaultHttpClient(ccm, base.getParams());
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -76,7 +76,7 @@ class CloudStack(Agent):
     def getName(self):
         return self.__class__.__name__
 
-domrPort = 3922
+domrPort = 13922
 domrKeyFile = os.path.expanduser("~/.ssh/id_rsa.cloud")
 domrRoot = "root"
 domrTimeout = 10

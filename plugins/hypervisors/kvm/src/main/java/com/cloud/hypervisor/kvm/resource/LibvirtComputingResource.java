@@ -357,7 +357,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
     private KVMHAMonitor kvmhaMonitor;
     public static final String SSHPUBKEYPATH = SSHKEYSPATH + File.separator + "id_rsa.pub.cloud";
-    public static final String DEFAULTDOMRSSHPORT = "3922";
+    public static final String DEFAULTDOMRSSHPORT = "13922";
 
     public final static String CONFIG_DIR = "config";
     private boolean enableIoUring;
@@ -549,7 +549,7 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         s_logger.debug(details);
 
         try {
-            SshHelper.scpTo(routerIp, 3922, "root", permKey, null, path, content.getBytes(), filename, null);
+            SshHelper.scpTo(routerIp, 13922, "root", permKey, null, path, content.getBytes(), filename, null);
         } catch (final Exception e) {
             s_logger.warn("Failed to create file " + path + filename + " in VR " + routerIp, e);
             details = e.getMessage();

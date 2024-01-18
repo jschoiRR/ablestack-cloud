@@ -89,9 +89,9 @@ public class VnfTemplateManagerImpl extends ManagerBase implements VnfTemplateMa
 
     public static final String VNF_SECURITY_GROUP_NAME = "VNF_SecurityGroup_";
     public static final String ACCESS_METHOD_SEPARATOR = ",";
-    public static final Integer ACCESS_DEFAULT_SSH_PORT = 22;
-    public static final Integer ACCESS_DEFAULT_HTTP_PORT = 80;
-    public static final Integer ACCESS_DEFAULT_HTTPS_PORT = 443;
+    public static final Integer ACCESS_DEFAULT_SSH_PORT = 10022;
+    public static final Integer ACCESS_DEFAULT_HTTP_PORT = 20080;
+    public static final Integer ACCESS_DEFAULT_HTTPS_PORT = 10443;
 
     @Inject
     VnfTemplateDetailsDao vnfTemplateDetailsDao;

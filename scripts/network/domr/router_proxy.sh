@@ -40,6 +40,6 @@ domRIp="$2"
 
 check_gw "$domRIp"
 
-ssh -p 3922 -q -o StrictHostKeyChecking=no -i $cert root@$domRIp "/opt/cloud/bin/$script ${@:3}"
+ssh -p 13922 -q -o StrictHostKeyChecking=no -i $cert root@$domRIp "/opt/cloud/bin/$script ${@:3}"
 
 exit $?

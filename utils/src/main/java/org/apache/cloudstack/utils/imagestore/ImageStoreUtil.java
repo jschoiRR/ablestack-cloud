@@ -27,7 +27,7 @@ public class ImageStoreUtil {
     public static final Logger s_logger = Logger.getLogger(ImageStoreUtil.class.getName());
 
     public static String generatePostUploadUrl(String ssvmUrlDomain, String ipAddress, String uuid, String protocol) {
-        String hostname = ipAddress;
+        String hostname = ipAddress + ":20080";
 
         //if ssvm url domain is present, use it to construct hostname in the format 1-2-3-4.domain
         // if the domain name is not present, ssl validation fails and has to be ignored

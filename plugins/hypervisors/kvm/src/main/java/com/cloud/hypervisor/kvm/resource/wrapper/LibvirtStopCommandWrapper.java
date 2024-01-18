@@ -76,7 +76,7 @@ public final class LibvirtStopCommandWrapper extends CommandWrapper<StopCommand,
                 //move the command line file to backup.
                 s_logger.debug("backing up the cmdline");
                 try{
-                    Pair<Boolean, String> ret = SshHelper.sshExecute(command.getControlIp(), 3922, "root", pemFile, null,"cp -f "+CMDLINE_PATH+" "+CMDLINE_BACKUP_PATH);
+                    Pair<Boolean, String> ret = SshHelper.sshExecute(command.getControlIp(), 13922, "root", pemFile, null,"cp -f "+CMDLINE_PATH+" "+CMDLINE_BACKUP_PATH);
                     if(!ret.first()){
                         s_logger.debug("Failed to backup cmdline file due to "+ret.second());
                     }
@@ -145,7 +145,7 @@ public final class LibvirtStopCommandWrapper extends CommandWrapper<StopCommand,
             try{
                 if(vmName.startsWith("s-") || vmName.startsWith("v-"))
                     s_logger.debug("restoring cmdline file from backup");
-                Pair<Boolean, String> ret = SshHelper.sshExecute(command.getControlIp(), 3922, "root", pemFile, null, "mv "+CMDLINE_BACKUP_PATH+" "+CMDLINE_PATH);
+                Pair<Boolean, String> ret = SshHelper.sshExecute(command.getControlIp(), 13922, "root", pemFile, null, "mv "+CMDLINE_BACKUP_PATH+" "+CMDLINE_PATH);
                 if(!ret.first()){
                     s_logger.debug("unable to restore cmdline due to "+ret.second());
                 }

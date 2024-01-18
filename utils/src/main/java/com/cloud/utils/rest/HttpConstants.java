@@ -21,7 +21,7 @@ package com.cloud.utils.rest;
 
 public class HttpConstants {
 
-    public static final int HTTPS_PORT = 443;
+    public static final int HTTPS_PORT = 10443;
     public static final String HTTPS = "https";
     public static final String GET_METHOD_TYPE = "get";
     public static final String DELETE_METHOD_TYPE = "delete";

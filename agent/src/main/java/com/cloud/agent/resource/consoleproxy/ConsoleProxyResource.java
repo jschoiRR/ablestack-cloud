@@ -245,10 +245,10 @@ public class ConsoleProxyResource extends ServerResourceBase implements ServerRe
 
         String value = (String)params.get("premium");
         if (value != null && value.equals("premium"))
-            proxyPort = 443;
+            proxyPort = 10443;
         else {
             value = (String)params.get("consoleproxy.httpListenPort");
-            proxyPort = NumbersUtil.parseInt(value, 80);
+            proxyPort = NumbersUtil.parseInt(value, 20080);
         }
 
         value = (String)params.get("proxy_vm");

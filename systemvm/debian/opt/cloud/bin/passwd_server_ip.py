@@ -180,7 +180,7 @@ def serve(HandlerClass = PasswordRequestHandler,
         if len(addresses) > 1:
             allowAddresses.append(addresses[1])
 
-    server_address = (listeningAddress, 8080)
+    server_address = (listeningAddress, 18080)
     passwordServer = ServerClass(server_address, HandlerClass)
     passwordServer.allow_reuse_address = True
     sa = passwordServer.socket.getsockname()

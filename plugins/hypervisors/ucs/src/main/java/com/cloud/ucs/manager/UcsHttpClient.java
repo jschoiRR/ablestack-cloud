@@ -29,7 +29,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 public class UcsHttpClient {
     private static HttpClient client = new HttpClient();
-    private static Protocol ucsHttpsProtocol = new org.apache.commons.httpclient.protocol.Protocol("https", new EasySSLProtocolSocketFactory(), 443);
+    private static Protocol ucsHttpsProtocol = new org.apache.commons.httpclient.protocol.Protocol("https", new EasySSLProtocolSocketFactory(), 10443);
     private final String url;
 
     public UcsHttpClient(String ip) {

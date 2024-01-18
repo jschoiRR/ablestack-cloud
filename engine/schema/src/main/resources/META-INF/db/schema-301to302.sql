@@ -35,7 +35,7 @@ INSERT IGNORE INTO `cloud`.`hypervisor_capabilities`(hypervisor_type, hypervisor
 
 INSERT IGNORE INTO `cloud`.`configuration` VALUES ('Advanced', 'DEFAULT', 'management-server', 'direct.agent.load.size', '16', 'The number of direct agents to load each time');
 INSERT IGNORE INTO `cloud`.`configuration` VALUES ('Network', 'DEFAULT', 'management-server', 'direct.network.no.default.route', 'false', 'Direct Network Dhcp Server should not send a default route');
-INSERT IGNORE INTO `cloud`.`configuration` VALUES ('Advanced', 'DEFAULT', 'management-server', 'endpointe.url', 'http://localhost:8080/client/api', 'Endpointe Url');
+INSERT IGNORE INTO `cloud`.`configuration` VALUES ('Advanced', 'DEFAULT', 'management-server', 'endpointe.url', 'http://localhost:18080/client/api', 'Endpointe Url');
 INSERT IGNORE INTO `cloud`.`configuration` VALUES ('Advanced', 'DEFAULT', 'management-server', 'extract.url.expiration.interval', '14400', 'The life of an extract URL after which it is deleted');
 INSERT IGNORE INTO `cloud`.`configuration` VALUES ('Hidden', 'DEFAULT', 'management-server', 'kvm.guest.network.device', null, 'Specify the private bridge on host for private network');
 INSERT IGNORE INTO `cloud`.`configuration` VALUES ('Network', 'DEFAULT', 'management-server', 'network.disable.rpfilter', 'true', 'disable rp_filter on Domain Router VM public interfaces.');

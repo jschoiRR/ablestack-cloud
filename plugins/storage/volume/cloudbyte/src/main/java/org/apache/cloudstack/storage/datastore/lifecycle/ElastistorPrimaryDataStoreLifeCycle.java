@@ -130,12 +130,12 @@ public class ElastistorPrimaryDataStoreLifeCycle implements PrimaryDataStoreLife
 
         } else if (details.get("hypervisortype") == "KVM") {
             storageIp = url;
-            storagePort = 3260;
+            storagePort = 13260;
             storagetype = StoragePoolType.Iscsi;
             accesspath = storageIp + ":/" + storagePoolName;
         }else{
             storageIp = url;
-            storagePort = 2049;
+            storagePort = 12049;
             storagetype = StoragePoolType.NetworkFilesystem;
             accesspath = storageIp + ":/" + storagePoolName;
         }
@@ -325,9 +325,9 @@ public class ElastistorPrimaryDataStoreLifeCycle implements PrimaryDataStoreLife
             String accessprotocol = st.nextElement().toString();
 
             if (accessprotocol.contentEquals("nfs")) {
-                return 2049;
+                return 12049;
             } else if (accessprotocol.contentEquals("iscsi")) {
-                return 3260;
+                return 13260;
             } else
                 break;
 

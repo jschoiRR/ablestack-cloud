@@ -115,7 +115,7 @@ public class NetScalerControlCenterResource implements ServerResource {
     private boolean _inline;
     private String _deviceName;
     private String _sessionid;
-    public static final int DEFAULT_PORT = 443;
+    public static final int DEFAULT_PORT = 10443;
     private static final Gson s_gson = GsonHelper.getGson();
     private static final Logger s_logger = Logger.getLogger(NetScalerControlCenterResource.class);
     protected Gson _gson;

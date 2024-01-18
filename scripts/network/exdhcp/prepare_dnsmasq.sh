@@ -189,38 +189,38 @@ config_dnsmasq dhcp-ignore=pxestuff
 # Open DHCP ports in iptable
 chkconfig --list iptables | grep "on"
 if [ $? -eq 0 ]; then
-	iptables-save | grep 'A INPUT -p udp -m udp --dport 67 -j ACCEPT' >/dev/null
+	iptables-save | grep 'A INPUT -p udp -m udp --dport 10067 -j ACCEPT' >/dev/null
 	if [ $? -ne 0 ]; then
-		iptables -I INPUT 1 -p udp --dport 67 -j ACCEPT
+		iptables -I INPUT 1 -p udp --dport 10067 -j ACCEPT
 		if [ $? -ne 0 ]; then
-			exit_with_error "iptables -I INPUT 1 -p udp --dport 67 -j ACCEPT failed"
+			exit_with_error "iptables -I INPUT 1 -p udp --dport 10067 -j ACCEPT failed"
 		fi
 		echo "iptables:Open udp port 67 for DHCP"
 	fi
 
-	iptables-save | grep 'A INPUT -p tcp -m tcp --dport 67 -j ACCEPT' >/dev/null
+	iptables-save | grep 'A INPUT -p tcp -m tcp --dport 10067 -j ACCEPT' >/dev/null
 	if [ $? -ne 0 ]; then
-		iptables -I INPUT 1 -p tcp --dport 67 -j ACCEPT
+		iptables -I INPUT 1 -p tcp --dport 10067 -j ACCEPT
 		if [ $? -ne 0 ]; then
-			exit_with_error "iptables -I INPUT 1 -p tcp --dport 67 -j ACCEPT failed"
+			exit_with_error "iptables -I INPUT 1 -p tcp --dport 10067 -j ACCEPT failed"
 		fi
 		echo "iptables:Open tcp port 67 for DHCP"
 	fi
 
-	iptables-save | grep 'A INPUT -p udp -m udp --dport 53 -j ACCEPT' >/dev/null
+	iptables-save | grep 'A INPUT -p udp -m udp --dport 10053 -j ACCEPT' >/dev/null
 	if [ $? -ne 0 ]; then
-		iptables -I INPUT 1 -p udp --dport 53 -j ACCEPT
+		iptables -I INPUT 1 -p udp --dport 10053 -j ACCEPT
 		if [ $? -ne 0 ]; then
-			exit_with_error "iptables -I INPUT 1 -p udp --dport 53 -j ACCEPT failed"
+			exit_with_error "iptables -I INPUT 1 -p udp --dport 10053 -j ACCEPT failed"
 		fi
 		echo "iptables:Open udp port 53 for DHCP"
 	fi
 
-	iptables-save | grep 'A INPUT -p tcp -m tcp --dport 53 -j ACCEPT' >/dev/null
+	iptables-save | grep 'A INPUT -p tcp -m tcp --dport 10053 -j ACCEPT' >/dev/null
 	if [ $? -ne 0 ]; then
-		iptables -I INPUT 1 -p tcp --dport 53 -j ACCEPT
+		iptables -I INPUT 1 -p tcp --dport 10053 -j ACCEPT
 		if [ $? -ne 0 ]; then
-			exit_with_error "iptables -I INPUT 1 -p tcp --dport 53 -j ACCEPT failed"
+			exit_with_error "iptables -I INPUT 1 -p tcp --dport 10053 -j ACCEPT failed"
 		fi
 		echo "iptables:Open tcp port 53 for DHCP"
 	fi

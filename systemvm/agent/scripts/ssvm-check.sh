@@ -143,12 +143,12 @@ echo Management server is $MGMTSERVER.  Checking connectivity.
 IFS=',' read -r -a hosts <<< "$MGMTSERVER"
 for host in "${hosts[@]}"
 do
-    socatout=$(echo | socat - TCP:$host:8250,connect-timeout=3 | tr -d '\0' 2>&1)
+    socatout=$(echo | socat - TCP:$host:18250,connect-timeout=3 | tr -d '\0' 2>&1)
     if [ $? -eq 0 ]
     then
-        echo "Good: Can connect to management server $host port 8250"
+        echo "Good: Can connect to management server $host port 18250"
     else
-        echo "ERROR: Cannot connect to $host port 8250"
+        echo "ERROR: Cannot connect to $host port 18250"
         echo $socatout
         exit 4
     fi

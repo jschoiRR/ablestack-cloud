@@ -54,7 +54,7 @@ def checkLoadBalance(haproxyData, haCfgSections):
                     print "Incorrect bind string found. Expected " + bindStr + " but found " + cfgSection["bind"][0] + "."
                     correct = False
 
-                if (lbSec["sourcePortStart"] == "80" and lbSec["sourcePortEnd"] == "80" and lbSec["keepAliveEnabled"] == "false") \
+                if (lbSec["sourcePortStart"] == "20080" and lbSec["sourcePortEnd"] == "20080" and lbSec["keepAliveEnabled"] == "false") \
                         or (lbSec["stickiness"].find("AppCookie") != -1 or lbSec["stickiness"].find("LbCookie") != -1):
                     if not ("mode" in cfgSection and cfgSection["mode"][0] == "http"):
                         print "Expected HTTP mode but not found"

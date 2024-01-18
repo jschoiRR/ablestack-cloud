@@ -498,7 +498,7 @@ for example:
                 stuff = info.split(":")
                 if len(stuff) == 1:
                     host = stuff[0]
-                    port = 3306
+                    port = 13306
                 elif len(stuff) == 2:
                     host = stuff[0]
                     try: port = int(stuff[1])

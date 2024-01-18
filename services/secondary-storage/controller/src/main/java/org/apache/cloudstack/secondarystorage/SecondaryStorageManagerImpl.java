@@ -178,7 +178,7 @@ public class SecondaryStorageManagerImpl extends ManagerBase implements Secondar
     private static final int ACQUIRE_GLOBAL_LOCK_TIMEOUT_FOR_SYNC_IN_SECONDS = 180;
     private static final int STARTUP_DELAY_IN_MILLISECONDS = 60000;
 
-    private int _mgmtPort = 8250;
+    private int _mgmtPort = 18250;
 
     private List<SecondaryStorageVmAllocator> _ssVmAllocators;
 
@@ -416,7 +416,7 @@ public class SecondaryStorageManagerImpl extends ManagerBase implements Secondar
             return false;
         }
 
-        String copyPort = _useSSlCopy ? "443" : Integer.toString(TemplateConstants.DEFAULT_TMPLT_COPY_PORT);
+        String copyPort = _useSSlCopy ? "10443" : Integer.toString(TemplateConstants.DEFAULT_TMPLT_COPY_PORT);
         SecStorageFirewallCfgCommand thiscpc = new SecStorageFirewallCfgCommand(true);
         thiscpc.addPortConfig(thisSecStorageVm.getPublicIpAddress(), copyPort, true, TemplateConstants.DEFAULT_TMPLT_COPY_INTF);
 
@@ -900,7 +900,7 @@ public class SecondaryStorageManagerImpl extends ManagerBase implements Secondar
         Map<String, String> agentMgrConfigs = _configDao.getConfiguration("AgentManager", params);
 
         String value = agentMgrConfigs.get("port");
-        _mgmtPort = NumbersUtil.parseInt(value, 8250);
+        _mgmtPort = NumbersUtil.parseInt(value, 18250);
 
         _listener = new SecondaryStorageListener(this);
         _agentMgr.registerForHostEvents(_listener, true, false, true);
@@ -1285,7 +1285,7 @@ public class SecondaryStorageManagerImpl extends ManagerBase implements Secondar
 
         controlNic = verifySshAccessOnManagementNicForSystemVm(profile, controlNic, managementNic);
 
-        CheckSshCommand check = new CheckSshCommand(profile.getInstanceName(), controlNic.getIPv4Address(), 3922);
+        CheckSshCommand check = new CheckSshCommand(profile.getInstanceName(), controlNic.getIPv4Address(), 13922);
         cmds.addCommand("checkSsh", check);
 
         return true;

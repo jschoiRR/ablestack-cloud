@@ -147,12 +147,12 @@ public class TungstenProviderServiceImpl extends ManagerBase implements Tungsten
         final String name = cmd.getName();
         final String hostname = cmd.getHostname();
         final String gateway = cmd.getGateway();
-        final String port = cmd.getPort() == null || cmd.getPort().equals(StringUtils.EMPTY) ? "8082" : cmd.getPort();
+        final String port = cmd.getPort() == null || cmd.getPort().equals(StringUtils.EMPTY) ? "18082" : cmd.getPort();
         final String vrouterPort =
-            cmd.getVrouterPort() == null || cmd.getVrouterPort().equals(StringUtils.EMPTY) ? "9091" :
+            cmd.getVrouterPort() == null || cmd.getVrouterPort().equals(StringUtils.EMPTY) ? "19091" :
                 cmd.getVrouterPort();
         final String introspectPort =
-            cmd.getIntrospectPort() == null || cmd.getIntrospectPort().equals(StringUtils.EMPTY) ? "8085" :
+            cmd.getIntrospectPort() == null || cmd.getIntrospectPort().equals(StringUtils.EMPTY) ? "18085" :
                 cmd.getIntrospectPort();
 
         TungstenResource tungstenResource = new TungstenResource();

@@ -41,6 +41,6 @@ then
     ips=$(ip addr show | grep inet | awk '{print $2}')
     for ip in $ips; do
         server_ip=$(echo $ip | awk -F'/' '{print $1}')
-        curl --header "DomU_Request: save_password" "http://$server_ip:8080/" -F "ip=$VM_IP" -F "password=$PASSWORD" -F "token=$TOKEN" >/dev/null 2>/dev/null &
+        curl --header "DomU_Request: save_password" "http://$server_ip:18080/" -F "ip=$VM_IP" -F "password=$PASSWORD" -F "token=$TOKEN" >/dev/null 2>/dev/null &
     done
 fi

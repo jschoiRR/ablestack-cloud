@@ -744,7 +744,7 @@
                     <stopWait>10</stopWait>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8080</port>
+                            <port>18080</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>
                     </connectors>

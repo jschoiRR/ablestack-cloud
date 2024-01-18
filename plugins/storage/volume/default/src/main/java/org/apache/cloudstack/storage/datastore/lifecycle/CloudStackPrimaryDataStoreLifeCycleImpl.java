@@ -160,7 +160,7 @@ public class CloudStackPrimaryDataStoreLifeCycleImpl implements PrimaryDataStore
         }
         if (scheme.equalsIgnoreCase("nfs")) {
             if (port == -1) {
-                port = 2049;
+                port = 12049;
             }
             parameters.setType(StoragePoolType.NetworkFilesystem);
             parameters.setHost(storageHost);
@@ -222,7 +222,7 @@ public class CloudStackPrimaryDataStoreLifeCycleImpl implements PrimaryDataStore
             String[] tokens = hostPath.split("/");
             int lun = NumbersUtil.parseInt(tokens[tokens.length - 1], -1);
             if (port == -1) {
-                port = 3260;
+                port = 13260;
             }
             if (lun != -1) {
                 if (clusterId == null) {
@@ -237,7 +237,7 @@ public class CloudStackPrimaryDataStoreLifeCycleImpl implements PrimaryDataStore
             }
         } else if (scheme.equalsIgnoreCase("iso")) {
             if (port == -1) {
-                port = 2049;
+                port = 12049;
             }
             parameters.setType(StoragePoolType.ISO);
             parameters.setHost(storageHost);

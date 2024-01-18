@@ -54,7 +54,7 @@ DISKSPACE=2120000  #free disk space required in kilobytes
 dbHost="localhost"
 dbUser="root"
 dbPassword=
-dbPort=3306
+dbPort=13306
 jarfile='/usr/share/cloudstack-common/lib/cloudstack-utils.jar'
 
 # check if first parameter is not a dash (-) then print the usage block

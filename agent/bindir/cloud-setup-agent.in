@@ -40,7 +40,7 @@ def getUserInputs():
     if mgtSvr == "":
         mgtSvr = oldMgt
     try:
-        socket.getaddrinfo(mgtSvr, 443)
+        socket.getaddrinfo(mgtSvr, 10443)
     except:
         print("Failed to resolve %s. Please input a valid hostname or IP-Address."%mgtSvr)
         exit(1)

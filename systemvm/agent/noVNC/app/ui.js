@@ -160,14 +160,14 @@ const UI = {
         UI.initSetting('logging', 'warn');
         UI.updateLogging();
 
-        // if port == 80 (or 443) then it won't be present and should be
+        // if port == 20080 (or 10443) then it won't be present and should be
         // set manually
         let port = window.location.port;
         if (!port) {
             if (window.location.protocol.substring(0, 5) == 'https') {
-                port = 443;
+                port = 10443;
             } else if (window.location.protocol.substring(0, 4) == 'http') {
-                port = 80;
+                port = 20080;
             }
         }
 

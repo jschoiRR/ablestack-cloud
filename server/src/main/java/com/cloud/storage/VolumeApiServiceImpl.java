@@ -476,6 +476,7 @@ public class VolumeApiServiceImpl extends ManagerBase implements VolumeApiServic
                 String protocol = UseHttpsToUpload.value() ? "https" : "http";
 
                 String url = ImageStoreUtil.generatePostUploadUrl(ssvmUrlDomain, ep.getPublicAddr(), vol.getUuid(),  protocol);
+
                 response.setPostURL(new URL(url));
 
                 // set the post url, this is used in the monitoring thread to determine the SSVM

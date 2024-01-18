@@ -57,7 +57,7 @@ public class NeutronRestApi {
     private static final MultiThreadedHttpConnectionManager s_httpClientManager = new MultiThreadedHttpConnectionManager();
 
     private static final String PROTOCOL = "https";
-    private static final int HTTPS_PORT = 443;
+    private static final int HTTPS_PORT = 10443;
 
     private final HttpClient client;
 

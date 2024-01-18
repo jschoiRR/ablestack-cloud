@@ -452,7 +452,7 @@ export default {
         const isHttps = /^https/.test(url)
         this.client = new Minio.Client({
           endPoint: url.split(':')[0],
-          port: url.split(':').length > 1 ? parseInt(url.split(':')[1]) : isHttps ? 443 : 80,
+          port: url.split(':').length > 1 ? parseInt(url.split(':')[1]) : isHttps ? 10443 : 20080,
           useSSL: isHttps,
           accessKey: this.resource.accesskey,
           secretKey: this.resource.usersecretkey
