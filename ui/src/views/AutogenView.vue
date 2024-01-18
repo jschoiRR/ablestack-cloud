@@ -1175,6 +1175,9 @@ export default {
           this.$store.getters.customColumns[this.$store.getters.userInfo.id][this.$route.path] = this.selectedColumns
         } else {
           this.selectedColumns = this.$store.getters.customColumns[this.$store.getters.userInfo.id][this.$route.path] || this.selectedColumns
+          if (this.$store.getters.listAllProjects && !this.projectView) {
+            this.selectedColumns.push('project')
+          }
           this.updateSelectedColumns()
         }
       }

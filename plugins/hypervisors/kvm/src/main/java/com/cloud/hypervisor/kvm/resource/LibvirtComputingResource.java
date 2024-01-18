@@ -970,9 +970,9 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
             throw new ConfigurationException("Unable to find kvmheartbeat.sh");
         }
 
-        heartBeatPathRbd = Script.findScript(kvmScriptsDir, "kvmheartbeat_rbd.py");
+        heartBeatPathRbd = Script.findScript(kvmScriptsDir, "kvmheartbeat_rbd.sh");
         if (heartBeatPathRbd == null) {
-            throw new ConfigurationException("Unable to find kvmheartbeat_rbd.py");
+            throw new ConfigurationException("Unable to find kvmheartbeat_rbd.sh");
         }
 
         heartBeatPathClvm = Script.findScript(kvmScriptsDir, "kvmheartbeat_clvm.sh");
@@ -993,6 +993,21 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         resizeVolumePath = Script.findScript(storageScriptsDir, "resizevolume.sh");
         if (resizeVolumePath == null) {
             throw new ConfigurationException("Unable to find the resizevolume.sh");
+        }
+
+        vmActivityCheckPath = Script.findScript(kvmScriptsDir, "kvmvmactivity.sh");
+        if (vmActivityCheckPath == null) {
+            throw new ConfigurationException("Unable to find kvmvmactivity.sh");
+        }
+
+        vmActivityCheckPathRbd = Script.findScript(kvmScriptsDir, "kvmvmactivity_rbd.sh");
+        if (vmActivityCheckPathRbd == null) {
+            throw new ConfigurationException("Unable to find kvmvmactivity_rbd.sh");
+        }
+
+        vmActivityCheckPathClvm = Script.findScript(kvmScriptsDir, "kvmvmactivity_clvm.sh");
+        if (vmActivityCheckPathClvm == null) {
+            throw new ConfigurationException("Unable to find kvmvmactivity_clvm.sh");
         }
 
         createTmplPath = Script.findScript(storageScriptsDir, "createtmplt.sh");
@@ -1236,7 +1251,8 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
 
         final String[] info = NetUtils.getNetworkParams(privateNic);
 
-        kvmhaMonitor = new KVMHAMonitor(null, null, null, info[0], heartBeatPath, heartBeatPathRbd, heartBeatPathClvm);
+        kvmhaMonitor = new KVMHAMonitor(null, info[0], heartBeatPath, heartBeatPathRbd, heartBeatPathClvm);
+
         final Thread ha = new Thread(kvmhaMonitor);
         ha.start();
 
@@ -4625,15 +4641,16 @@ public class LibvirtComputingResource extends ServerResourceBase implements Serv
         final String path = disk.getDiskPath();
         if (path != null) {
             final String[] token = path.split("/");
-            if (DiskProtocol.RBD.equals(disk.getDiskProtocol())) {
-                // for example, path = <RBD pool>/<disk path>
-                if (token.length > 1) {
-                    return token[1];
-                }
-            } else if (token.length > 3) {
-                // for example, path = /mnt/pool_uuid/disk_path/
-                return token[3];
-            }
+            return token[token.length - 1];
+            // if (DiskProtocol.RBD.equals(disk.getDiskProtocol())) {
+            //     // for example, path = <RBD pool>/<disk path>
+            //     if (token.length > 1) {
+            //         return token[1];
+            //     }
+            // } else if (token.length > 3) {
+            //     // for example, path = /mnt/pool_uuid/disk_path/
+            //     return token[3];
+            // }
         }
         return null;
     }

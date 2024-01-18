@@ -363,14 +363,14 @@ public class KVMStoragePoolManager {
 
         // LibvirtStorageAdaptor-specific statement
         if (type == StoragePoolType.NetworkFilesystem && primaryStorage) {
-            KVMHABase.NfsStoragePool nfspool = new KVMHABase.NfsStoragePool(pool.getUuid(), host, path, pool.getLocalPath(), PoolType.PrimaryStorage);
-            _haMonitor.addStoragePool(nfspool);
+            KVMHABase.HAStoragePool storagePool = new KVMHABase.HAStoragePool(pool, host, path, PoolType.PrimaryStorage);
+            _haMonitor.addStoragePool(storagePool);
         } else if (type == StoragePoolType.RBD && primaryStorage) {
-            KVMHABase.RbdStoragePool rbdpool = new KVMHABase.RbdStoragePool(pool.getUuid(), host, path, pool.getLocalPath(), PoolType.PrimaryStorage, pool.getAuthUserName(), pool.getAuthSecret(), pool.getSourceHost());
-            _haMonitor.addStoragePool(rbdpool);
+            KVMHABase.HAStoragePool rbdpool = new KVMHABase.HAStoragePool(pool, host, path, pool.getLocalPath(), PoolType.PrimaryStorage, pool.getAuthUserName(), pool.getAuthSecret(), pool.getSourceHost());
+            _haMonitor.addRbdStoragePool(rbdpool);
         } else if (type == StoragePoolType.CLVM && primaryStorage) {
-            KVMHABase.ClvmStoragePool clvmpool = new KVMHABase.ClvmStoragePool(pool.getUuid(), host, path, PoolType.PrimaryStorage);
-            _haMonitor.addStoragePool(clvmpool);
+            KVMHABase.HAStoragePool clvmpool = new KVMHABase.HAStoragePool(pool, host, path, PoolType.PrimaryStorage);
+            _haMonitor.addClvmStoragePool(clvmpool);
         }
         StoragePoolInformation info = new StoragePoolInformation(name, host, port, path, userInfo, type, details, primaryStorage);
         addStoragePool(pool.getUuid(), info);
