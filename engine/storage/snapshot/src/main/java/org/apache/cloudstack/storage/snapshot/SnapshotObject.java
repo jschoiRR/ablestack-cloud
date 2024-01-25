@@ -86,6 +86,8 @@ public class SnapshotObject implements SnapshotInfo {
     DataStoreManager dataStoreManager;
     private String installPath; // temporarily set installPath before passing to resource for entries with empty installPath for object store migration case
 
+    private String vmSnapshotName;
+
     private Long zoneId = null;
 
     public SnapshotObject() {
@@ -464,5 +466,15 @@ public class SnapshotObject implements SnapshotInfo {
     @Override
     public Class<?> getEntityType() {
         return Snapshot.class;
+    }
+
+    @Override
+    public void setVmSnapshotName(String vmSnapshotName) {
+        this.vmSnapshotName = vmSnapshotName;
+    }
+
+    @Override
+    public String getVmSnapshotName() {
+        return vmSnapshotName;
     }
 }

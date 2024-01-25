@@ -356,6 +356,8 @@ public class AblestackPrimaryDataStoreDriverImpl implements PrimaryDataStoreDriv
                 snapshotTO.setQuiescevm(snapshotPayload.getQuiescevm());
             }
 
+            snapshotTO.setVmSnapshotName(snapshot.getVmSnapshotName());
+
             CreateObjectCommand cmd = new CreateObjectCommand(snapshotTO);
             EndPoint ep = epSelector.select(snapshot, StorageAction.TAKESNAPSHOT);
             Answer answer = null;
