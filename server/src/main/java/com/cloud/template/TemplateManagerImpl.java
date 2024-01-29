@@ -1790,7 +1790,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         VMTemplateVO finalTmpProduct = null;
         SnapshotVO snapshot = null;
         try {
-            TemplateInfo cloneTempalateInfp = _tmplFactory.getTemplate(templateId, DataStoreRole.Image);
+            TemplateInfo cloneTempalateInfo = _tmplFactory.getTemplate(templateId, DataStoreRole.Image);
             long zoneId = curVm.getDataCenterId();
             AsyncCallFuture<TemplateApiResult> future = null;
             VolumeInfo vInfo = _volFactory.getVolume(volumeId);
@@ -1798,10 +1798,10 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
             snapshot = _snapshotDao.findById(snapshotId);
             // create template from snapshot
             DataStoreRole dataStoreRole = ApiResponseHelper.getDataStoreRole(snapshot, _snapshotStoreDao, _dataStoreMgr);
-            SnapshotInfo snapInfo = _snapshotFactory.getSnapshot(snapshotId, store.getId(), dataStoreRole);
+            SnapshotInfo snapInfo = _snapshotFactory.getSnapshotWithRoleAndZone(snapshotId, dataStoreRole, zoneId);
             if (dataStoreRole == DataStoreRole.Image) {
                 if (snapInfo == null) {
-                    snapInfo = _snapshotFactory.getSnapshot(snapshotId, store.getId(), DataStoreRole.Primary);
+                    snapInfo = _snapshotFactory.getSnapshotWithRoleAndZone(snapshotId, DataStoreRole.Primary, zoneId);
                     if(snapInfo == null) {
                         throw new CloudRuntimeException("Cannot find snapshot "+snapshotId);
                     }
@@ -1810,7 +1810,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                     snapshotStrategy.backupSnapshot(snapInfo);
 
                     // Attempt to grab it again.
-                    snapInfo = _snapshotFactory.getSnapshot(snapshotId, store.getId(), dataStoreRole);
+                    snapInfo = _snapshotFactory.getSnapshotWithRoleAndZone(snapshotId, dataStoreRole, zoneId);
                     if(snapInfo == null) {
                         throw new CloudRuntimeException("Cannot find snapshot " + snapshotId + " on secondary and could not create backup");
                     }
@@ -1822,7 +1822,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                     store = snapStore; // pick snapshot image store to create template
                 }
             }
-            future = _tmpltSvr.createTemplateFromSnapshotAsync(snapInfo, cloneTempalateInfp, store);
+            future = _tmpltSvr.createTemplateFromSnapshotAsync(snapInfo, cloneTempalateInfo, store);
             // wait for the result to converge
             CommandResult result = null;
             try {
