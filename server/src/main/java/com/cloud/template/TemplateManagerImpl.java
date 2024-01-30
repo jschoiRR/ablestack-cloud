@@ -1790,7 +1790,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
         VMTemplateVO finalTmpProduct = null;
         SnapshotVO snapshot = null;
         try {
-            TemplateInfo cloneTempalateInfo = _tmplFactory.getTemplate(templateId, DataStoreRole.Image);
+            TemplateInfo cloneTemplateInfo = _tmplFactory.getTemplate(templateId, DataStoreRole.Image);
             long zoneId = curVm.getDataCenterId();
             AsyncCallFuture<TemplateApiResult> future = null;
             VolumeInfo vInfo = _volFactory.getVolume(volumeId);
@@ -1822,7 +1822,7 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                     store = snapStore; // pick snapshot image store to create template
                 }
             }
-            future = _tmpltSvr.createTemplateFromSnapshotAsync(snapInfo, cloneTempalateInfo, store);
+            future = _tmpltSvr.createTemplateFromSnapshotAsync(snapInfo, cloneTemplateInfo, store);
             // wait for the result to converge
             CommandResult result = null;
             try {
@@ -1853,12 +1853,9 @@ public class TemplateManagerImpl extends ManagerBase implements TemplateManager,
                         new UsageEventVO(EventTypes.EVENT_TEMPLATE_CREATE, finalTmpProduct.getAccountId(), zoneId, finalTmpProduct.getId(), finalTmpProduct.getName(), null,
                                 finalTmpProduct.getSourceTemplateId(), srcTmpltStore.getPhysicalSize(), finalTmpProduct.getSize());
                 _usageEventDao.persist(usageEvent);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 s_logger.debug("Failed to create template for id: " + templateId, e);
                 throw new CloudRuntimeException("Failed to create template" , e);
-            } catch (ExecutionException e) {
-                s_logger.debug("Failed to create template for id: " + templateId, e);
-                throw new CloudRuntimeException("Failed to create template ", e);
             }
 
         } finally {

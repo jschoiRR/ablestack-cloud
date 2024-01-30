@@ -47,8 +47,8 @@ import org.apache.log4j.Logger;
 import java.util.Optional;
 import java.util.List;
 
-@APICommand(name = "cloneVirtualMachine", responseObject = UserVmResponse.class, description = "clone a virtual VM",
-        responseView = ResponseObject.ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = true, entityType = {VirtualMachine.class}, since="4.16.0")
+@APICommand(name = "cloneVirtualMachine", responseObject = UserVmResponse.class, description = "clone a virtual machine",
+        responseView = ResponseObject.ResponseView.Restricted, requestHasSensitiveInfo = false, responseHasSensitiveInfo = true, entityType = {VirtualMachine.class}, since="4.19.0")
 public class CloneVMCmd extends BaseAsyncCreateCmd implements UserCmd {
     public static final Logger s_logger = Logger.getLogger(CloneVMCmd.class.getName());
     private static final String s_name = "clonevirtualmachineresponse";
@@ -59,7 +59,7 @@ public class CloneVMCmd extends BaseAsyncCreateCmd implements UserCmd {
     /////////////////////////////////////////////////////
     @ACL(accessType = AccessType.OperateEntry)
     @Parameter(name = ApiConstants.VIRTUAL_MACHINE_ID, type = CommandType.UUID, entityType=UserVmResponse.class,
-            required = true, description = "The ID of the virtual machine")
+            required = true, description = "The ID of the virtual machine to clone")
     private Long virtualmachineid;
 
     @Parameter(name = ApiConstants.NAME, type = CommandType.STRING, description = "name of the cloned virtual machine")
