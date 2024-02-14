@@ -674,10 +674,6 @@ export default {
         name: 'label.info.upper'
       })
       levels.push({
-        id: 'WARN',
-        name: 'label.warn.upper'
-      })
-      levels.push({
         id: 'ERROR',
         name: 'label.error.upper'
       })

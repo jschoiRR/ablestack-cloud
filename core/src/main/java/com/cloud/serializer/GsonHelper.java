@@ -21,7 +21,8 @@ package com.cloud.serializer;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,7 +43,7 @@ import com.cloud.storage.Storage;
 import com.cloud.utils.Pair;
 
 public class GsonHelper {
-    private static final Logger s_logger = Logger.getLogger(GsonHelper.class);
+    protected static Logger logger = LogManager.getLogger(GsonHelper.class);
 
     protected static final Gson s_gson;
     protected static final Gson s_gogger;
@@ -52,9 +53,9 @@ public class GsonHelper {
         s_gson = setDefaultGsonConfig(gsonBuilder);
         GsonBuilder loggerBuilder = new GsonBuilder();
         loggerBuilder.disableHtmlEscaping();
-        loggerBuilder.setExclusionStrategies(new LoggingExclusionStrategy(s_logger));
+        loggerBuilder.setExclusionStrategies(new LoggingExclusionStrategy(logger));
         s_gogger = setDefaultGsonConfig(loggerBuilder);
-        s_logger.info("Default Builder inited.");
+        logger.info("Default Builder inited.");
     }
 
     static Gson setDefaultGsonConfig(GsonBuilder builder) {
@@ -89,6 +90,6 @@ public class GsonHelper {
     }
 
     public final static Logger getLogger() {
-        return s_logger;
+        return logger;
     }
 }

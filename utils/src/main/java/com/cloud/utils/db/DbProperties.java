@@ -26,17 +26,38 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.PropertiesUtil;
 import com.cloud.utils.crypt.EncryptionSecretKeyChecker;
 
 public class DbProperties {
-    private static final Logger log = Logger.getLogger(DbProperties.class);
+    protected static Logger log = LogManager.getLogger(DbProperties.class);
 
     private static Properties properties = new Properties();
     private static boolean loaded = false;
     public static final String dbEncryptionType = "db.cloud.encryption.type";
+    public static final String dbProperties = "db.properties";
+    public static final String dbPropertiesEnc = "db.properties.enc";
+    public static String kp;
+    public static String key;
+
+    public static String getKp() {
+        return kp;
+    }
+
+    public static void setKp(String val) {
+        kp = val;
+    }
+
+    public static String getKey() {
+        return key;
+    }
+
+    public static void setKey(String hex) {
+        key = hex;
+    }
 
     protected static Properties wrapEncryption(Properties dbProps) throws IOException {
         EncryptionSecretKeyChecker checker = new EncryptionSecretKeyChecker();
@@ -53,17 +74,22 @@ public class DbProperties {
     }
 
     public synchronized static Properties getDbProperties() {
+        Properties dbProps = new Properties();
+        InputStream is = null;
         if (!loaded) {
-            Properties dbProps = new Properties();
-            InputStream is = null;
             try {
-                File props = PropertiesUtil.findConfigFile("db.properties");
-                if (props != null && props.exists()) {
+                final File propsEnc = PropertiesUtil.findConfigFile(dbPropertiesEnc);
+                final File props = PropertiesUtil.findConfigFile(dbProperties);
+                if (propsEnc != null && propsEnc.exists()) {
+                    Process process = Runtime.getRuntime().exec("openssl enc -aes-256-cbc -d -K " + DbProperties.getKey() + " -pass pass:" + DbProperties.getKp() + " -saltlen 16 -md sha256 -iter 100000 -in " + propsEnc.getAbsoluteFile());
+                    is = process.getInputStream();
+                    process.onExit();
+                } else {
                     is = new FileInputStream(props);
                 }
 
                 if (is == null) {
-                    is = PropertiesUtil.openStreamFromURL("db.properties");
+                    is = PropertiesUtil.openStreamFromURL(dbProperties);
                 }
 
                 if (is == null) {
@@ -74,7 +100,7 @@ public class DbProperties {
                 if (is != null) {
                     dbProps.load(is);
                 }
-
+                log.info(":::::::db Properties::::::::" + dbProps);
                 EncryptionSecretKeyChecker checker = new EncryptionSecretKeyChecker();
                 checker.check(dbProps, dbEncryptionType);
 
@@ -90,6 +116,7 @@ public class DbProperties {
 
             properties = dbProps;
             loaded = true;
+
         } else {
             log.debug("DB properties were already loaded");
         }

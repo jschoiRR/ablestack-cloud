@@ -28,7 +28,8 @@ import org.apache.commons.httpclient.NoHttpResponseException;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.util.CollectionUtils;
 
 import java.io.File;
@@ -47,7 +48,7 @@ public class MetalinkTemplateDownloader extends TemplateDownloaderBase implement
     protected GetMethod request;
     private boolean toFileSet = false;
 
-    private static final Logger LOGGER = Logger.getLogger(MetalinkTemplateDownloader.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(MetalinkTemplateDownloader.class.getName());
 
     public MetalinkTemplateDownloader(StorageLayer storageLayer, String downloadUrl, String toDir, DownloadCompleteCallback callback, long maxTemplateSize) {
         super(storageLayer, downloadUrl, toDir, maxTemplateSize, callback);

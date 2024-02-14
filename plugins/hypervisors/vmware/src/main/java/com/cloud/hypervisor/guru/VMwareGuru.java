@@ -54,7 +54,8 @@ import org.apache.cloudstack.vm.UnmanagedInstanceTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.BackupSnapshotCommand;
 import com.cloud.agent.api.Command;
@@ -161,7 +162,7 @@ import com.vmware.vim25.VirtualMachineConfigSummary;
 import com.vmware.vim25.VirtualMachineRuntimeInfo;
 
 public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Configurable {
-    private static final Logger s_logger = Logger.getLogger(VMwareGuru.class);
+    protected static Logger logger = LogManager.getLogger(VMwareGuru.class);
     private static final Gson GSON = GsonHelper.getGson();
 
 
@@ -216,8 +217,8 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
     }
 
     @Override @DB public Pair<Boolean, Long> getCommandHostDelegation(long hostId, Command cmd) {
-        if (s_logger.isTraceEnabled()) {
-            s_logger.trace(String.format("Finding delegation for command of type %s to host %d.", cmd.getClass(), hostId));
+        if (logger.isTraceEnabled()) {
+            logger.trace(String.format("Finding delegation for command of type %s to host %d.", cmd.getClass(), hostId));
         }
 
         boolean needDelegation = false;
@@ -273,9 +274,9 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             }
         }
 
-        if (s_logger.isTraceEnabled()) {
-            s_logger.trace(String.format("Command of type %s is going to be executed in sequence? %b", cmd.getClass(), cmd.executeInSequence()));
-            s_logger.trace(String.format("Command of type %s is going to need delegation? %b", cmd.getClass(), needDelegation));
+        if (logger.isTraceEnabled()) {
+            logger.trace(String.format("Command of type %s is going to be executed in sequence? %b", cmd.getClass(), cmd.executeInSequence()));
+            logger.trace(String.format("Command of type %s is going to need delegation? %b", cmd.getClass(), needDelegation));
         }
 
         if (!needDelegation) {
@@ -348,7 +349,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
 
         String vCenterIp = NetUtils.resolveToIp(tokens[1]);
         if (vCenterIp == null) {
-            s_logger.error("Fatal : unable to resolve vCenter address " + tokens[1] + ", please check your DNS configuration");
+            logger.error("Fatal : unable to resolve vCenter address " + tokens[1] + ", please check your DNS configuration");
             return guid;
         }
 
@@ -364,7 +365,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         for (NicVO nic : nicVOs) {
             NetworkVO network = networkDao.findById(nic.getNetworkId());
             if (network.getBroadcastDomainType() == BroadcastDomainType.Lswitch) {
-                s_logger.debug("Nic " + nic.toString() + " is connected to an lswitch, cleanup required");
+                logger.debug("Nic " + nic.toString() + " is connected to an lswitch, cleanup required");
                 NetworkVO networkVO = networkDao.findById(nic.getNetworkId());
                 // We need the traffic label to figure out which vSwitch has the
                 // portgroup
@@ -451,7 +452,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         ManagedObjectReference dcMor = dcMo.getMor();
         if (dcMor == null) {
             String msg = "Error while getting Vmware datacenter " + vmwareDatacenter.getVmwareDatacenterName();
-            s_logger.error(msg);
+            logger.error(msg);
             throw new InvalidParameterValueException(msg);
         }
         return dcMo;
@@ -525,7 +526,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
     private void checkBackingInfo(VirtualDeviceBackingInfo backingInfo) {
         if (!(backingInfo instanceof VirtualDiskFlatVer2BackingInfo)) {
             String errorMessage = String.format("Unsupported backing info. Expected: [%s], but received: [%s].", VirtualDiskFlatVer2BackingInfo.class.getSimpleName(), backingInfo.getClass().getSimpleName());
-            s_logger.error(errorMessage);
+            logger.error(errorMessage);
             throw new CloudRuntimeException(errorMessage);
         }
     }
@@ -668,11 +669,11 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
      * If VM exists: update VM
      */
     private VMInstanceVO getVM(String vmInternalName, long templateId, long guestOsId, long serviceOfferingId, long zoneId, long accountId, long userId, long domainId) {
-        s_logger.debug(String.format("Trying to get VM with specs: [vmInternalName: %s, templateId: %s, guestOsId: %s, serviceOfferingId: %s].", vmInternalName,
+        logger.debug(String.format("Trying to get VM with specs: [vmInternalName: %s, templateId: %s, guestOsId: %s, serviceOfferingId: %s].", vmInternalName,
                 templateId, guestOsId, serviceOfferingId));
         VMInstanceVO vm = virtualMachineDao.findVMByInstanceNameIncludingRemoved(vmInternalName);
         if (vm != null) {
-            s_logger.debug(String.format("Found an existing VM [id: %s, removed: %s] with internalName: [%s].", vm.getUuid(), vm.getRemoved() != null ? "yes" : "no", vmInternalName));
+            logger.debug(String.format("Found an existing VM [id: %s, removed: %s] with internalName: [%s].", vm.getUuid(), vm.getRemoved() != null ? "yes" : "no", vmInternalName));
             vm.setState(VirtualMachine.State.Stopped);
             vm.setPowerState(VirtualMachine.PowerState.PowerOff);
             virtualMachineDao.update(vm.getId(), vm);
@@ -684,7 +685,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             return virtualMachineDao.findById(vm.getId());
         } else {
             long id = userVmDao.getNextInSequence(Long.class, "id");
-            s_logger.debug(String.format("Can't find an existing VM with internalName: [%s]. Creating a new VM with: [id: %s, name: %s, templateId: %s, guestOsId: %s, serviceOfferingId: %s].",
+            logger.debug(String.format("Can't find an existing VM with internalName: [%s]. Creating a new VM with: [id: %s, name: %s, templateId: %s, guestOsId: %s, serviceOfferingId: %s].",
                     vmInternalName, id, vmInternalName, templateId, guestOsId, serviceOfferingId));
 
             UserVmVO vmInstanceVO = new UserVmVO(id, vmInternalName, vmInternalName, templateId, HypervisorType.VMware, guestOsId, false, false, domainId, accountId, userId,
@@ -753,7 +754,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         volume.setAttached(new Date());
         _volumeDao.update(volume.getId(), volume);
         if (volume.getRemoved() != null) {
-            s_logger.debug(String.format("Marking volume [uuid: %s] of restored VM [%s] as non removed.", volume.getUuid(),
+            logger.debug(String.format("Marking volume [uuid: %s] of restored VM [%s] as non removed.", volume.getUuid(),
                     ReflectionToStringBuilderUtils.reflectOnlySelectedFields(vm, "uuid", "instanceName")));
             _volumeDao.unremove(volume.getId());
             if (vm.getType() == Type.User) {
@@ -788,7 +789,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
                 volume = createVolume(disk, vmToImport, domainId, zoneId, accountId, instanceId, poolId, templateId, backup, true);
                 operation = "created";
             }
-            s_logger.debug(String.format("Sync volumes to %s in backup restore operation: %s volume [id: %s].", vmInstanceVO, operation, volume.getUuid()));
+            logger.debug(String.format("Sync volumes to %s in backup restore operation: %s volume [id: %s].", vmInstanceVO, operation, volume.getUuid()));
         }
     }
 
@@ -833,9 +834,9 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             return GSON.toJson(list.toArray(), Backup.VolumeInfo[].class);
         } catch (Exception e) {
             if (CollectionUtils.isEmpty(vmVolumes) || vmVolumes.get(0).getInstanceId() == null) {
-                s_logger.error(String.format("Failed to create VolumeInfo of VM [id: null] volumes due to: [%s].", e.getMessage()), e);
+                logger.error(String.format("Failed to create VolumeInfo of VM [id: null] volumes due to: [%s].", e.getMessage()), e);
             } else {
-                s_logger.error(String.format("Failed to create VolumeInfo of VM [id: %s] volumes due to: [%s].", vmVolumes.get(0).getInstanceId(), e.getMessage()), e);
+                logger.error(String.format("Failed to create VolumeInfo of VM [id: %s] volumes due to: [%s].", vmVolumes.get(0).getInstanceId(), e.getMessage()), e);
             }
             throw e;
         }
@@ -886,11 +887,11 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         String[] tagSplit = tag.split("-");
         tag = tagSplit[tagSplit.length - 1];
 
-        s_logger.debug(String.format("Trying to find network with vlan: [%s].", vlan));
+        logger.debug(String.format("Trying to find network with vlan: [%s].", vlan));
         NetworkVO networkVO = networkDao.findByVlan(vlan);
         if (networkVO == null) {
             networkVO = createNetworkRecord(zoneId, tag, vlan, accountId, domainId);
-            s_logger.debug(String.format("Created new network record [id: %s] with details [zoneId: %s, tag: %s, vlan: %s, accountId: %s and domainId: %s].",
+            logger.debug(String.format("Created new network record [id: %s] with details [zoneId: %s, tag: %s, vlan: %s, accountId: %s and domainId: %s].",
                     networkVO.getUuid(), zoneId, tag, vlan, accountId, domainId));
         }
         return networkVO;
@@ -903,7 +904,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         Map<String, NetworkVO> mapping = new HashMap<>();
         for (String networkName : vmNetworkNames) {
             NetworkVO networkVO = getGuestNetworkFromNetworkMorName(networkName, accountId, zoneId, domainId);
-            s_logger.debug(String.format("Mapping network name [%s] to networkVO [id: %s].", networkName, networkVO.getUuid()));
+            logger.debug(String.format("Mapping network name [%s] to networkVO [id: %s].", networkName, networkVO.getUuid()));
             mapping.put(networkName, networkVO);
         }
         return mapping;
@@ -940,7 +941,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             NetworkVO networkVO = networksMapping.get(networkName);
             NicVO nicVO = nicDao.findByNetworkIdAndMacAddressIncludingRemoved(networkVO.getId(), macAddress);
             if (nicVO != null) {
-                s_logger.warn(String.format("Find NIC in DB with networkId [%s] and MAC Address [%s], so this NIC will be removed from list of unmapped NICs of VM [id: %s, name: %s].",
+                logger.warn(String.format("Find NIC in DB with networkId [%s] and MAC Address [%s], so this NIC will be removed from list of unmapped NICs of VM [id: %s, name: %s].",
                         networkVO.getId(), macAddress, vm.getUuid(), vm.getInstanceName()));
                 allNics.remove(nicVO);
 
@@ -950,7 +951,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             }
         }
         for (final NicVO unMappedNic : allNics) {
-            s_logger.debug(String.format("Removing NIC [%s] from backup restored %s.", ReflectionToStringBuilderUtils.reflectOnlySelectedFields(unMappedNic, "uuid", "macAddress"), vm));
+            logger.debug(String.format("Removing NIC [%s] from backup restored %s.", ReflectionToStringBuilderUtils.reflectOnlySelectedFields(unMappedNic, "uuid", "macAddress"), vm));
             vmManager.removeNicFromVm(vm, unMappedNic);
         }
     }
@@ -968,7 +969,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         for (Backup.VolumeInfo backedUpVol : backedUpVolumes) {
             VolumeVO volumeExtra = _volumeDao.findByUuid(backedUpVol.getUuid());
             if (volumeExtra != null) {
-                s_logger.debug(String.format("Marking volume [id: %s] of VM [%s] as removed for the backup process.", backedUpVol.getUuid(), ReflectionToStringBuilderUtils.reflectOnlySelectedFields(vm, "uuid", "instanceName")));
+                logger.debug(String.format("Marking volume [id: %s] of VM [%s] as removed for the backup process.", backedUpVol.getUuid(), ReflectionToStringBuilderUtils.reflectOnlySelectedFields(vm, "uuid", "instanceName")));
                 _volumeDao.remove(volumeExtra.getId());
 
                 if (vm.getType() == Type.User) {
@@ -985,7 +986,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
                     VolumeVO vol = _volumeDao.findByUuidIncludingRemoved(volId);
                     usedVols.put(backedUpVol.getUuid(), true);
                     map.put(disk, vol);
-                    s_logger.debug("VM restore mapping for disk " + disk.getBacking() + " (capacity: " + toHumanReadableSize(disk.getCapacityInBytes()) + ") with volume ID" + vol.getId());
+                    logger.debug("VM restore mapping for disk " + disk.getBacking() + " (capacity: " + toHumanReadableSize(disk.getCapacityInBytes()) + ") with volume ID" + vol.getId());
                 }
             }
         }
@@ -1050,7 +1051,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
 
     @Override
     public VirtualMachine importVirtualMachineFromBackup(long zoneId, long domainId, long accountId, long userId, String vmInternalName, Backup backup) throws Exception {
-        s_logger.debug(String.format("Trying to import VM [vmInternalName: %s] from Backup [%s].", vmInternalName,
+        logger.debug(String.format("Trying to import VM [vmInternalName: %s] from Backup [%s].", vmInternalName,
                 ReflectionToStringBuilderUtils.reflectOnlySelectedFields(backup, "id", "uuid", "vmId", "externalId", "backupType")));
         DatacenterMO dcMo = getDatacenterMO(zoneId);
         VirtualMachineMO vmToImport = dcMo.findVm(vmInternalName);
@@ -1086,7 +1087,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         VirtualDisk restoredDisk = findRestoredVolume(volumeInfo, vmRestored);
         String diskPath = vmRestored.getVmdkFileBaseName(restoredDisk);
 
-        s_logger.debug("Restored disk size=" + toHumanReadableSize(restoredDisk.getCapacityInKB() * Resource.ResourceType.bytesToKiB) + " path=" + diskPath);
+        logger.debug("Restored disk size=" + toHumanReadableSize(restoredDisk.getCapacityInKB() * Resource.ResourceType.bytesToKiB) + " path=" + diskPath);
 
         // Detach restored VM disks
         vmRestored.detachDisk(String.format("%s/%s.vmdk", location, diskPath), false);
@@ -1104,7 +1105,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
             // Attach volume to VM
             vmMo.attachDisk(new String[] {destPath}, getDestStoreMor(vmMo));
         } catch (Exception e) {
-            s_logger.error("Failed to attach the restored volume: " + diskPath, e);
+            logger.error("Failed to attach the restored volume: " + diskPath, e);
             return false;
         } finally {
             // Destroy restored VM
@@ -1114,7 +1115,7 @@ public class VMwareGuru extends HypervisorGuruBase implements HypervisorGuru, Co
         s_logger.debug(String.format("Attaching disk %s to vm %s", destPath, vm.getId()));
         VirtualDisk attachedDisk = getAttachedDisk(vmMo, destPath);
         if (attachedDisk == null) {
-            s_logger.error("Failed to get the attached the (restored) volume " + destPath);
+            logger.error("Failed to get the attached the (restored) volume " + destPath);
             return false;
         }
         s_logger.debug(String.format("Creating volume entry for disk %s attached to vm %s", destPath, vm.getId()));

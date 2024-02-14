@@ -33,14 +33,15 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 
 @APICommand(name = DeleteTungstenFabricTagCmd.APINAME, description = "delete Tungsten-Fabric tag", responseObject =
     SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteTungstenFabricTagCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeleteTungstenFabricTagCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DeleteTungstenFabricTagCmd.class.getName());
     public static final String APINAME = "deleteTungstenFabricTag";
 
     @Inject

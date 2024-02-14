@@ -18,7 +18,8 @@
 package com.cloud.upgrade.dao;
 
 import com.cloud.utils.exception.CloudRuntimeException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -26,7 +27,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Upgrade461to470 implements DbUpgrade {
-    final static Logger s_logger = Logger.getLogger(Upgrade461to470.class);
+    final static Logger logger = LogManager.getLogger(Upgrade461to470.class);
 
     @Override
     public String[] getUpgradableVersionRange() {
@@ -58,10 +59,10 @@ public class Upgrade461to470 implements DbUpgrade {
         final String alterTableSql = "ALTER TABLE `cloud_usage`.`cloud_usage` ADD COLUMN `quota_calculated` tinyint(1) DEFAULT 0 NOT NULL COMMENT 'quota calculation status'";
         try (PreparedStatement pstmt = conn.prepareStatement(alterTableSql)) {
             pstmt.executeUpdate();
-            s_logger.info("Altered cloud_usage.cloud_usage table and added column quota_calculated");
+            logger.info("Altered cloud_usage.cloud_usage table and added column quota_calculated");
         } catch (SQLException e) {
             if (e.getMessage().contains("quota_calculated")) {
-                s_logger.warn("cloud_usage.cloud_usage table already has a column called quota_calculated");
+                logger.warn("cloud_usage.cloud_usage table already has a column called quota_calculated");
             } else {
                 throw new CloudRuntimeException("Unable to create column quota_calculated in table cloud_usage.cloud_usage", e);
             }

@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.admin.network;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.ApiArgValidator;
@@ -44,7 +45,7 @@ import com.cloud.user.Account;
         responseHasSensitiveInfo = false,
         authorized = {RoleType.Admin})
 public class CreateManagementNetworkIpRangeCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateManagementNetworkIpRangeCmd.class);
+    protected static Logger logger = LogManager.getLogger(CreateManagementNetworkIpRangeCmd.class);
 
 
     /////////////////////////////////////////////////////

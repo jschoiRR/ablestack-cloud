@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cloudstack.api.response.GuestOSResponse;
 import org.apache.cloudstack.api.response.TemplateResponse;
 
@@ -24,7 +25,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public abstract class BaseUpdateTemplateOrIsoCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(BaseUpdateTemplateOrIsoCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(BaseUpdateTemplateOrIsoCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

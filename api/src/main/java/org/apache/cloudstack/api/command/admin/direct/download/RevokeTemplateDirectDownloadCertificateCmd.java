@@ -41,7 +41,8 @@ import org.apache.cloudstack.direct.download.DirectDownloadManager;
 import org.apache.cloudstack.direct.download.DirectDownloadManager.HostCertificateStatus;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class RevokeTemplateDirectDownloadCertificateCmd extends BaseCmd {
     @Inject
     DirectDownloadManager directDownloadManager;
 
-    private static final Logger LOG = Logger.getLogger(RevokeTemplateDirectDownloadCertificateCmd.class);
+    protected static Logger LOG = LogManager.getLogger(RevokeTemplateDirectDownloadCertificateCmd.class);
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID,
             entityType = DirectDownloadCertificateResponse.class,

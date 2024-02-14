@@ -36,7 +36,7 @@ import org.apache.cloudstack.config.ApiServiceConfiguration;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
 
 import com.cloud.dc.DataCenter;
 import com.cloud.deploy.DeployDestination;

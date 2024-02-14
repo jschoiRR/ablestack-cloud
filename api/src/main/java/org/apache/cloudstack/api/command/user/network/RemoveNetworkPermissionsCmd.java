@@ -27,7 +27,8 @@ import org.apache.cloudstack.api.response.AccountResponse;
 import org.apache.cloudstack.api.response.NetworkResponse;
 import org.apache.cloudstack.api.response.ProjectResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.network.Network;
@@ -43,7 +44,7 @@ import java.util.List;
         since = "4.17.0",
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User})
 public class RemoveNetworkPermissionsCmd extends BaseCmd {
-    public static final Logger LOGGER = Logger.getLogger(RemoveNetworkPermissionsCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(RemoveNetworkPermissionsCmd.class.getName());
 
 
     // ///////////////////////////////////////////////////

@@ -20,7 +20,8 @@ import com.cloud.upgrade.SystemVmTemplateRegistration;
 import com.cloud.utils.crypt.DBEncryptionUtil;
 import com.cloud.utils.DateUtil;
 import com.cloud.utils.exception.CloudRuntimeException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 
 import java.io.InputStream;
@@ -35,7 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Upgrade41810to41900 implements DbUpgrade, DbUpgradeSystemVmTemplate {
-    final static Logger LOG = Logger.getLogger(Upgrade41810to41900.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41810to41900.class);
     private SystemVmTemplateRegistration systemVmTemplateRegistration;
 
     private static final String ACCOUNT_DETAILS = "account_details";

@@ -19,7 +19,8 @@
 
 package com.cloud.network.resource.wrapper;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.CheckHealthAnswer;
@@ -35,7 +36,7 @@ import com.cloud.resource.ResourceWrapper;
 public class NiciraCheckHealthCommandWrapper extends CommandWrapper<CheckHealthCommand, Answer, NiciraNvpResource> {
 
     private static final String CONTROL_CLUSTER_STATUS_IS_STABLE = "stable";
-    private static final Logger s_logger = Logger.getLogger(NiciraCheckHealthCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(NiciraCheckHealthCommandWrapper.class);
 
     @Override
     public Answer execute(final CheckHealthCommand command, final NiciraNvpResource serverResource) {
@@ -45,11 +46,11 @@ public class NiciraCheckHealthCommandWrapper extends CommandWrapper<CheckHealthC
             final ControlClusterStatus clusterStatus = niciraNvpApi.getControlClusterStatus();
             final String status = clusterStatus.getClusterStatus();
             if (clusterIsUnstable(status)) {
-                s_logger.warn("Control cluster is not stable. Current status is " + status);
+                logger.warn("Control cluster is not stable. Current status is " + status);
                 healthy = false;
             }
         } catch (final NiciraNvpApiException e) {
-            s_logger.error("Exception caught while checking control cluster status during health check", e);
+            logger.error("Exception caught while checking control cluster status during health check", e);
             healthy = false;
         }
 

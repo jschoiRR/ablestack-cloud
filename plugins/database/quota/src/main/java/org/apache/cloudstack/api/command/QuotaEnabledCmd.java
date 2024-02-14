@@ -22,7 +22,8 @@ import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.BaseCmd;
 import org.apache.cloudstack.api.response.QuotaEnabledResponse;
 import org.apache.cloudstack.quota.QuotaService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 import javax.inject.Inject;
@@ -30,7 +31,7 @@ import javax.inject.Inject;
 @APICommand(name = "quotaIsEnabled", responseObject = QuotaEnabledResponse.class, description = "Return true if the plugin is enabled", since = "4.7.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class QuotaEnabledCmd extends BaseCmd {
 
-    public static final Logger s_logger = Logger.getLogger(QuotaEnabledCmd.class);
+    protected static Logger logger = LogManager.getLogger(QuotaEnabledCmd.class);
 
 
     @Inject

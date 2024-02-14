@@ -45,7 +45,8 @@ import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreVO;
 import org.apache.cloudstack.storage.to.SnapshotObjectTO;
 import org.apache.cloudstack.storage.to.TemplateObjectTO;
 import org.apache.cloudstack.storage.to.VolumeObjectTO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.agent.AgentManager;
@@ -64,7 +65,7 @@ import com.cloud.utils.net.Proxy;
 
 @Component
 public class DownloadMonitorImpl extends ManagerBase implements DownloadMonitor {
-    static final Logger LOGGER = Logger.getLogger(DownloadMonitorImpl.class);
+    static final Logger LOGGER = LogManager.getLogger(DownloadMonitorImpl.class);
 
     @Inject
     private TemplateDataStoreDao _vmTemplateStoreDao;

@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.admin.systemvm;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
 import org.apache.cloudstack.api.ACL;
@@ -37,7 +38,7 @@ import com.cloud.vm.VirtualMachine;
 @APICommand(name = "destroySystemVm", responseObject = SystemVmResponse.class, description = "Destroys a system virtual machine.", entityType = {VirtualMachine.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DestroySystemVmCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DestroySystemVmCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DestroySystemVmCmd.class.getName());
 
 
     @ACL(accessType = AccessType.OperateEntry)

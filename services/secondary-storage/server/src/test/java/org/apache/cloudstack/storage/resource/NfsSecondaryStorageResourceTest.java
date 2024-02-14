@@ -108,7 +108,7 @@ public class NfsSecondaryStorageResourceTest {
         TestAppender.TestAppenderBuilder appenderBuilder = new TestAppender.TestAppenderBuilder();
         appenderBuilder.addExpectedPattern(Level.DEBUG, "Failed to clean up staging area:");
         TestAppender testLogAppender = appenderBuilder.build();
-        TestAppender.safeAddAppender(NfsSecondaryStorageResource.s_logger, testLogAppender);
+        TestAppender.safeAddAppender(NfsSecondaryStorageResource.logger, testLogAppender);
 
         spyResource.cleanupStagingNfs(mockTemplate);
 

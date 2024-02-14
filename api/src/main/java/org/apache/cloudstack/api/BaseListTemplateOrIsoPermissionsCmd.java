@@ -18,8 +18,6 @@ package org.apache.cloudstack.api;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import org.apache.cloudstack.api.ResponseObject.ResponseView;
 import org.apache.cloudstack.api.command.ResponseViewProvider;
 import org.apache.cloudstack.api.response.TemplatePermissionsResponse;
@@ -28,7 +26,6 @@ import com.cloud.template.VirtualMachineTemplate;
 import com.cloud.user.Account;
 
 public abstract class BaseListTemplateOrIsoPermissionsCmd extends BaseCmd implements ResponseViewProvider {
-    public Logger logger = getLogger();
     protected static final String s_name = "listtemplatepermissionsresponse";
 
     /////////////////////////////////////////////////////
@@ -57,10 +54,6 @@ public abstract class BaseListTemplateOrIsoPermissionsCmd extends BaseCmd implem
         }
 
         return Account.ACCOUNT_ID_SYSTEM; // no account info given, parent this command to SYSTEM so ERROR events are tracked
-    }
-
-    protected Logger getLogger() {
-        return Logger.getLogger(BaseListTemplateOrIsoPermissionsCmd.class);
     }
 
     @Override

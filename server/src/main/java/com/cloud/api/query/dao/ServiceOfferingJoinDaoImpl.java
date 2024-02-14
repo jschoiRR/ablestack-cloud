@@ -34,7 +34,8 @@ import com.cloud.storage.DiskOfferingVO;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.response.ServiceOfferingResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.api.ApiDBUtils;
@@ -49,7 +50,7 @@ import javax.inject.Inject;
 
 @Component
 public class ServiceOfferingJoinDaoImpl extends GenericDaoBase<ServiceOfferingJoinVO, Long> implements ServiceOfferingJoinDao {
-    public static final Logger s_logger = Logger.getLogger(ServiceOfferingJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(ServiceOfferingJoinDaoImpl.class);
 
     @Inject
     VsphereStoragePolicyDao _vsphereStoragePolicyDao;

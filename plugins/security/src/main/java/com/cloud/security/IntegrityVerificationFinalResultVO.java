@@ -34,13 +34,13 @@ import javax.persistence.TemporalType;
 public class IntegrityVerificationFinalResultVO implements IntegrityVerificationFinalResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    private long id = -1;
+    @Column(name = "id")
+    private long id;
 
     @Column(name = "uuid")
     private String uuid;
 
-    @Column(name = "mshost_id", updatable = false, nullable = false)
+    @Column(name = "mshost_id")
     private long msHostId;
 
     @Column(name = "verification_final_result")
@@ -53,7 +53,7 @@ public class IntegrityVerificationFinalResultVO implements IntegrityVerification
     @Column(name = "verification_failed_list", length = 16777215)
     private String verificationFailedList;
 
-    @Column(name = "type", updatable = false, nullable = false)
+    @Column(name = "type")
     private String type;
 
     public long getId() {

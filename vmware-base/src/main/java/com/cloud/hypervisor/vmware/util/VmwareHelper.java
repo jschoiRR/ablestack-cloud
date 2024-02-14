@@ -66,7 +66,8 @@ import org.apache.cloudstack.utils.volume.VirtualMachineDiskInfo;
 import org.apache.cloudstack.vm.UnmanagedInstanceTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.hypervisor.vmware.mo.CustomFieldConstants;
 import com.cloud.hypervisor.vmware.mo.DatastoreMO;
@@ -117,7 +118,7 @@ import com.vmware.vim25.VirtualVmxnet2;
 import com.vmware.vim25.VirtualVmxnet3;
 
 public class VmwareHelper {
-    private static final Logger s_logger = Logger.getLogger(VmwareHelper.class);
+    protected static Logger logger = LogManager.getLogger(VmwareHelper.class);
 
     public static final int MAX_SCSI_CONTROLLER_COUNT = 4;
     public static final int MAX_IDE_CONTROLLER_COUNT = 2;
@@ -245,7 +246,7 @@ public class VmwareHelper {
     // vmdkDatastorePath: [datastore name] vmdkFilePath
     public static VirtualDevice prepareDiskDevice(VirtualMachineMO vmMo, VirtualDisk device, int controllerKey, String vmdkDatastorePathChain[],
                                                   ManagedObjectReference morDs, int deviceNumber, int contextNumber, Long maxIops) throws Exception {
-        s_logger.debug(LogUtils.logGsonWithoutException("Trying to prepare disk device to virtual machine [%s], using the following details: Virtual device [%s], "
+        logger.debug(LogUtils.logGsonWithoutException("Trying to prepare disk device to virtual machine [%s], using the following details: Virtual device [%s], "
                 + "ManagedObjectReference [%s], ControllerKey [%s], VMDK path chain [%s], DeviceNumber [%s], ContextNumber [%s] and max IOPS [%s].",
                 vmMo, device, morDs, controllerKey, vmdkDatastorePathChain, deviceNumber, contextNumber, maxIops));
         assert (vmdkDatastorePathChain != null);
@@ -275,7 +276,7 @@ public class VmwareHelper {
             disk.setUnitNumber(deviceNumber);
 
             if (maxIops != null && maxIops > 0) {
-                s_logger.debug(LogUtils.logGsonWithoutException("Defining [%s] as the max IOPS of disk [%s].", maxIops, disk));
+                logger.debug(LogUtils.logGsonWithoutException("Defining [%s] as the max IOPS of disk [%s].", maxIops, disk));
                 StorageIOAllocationInfo storageIOAllocationInfo = new StorageIOAllocationInfo();
                 storageIOAllocationInfo.setLimit(maxIops);
                 disk.setStorageIOAllocation(storageIOAllocationInfo);
@@ -293,7 +294,7 @@ public class VmwareHelper {
             setParentBackingInfo(backingInfo, morDs, parentDisks);
         }
 
-        s_logger.debug(LogUtils.logGsonWithoutException("Prepared disk device, to attach to virtual machine [%s], has the following details: Virtual device [%s], "
+        logger.debug(LogUtils.logGsonWithoutException("Prepared disk device, to attach to virtual machine [%s], has the following details: Virtual device [%s], "
                 + "ManagedObjectReference [%s], ControllerKey [%s], VMDK path chain [%s], DeviceNumber [%s], ContextNumber [%s] and max IOPS [%s], is: [%s].",
                 vmMo, device, morDs, controllerKey, vmdkDatastorePathChain, deviceNumber, contextNumber, maxIops, disk));
         return disk;
@@ -602,7 +603,7 @@ public class VmwareHelper {
     }
 
     public static VirtualDevice prepareUSBControllerDevice() {
-        s_logger.debug("Preparing USB controller(EHCI+UHCI) device");
+        logger.debug("Preparing USB controller(EHCI+UHCI) device");
         VirtualUSBController usbController = new VirtualUSBController(); //EHCI+UHCI
         usbController.setEhciEnabled(true);
         usbController.setAutoConnectDevices(true);
@@ -684,7 +685,7 @@ public class VmwareHelper {
                 }
             }
         } catch (Exception ex) {
-            s_logger.info("[ignored]"
+            logger.info("[ignored]"
                     + "failed to get message for exception: " + e.getLocalizedMessage());
         }
 

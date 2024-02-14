@@ -20,7 +20,8 @@ package com.cloud.network.rules;
 import java.util.List;
 
 import org.apache.cloudstack.network.topology.NetworkTopologyVisitor;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.dc.DataCenter;
 import com.cloud.exception.ResourceUnavailableException;
@@ -33,7 +34,7 @@ import com.cloud.vm.VirtualMachine.State;
 
 public class AdvancedVpnRules extends BasicVpnRules {
 
-    private static final Logger s_logger = Logger.getLogger(AdvancedVpnRules.class);
+    protected static Logger logger = LogManager.getLogger(AdvancedVpnRules.class);
 
     private final RemoteAccessVpn _remoteAccessVpn;
 
@@ -50,7 +51,7 @@ public class AdvancedVpnRules extends BasicVpnRules {
         Vpc vpc = vpcDao.findById(_remoteAccessVpn.getVpcId());
 
         if (_router.getState() != State.Running) {
-            s_logger.warn("Failed to add/remove Remote Access VPN users: router not in running state");
+            logger.warn("Failed to add/remove Remote Access VPN users: router not in running state");
             throw new ResourceUnavailableException("Failed to add/remove Remote Access VPN users: router not in running state: " + router.getState(), DataCenter.class,
                     vpc.getZoneId());
         }

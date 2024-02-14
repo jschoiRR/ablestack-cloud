@@ -14,25 +14,9 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
-package org.apache.cloudstack.network.tungsten.service;
 
-import org.apache.cloudstack.network.tungsten.agent.api.TungstenAnswer;
+package com.cloud.security;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-public class MockTungstenAnswerFactory {
-
-    TungstenAnswer tungstenAnswer;
-    MockTungstenAnswerFactory(boolean returnResult){
-        tungstenAnswer=mock(TungstenAnswer.class);
-        when(tungstenAnswer.getResult()).thenReturn(returnResult);
-    }
-    TungstenAnswer get() {
-        return tungstenAnswer;
-    }
-    public static TungstenAnswer get(boolean returnResult){
-        TungstenAnswer tungstenAnswers = new MockTungstenAnswerFactory(returnResult).get();
-        return tungstenAnswers;
-    }
+public class SecurityCheckEventTypes {
+    public static final String EVENT_SECURITY_CHECK_DELETE = "SECURITY.CHECK.DELETE";
 }

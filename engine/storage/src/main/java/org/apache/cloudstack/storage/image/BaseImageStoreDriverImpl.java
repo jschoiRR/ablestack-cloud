@@ -55,7 +55,8 @@ import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreVO;
 import org.apache.cloudstack.storage.endpoint.DefaultEndPointSelector;
 import org.apache.cloudstack.storage.image.deployasis.DeployAsIsHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -93,7 +94,7 @@ import com.cloud.vm.VirtualMachineManager;
 import com.cloud.vm.dao.SecondaryStorageVmDao;
 
 public abstract class BaseImageStoreDriverImpl implements ImageStoreDriver {
-    private static final Logger LOGGER = Logger.getLogger(BaseImageStoreDriverImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(BaseImageStoreDriverImpl.class);
 
     @Inject
     protected VMTemplateDao _templateDao;

@@ -28,7 +28,8 @@ import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.NetworkOfferingResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.dc.DataCenter;
 import com.cloud.domain.Domain;
@@ -39,7 +40,7 @@ import com.cloud.user.Account;
 @APICommand(name = "updateNetworkOffering", description = "Updates a network offering.", responseObject = NetworkOfferingResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateNetworkOfferingCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(UpdateNetworkOfferingCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateNetworkOfferingCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

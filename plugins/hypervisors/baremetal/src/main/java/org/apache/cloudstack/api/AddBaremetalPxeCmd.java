@@ -20,7 +20,8 @@ package org.apache.cloudstack.api;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.response.PhysicalNetworkResponse;
 import org.apache.cloudstack.api.response.PodResponse;
@@ -38,7 +39,7 @@ import com.cloud.exception.ResourceUnavailableException;
 
 public class AddBaremetalPxeCmd extends BaseAsyncCmd {
     private static final String s_name = "addbaremetalpxeresponse";
-    public static final Logger s_logger = Logger.getLogger(AddBaremetalPxeCmd.class);
+    protected static Logger logger = LogManager.getLogger(AddBaremetalPxeCmd.class);
 
     @Inject
     BaremetalPxeManager pxeMgr;
@@ -86,7 +87,7 @@ public class AddBaremetalPxeCmd extends BaseAsyncCmd {
             rsp.setResponseName(getCommandName());
             this.setResponseObject(rsp);
         } catch (Exception e) {
-            s_logger.warn("Unable to add external pxe server with url: " + getUrl(), e);
+            logger.warn("Unable to add external pxe server with url: " + getUrl(), e);
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, e.getMessage());
         }
     }

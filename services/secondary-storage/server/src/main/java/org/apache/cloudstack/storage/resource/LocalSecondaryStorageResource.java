@@ -21,7 +21,8 @@ import java.util.Map;
 
 import javax.naming.ConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.storage.command.DownloadCommand;
 import org.apache.cloudstack.storage.command.DownloadProgressCommand;
@@ -53,7 +54,7 @@ import com.cloud.storage.template.TemplateProp;
 import com.cloud.utils.component.ComponentContext;
 
 public class LocalSecondaryStorageResource extends ServerResourceBase implements SecondaryStorageResource {
-    private static final Logger s_logger = Logger.getLogger(LocalSecondaryStorageResource.class);
+    protected static Logger logger = LogManager.getLogger(LocalSecondaryStorageResource.class);
     int _timeout;
 
     String _instance;
@@ -161,11 +162,11 @@ public class LocalSecondaryStorageResource extends ServerResourceBase implements
         }
 
         if (!_storage.mkdirs(_parent)) {
-            s_logger.warn("Unable to create the directory " + _parent);
+            logger.warn("Unable to create the directory " + _parent);
             throw new ConfigurationException("Unable to create the directory " + _parent);
         }
 
-        s_logger.info("Mount point established at " + _parent);
+        logger.info("Mount point established at " + _parent);
 
         params.put("template.parent", _parent);
         params.put(StorageLayer.InstanceConfigKey, _storage);

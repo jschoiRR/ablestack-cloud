@@ -25,7 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.exception.CloudException;
@@ -37,7 +38,7 @@ import com.cloud.utils.db.TransactionLegacy;
 
 @Component
 public class UsageBackupDaoImpl extends GenericDaoBase<UsageBackupVO, Long> implements UsageBackupDao {
-    public static final Logger LOGGER = Logger.getLogger(UsageBackupDaoImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(UsageBackupDaoImpl.class);
     protected static final String UPDATE_DELETED = "UPDATE usage_backup SET removed = ? WHERE account_id = ? AND vm_id = ? and removed IS NULL";
     protected static final String GET_USAGE_RECORDS_BY_ACCOUNT = "SELECT id, zone_id, account_id, domain_id, vm_id, backup_offering_id, size, protected_size, created, removed FROM usage_backup WHERE " +
             " account_id = ? AND ((removed IS NULL AND created <= ?) OR (created BETWEEN ? AND ?) OR (removed BETWEEN ? AND ?) " +

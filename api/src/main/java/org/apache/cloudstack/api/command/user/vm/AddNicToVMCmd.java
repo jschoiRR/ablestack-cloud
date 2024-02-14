@@ -37,7 +37,8 @@ import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.NetworkResponse;
 import org.apache.cloudstack.api.response.UserVmResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.InvalidParameterValueException;
@@ -51,7 +52,7 @@ import com.cloud.vm.VirtualMachine;
 @APICommand(name = "addNicToVirtualMachine", description = "Adds VM to specified network by creating a NIC", responseObject = UserVmResponse.class, responseView = ResponseView.Restricted, entityType = {VirtualMachine.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class AddNicToVMCmd extends BaseAsyncCmd implements UserCmd {
-    public static final Logger s_logger = Logger.getLogger(AddNicToVMCmd.class);
+    protected static Logger logger = LogManager.getLogger(AddNicToVMCmd.class);
     private static final String s_name = "addnictovirtualmachineresponse";
 
     /////////////////////////////////////////////////////

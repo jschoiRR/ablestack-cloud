@@ -22,7 +22,8 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 import org.apache.cloudstack.framework.config.ConfigKey;
 import org.apache.cloudstack.framework.config.Configurable;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -32,7 +33,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class PrometheusExporterServerImpl extends ManagerBase implements PrometheusExporterServer, Configurable {
-    private static final Logger LOG = Logger.getLogger(PrometheusExporterServerImpl.class);
+    protected static Logger LOG = LogManager.getLogger(PrometheusExporterServerImpl.class);
 
     private static HttpServer httpServer;
 

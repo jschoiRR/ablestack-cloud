@@ -30,7 +30,8 @@ import org.apache.cloudstack.backup.BackupManager;
 import org.apache.cloudstack.backup.BackupOffering;
 import org.apache.cloudstack.utils.reflectiontostringbuilderutils.ReflectionToStringBuilderUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.user.Account;
@@ -39,7 +40,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 @APICommand(name = "updateBackupOffering", description = "Updates a backup offering.", responseObject = BackupOfferingResponse.class,
 requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, since = "4.16.0")
 public class UpdateBackupOfferingCmd extends BaseCmd {
-    private static final Logger LOGGER = Logger.getLogger(UpdateBackupOfferingCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(UpdateBackupOfferingCmd.class.getName());
 
     @Inject
     private BackupManager backupManager;

@@ -26,7 +26,8 @@ import javax.inject.Inject;
 import javax.naming.ConfigurationException;
 
 import com.cloud.exception.UnavailableCommandException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 
@@ -43,7 +44,7 @@ import com.cloud.utils.component.PluggableService;
 @Deprecated
 public class StaticRoleBasedAPIAccessChecker extends AdapterBase implements APIAclChecker {
 
-    protected static final Logger LOGGER = Logger.getLogger(StaticRoleBasedAPIAccessChecker.class);
+    protected static final Logger LOGGER = LogManager.getLogger(StaticRoleBasedAPIAccessChecker.class);
 
     private Set<String> commandPropertyFiles = new HashSet<String>();
     private Set<String> commandNames = new HashSet<String>();

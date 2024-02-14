@@ -19,7 +19,8 @@
 package com.cloud.hypervisor.xenserver.resource;
 
 import org.apache.cloudstack.hypervisor.xenserver.XenServerResourceNewBase;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.cloud.storage.resource.StorageSubsystemCommandHandler;
@@ -33,7 +34,7 @@ import com.xensource.xenapi.VM;
 
 public class Xenserver625Resource extends XenServerResourceNewBase {
 
-    private static final Logger s_logger = Logger.getLogger(Xenserver625Resource.class);
+    protected static Logger logger = LogManager.getLogger(Xenserver625Resource.class);
 
     @Override
     protected String getPatchFilePath() {
@@ -70,7 +71,7 @@ public class Xenserver625Resource extends XenServerResourceNewBase {
 
             SSHCmdHelper.sshExecuteCmd(sshConnection, cmd);
         } catch (final Exception e) {
-            s_logger.debug("Catch exception " + e.toString(), e);
+            logger.debug("Catch exception " + e.toString(), e);
         } finally {
             sshConnection.close();
         }
@@ -96,7 +97,7 @@ public class Xenserver625Resource extends XenServerResourceNewBase {
                 errMsg = "revert_memory_snapshot exception";
             }
         }
-        s_logger.warn(errMsg);
+        logger.warn(errMsg);
         throw new CloudRuntimeException(errMsg);
     }
 

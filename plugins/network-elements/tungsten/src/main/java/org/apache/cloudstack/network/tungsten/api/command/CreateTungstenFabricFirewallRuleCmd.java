@@ -34,7 +34,8 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.network.tungsten.api.response.TungstenFabricFirewallRuleResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 
@@ -42,7 +43,7 @@ import javax.inject.Inject;
     responseObject = TungstenFabricFirewallRuleResponse.class, requestHasSensitiveInfo = false,
     responseHasSensitiveInfo = false)
 public class CreateTungstenFabricFirewallRuleCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateTungstenFabricFirewallRuleCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateTungstenFabricFirewallRuleCmd.class.getName());
     public static final String APINAME = "createTungstenFabricFirewallRule";
 
     @Inject

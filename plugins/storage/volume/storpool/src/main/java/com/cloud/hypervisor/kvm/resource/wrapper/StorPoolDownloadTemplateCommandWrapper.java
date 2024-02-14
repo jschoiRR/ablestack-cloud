@@ -30,7 +30,8 @@ import org.apache.cloudstack.utils.qemu.QemuImg;
 import org.apache.cloudstack.utils.qemu.QemuImg.PhysicalDiskFormat;
 import org.apache.cloudstack.utils.qemu.QemuImgFile;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.storage.StorPoolDownloadTemplateCommand;
 import com.cloud.agent.api.to.DataStoreTO;
@@ -47,7 +48,7 @@ import com.cloud.resource.ResourceWrapper;
 @ResourceWrapper(handles = StorPoolDownloadTemplateCommand.class)
 public final class StorPoolDownloadTemplateCommandWrapper extends CommandWrapper<StorPoolDownloadTemplateCommand, CopyCmdAnswer, LibvirtComputingResource> {
 
-    private static final Logger s_logger = Logger.getLogger(StorPoolDownloadTemplateCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(StorPoolDownloadTemplateCommandWrapper.class);
 
     @Override
     public CopyCmdAnswer execute(final StorPoolDownloadTemplateCommand cmd, final LibvirtComputingResource libvirtComputingResource) {
@@ -120,7 +121,7 @@ public final class StorPoolDownloadTemplateCommandWrapper extends CommandWrapper
             return new CopyCmdAnswer(dst);
         } catch (final Exception e) {
             final String error = "Failed to copy template to primary: " + e.getMessage();
-            s_logger.debug(error);
+            logger.debug(error);
             return new CopyCmdAnswer(cmd, e);
         } finally {
             if (dstPath != null) {
@@ -131,7 +132,7 @@ public final class StorPoolDownloadTemplateCommandWrapper extends CommandWrapper
                 try {
                     secondaryPool.delete();
                 } catch (final Exception e) {
-                    s_logger.debug("Failed to delete secondary storage", e);
+                    logger.debug("Failed to delete secondary storage", e);
                 }
             }
         }

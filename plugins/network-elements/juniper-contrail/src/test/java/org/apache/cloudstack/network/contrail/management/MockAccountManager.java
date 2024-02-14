@@ -31,7 +31,8 @@ import org.apache.cloudstack.api.command.admin.user.MoveUserCmd;
 import org.apache.cloudstack.api.response.UserTwoFactorAuthenticationSetupResponse;
 import org.apache.cloudstack.auth.UserTwoFactorAuthenticator;
 import org.apache.cloudstack.framework.config.ConfigKey;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.ControlledEntity;
 import org.apache.cloudstack.acl.RoleType;
@@ -73,7 +74,7 @@ import com.cloud.utils.db.TransactionCallbackNoReturn;
 import com.cloud.utils.db.TransactionStatus;
 
 public class MockAccountManager extends ManagerBase implements AccountManager {
-    private static final Logger s_logger = Logger.getLogger(MockAccountManager.class);
+    protected static Logger logger = LogManager.getLogger(MockAccountManager.class);
 
     @Inject
     AccountDao _accountDao;
@@ -98,7 +99,7 @@ public class MockAccountManager extends ManagerBase implements AccountManager {
             throw new ConfigurationException("Unable to find the system user using " + User.UID_SYSTEM);
         }
         CallContext.register(_systemUser, _systemAccount);
-        s_logger.info("MockAccountManager initialization successful");
+        logger.info("MockAccountManager initialization successful");
         return true;
     }
 

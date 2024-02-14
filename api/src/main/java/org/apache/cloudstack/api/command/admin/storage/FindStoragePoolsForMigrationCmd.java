@@ -30,7 +30,8 @@ import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.StoragePoolResponse;
 import org.apache.cloudstack.api.response.VolumeResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.storage.StoragePool;
 import com.cloud.utils.Pair;
@@ -38,7 +39,7 @@ import com.cloud.utils.Pair;
 @APICommand(name = "findStoragePoolsForMigration", description = "Lists storage pools available for migration of a volume.", responseObject = StoragePoolResponse.class,
 requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class FindStoragePoolsForMigrationCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(FindStoragePoolsForMigrationCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(FindStoragePoolsForMigrationCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

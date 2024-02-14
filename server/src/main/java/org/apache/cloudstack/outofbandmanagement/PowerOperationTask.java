@@ -19,7 +19,8 @@ package org.apache.cloudstack.outofbandmanagement;
 
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.ActionEventUtils;
 import com.cloud.event.EventTypes;
@@ -27,7 +28,7 @@ import com.cloud.event.EventVO;
 import com.cloud.host.Host;
 
 public class PowerOperationTask implements Runnable {
-    public static final Logger LOG = Logger.getLogger(PowerOperationTask.class);
+    protected static Logger LOG = LogManager.getLogger(PowerOperationTask.class);
 
     final private OutOfBandManagementService service;
     final private Host host;
@@ -55,7 +56,7 @@ public class PowerOperationTask implements Runnable {
             String eventMessage = String
                     .format("Error while issuing out-of-band management action %s for host: %s", powerOperation.name(), host.getName());
 
-            ActionEventUtils.onCreatedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_WARN,
+            ActionEventUtils.onCreatedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_ERROR,
                     EventTypes.EVENT_HOST_OUTOFBAND_MANAGEMENT_ACTION, true, eventMessage, host.getId(), ApiCommandResourceType.Host.toString());
         }
     }

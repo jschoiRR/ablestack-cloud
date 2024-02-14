@@ -30,7 +30,8 @@ import org.apache.cloudstack.api.ResponseObject;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.ManagementServerResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import java.security.NoSuchAlgorithmException;
@@ -42,7 +43,7 @@ import java.security.NoSuchAlgorithmException;
         entityType = {IntegrityVerification.class},
         authorized = {RoleType.Admin})
 public class RunIntegrityVerificationCmd extends BaseCmd {
-    public static final Logger LOG = Logger.getLogger(RunIntegrityVerificationCmd.class);
+    protected static Logger LOG = LogManager.getLogger(RunIntegrityVerificationCmd.class);
     public static final String APINAME = "runIntegrityVerification";
 
     @Inject
@@ -87,7 +88,7 @@ public class RunIntegrityVerificationCmd extends BaseCmd {
                 response.setSuccess(result);
                 this.setResponseObject(response);
             } else {
-                throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to Integrity Verification for management server. Please check the Integrity Verification tab for detailed results.");
+                throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to execute integrity verification on the management server when running the product");
             }
         } catch (final ServerApiException e) {
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, e.getMessage());

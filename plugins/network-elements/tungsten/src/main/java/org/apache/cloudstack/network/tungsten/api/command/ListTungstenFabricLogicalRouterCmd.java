@@ -36,7 +36,8 @@ import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.network.tungsten.api.response.TungstenFabricLogicalRouterResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ import javax.inject.Inject;
     responseObject = TungstenFabricLogicalRouterResponse.class, requestHasSensitiveInfo = false,
     responseHasSensitiveInfo = false)
 public class ListTungstenFabricLogicalRouterCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListTungstenFabricLogicalRouterCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListTungstenFabricLogicalRouterCmd.class.getName());
     public static final String APINAME = "listTungstenFabricLogicalRouter";
 
     @Inject

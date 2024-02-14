@@ -82,7 +82,7 @@ export default {
       }, {
         name: 'vnf.appliances',
         component: shallowRef(defineAsyncComponent(() => import('@/views/network/VnfAppliancesTab.vue'))),
-        show: () => { return 'deployVnfAppliance' in store.getters.apis }
+        show: () => { return ('deployVnfAppliance' in store.getters.apis) && (!store.getters.features.securityfeaturesenabled) }
       }, {
         name: 'guest.ip.range',
         component: shallowRef(defineAsyncComponent(() => import('@/views/network/GuestIpRanges.vue'))),
@@ -339,6 +339,7 @@ export default {
       icon: 'gateway-outlined',
       permission: ['listVirtualMachinesMetrics'],
       resourceType: 'UserVm',
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       params: () => {
         return { details: 'servoff,tmpl,nics', isvnf: true }
       },
@@ -782,7 +783,7 @@ export default {
       }, {
         name: 'vpn',
         component: shallowRef(defineAsyncComponent(() => import('@/views/network/VpnDetails.vue'))),
-        show: (record) => { return record.issourcenat }
+        show: (record) => { return (record.issourcenat) && (!store.getters.features.securityfeaturesenabled) }
       },
       {
         name: 'events',
@@ -1094,6 +1095,7 @@ export default {
       title: 'label.vpn.users',
       icon: 'user-switch-outlined',
       permission: ['listVpnUsers'],
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       columns: ['username', 'state', 'account', 'domain'],
       details: ['username', 'state', 'account', 'domain'],
       actions: [
@@ -1146,6 +1148,7 @@ export default {
       title: 'label.vpncustomergatewayid',
       icon: 'lock-outlined',
       permission: ['listVpnCustomerGateways'],
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       columns: () => {
         var fields = ['name', 'gateway', 'cidrlist', 'ipsecpsk', 'account']
         if (store.getters.listAllProjects) {
@@ -1208,6 +1211,7 @@ export default {
       title: 'label.tungsten.fabric',
       icon: shallowRef(tungsten),
       permission: ['listTungstenFabricProviders'],
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       columns: [
         {
           field: 'name',

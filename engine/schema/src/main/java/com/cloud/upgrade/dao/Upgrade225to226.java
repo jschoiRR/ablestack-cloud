@@ -22,12 +22,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade225to226 implements DbUpgrade {
-    final static Logger s_logger = Logger.getLogger(Upgrade225to226.class);
+    final static Logger logger = LogManager.getLogger(Upgrade225to226.class);
 
     @Override
     public InputStream[] getPrepareScripts() {
@@ -75,7 +76,7 @@ public class Upgrade225to226 implements DbUpgrade {
         columns.add("domain_id");
         tablesToModify.put("domain_router", columns);
 
-        s_logger.debug("Dropping columns that don't exist in 2.2.6 version of the DB...");
+        logger.debug("Dropping columns that don't exist in 2.2.6 version of the DB...");
         for (String tableName : tablesToModify.keySet()) {
             DbUpgradeUtils.dropTableColumnsIfExist(conn, tableName, tablesToModify.get(tableName));
         }
@@ -95,7 +96,7 @@ public class Upgrade225to226 implements DbUpgrade {
         indexes.put("domain_router", keys);
 
         // drop all foreign keys first
-        s_logger.debug("Dropping keys that don't exist in 2.2.6 version of the DB...");
+        logger.debug("Dropping keys that don't exist in 2.2.6 version of the DB...");
         for (String tableName : foreignKeys.keySet()) {
             DbUpgradeUtils.dropKeysIfExist(conn, tableName, foreignKeys.get(tableName), true);
         }

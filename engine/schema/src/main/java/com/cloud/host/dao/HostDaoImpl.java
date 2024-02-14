@@ -36,7 +36,8 @@ import javax.persistence.TableGenerator;
 
 import org.apache.cloudstack.utils.jsinterpreter.TagAsRuleHelper;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.VgpuTypesInfo;
 import com.cloud.cluster.agentlb.HostTransferMapVO;
@@ -79,9 +80,9 @@ import java.util.Arrays;
 @DB
 @TableGenerator(name = "host_req_sq", table = "op_host", pkColumnName = "id", valueColumnName = "sequence", allocationSize = 1)
 public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao { //FIXME: , ExternalIdDao {
-    private static final Logger s_logger = Logger.getLogger(HostDaoImpl.class);
-    private static final Logger status_logger = Logger.getLogger(Status.class);
-    private static final Logger state_logger = Logger.getLogger(ResourceState.class);
+    protected static Logger logger = LogManager.getLogger(HostDaoImpl.class);
+    protected static Logger status_logger = LogManager.getLogger(Status.class);
+    protected static Logger state_logger = LogManager.getLogger(ResourceState.class);
 
     private static final String LIST_HOST_IDS_BY_COMPUTETAGS = "SELECT filtered.host_id, COUNT(filtered.tag) AS tag_count "
                                                              + "FROM (SELECT host_id, tag, is_tag_a_rule FROM host_tags GROUP BY host_id,tag) AS filtered "
@@ -355,7 +356,7 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
         try {
             HostTransferSearch = _hostTransferDao.createSearchBuilder();
         } catch (Throwable e) {
-            s_logger.debug("error", e);
+            logger.debug("error", e);
         }
         HostTransferSearch.and("id", HostTransferSearch.entity().getId(), SearchCriteria.Op.NULL);
         UnmanagedDirectConnectSearch.join("hostTransferSearch", HostTransferSearch, HostTransferSearch.entity().getId(), UnmanagedDirectConnectSearch.entity().getId(),
@@ -593,8 +594,8 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
             sb.append(" ");
         }
 
-        if (s_logger.isTraceEnabled()) {
-            s_logger.trace("Following hosts got reset: " + sb.toString());
+        if (logger.isTraceEnabled()) {
+            logger.trace("Following hosts got reset: " + sb.toString());
         }
     }
 
@@ -642,19 +643,19 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
     public List<HostVO> findAndUpdateDirectAgentToLoad(long lastPingSecondsAfter, Long limit, long managementServerId) {
         TransactionLegacy txn = TransactionLegacy.currentTxn();
 
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Resetting hosts suitable for reconnect");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Resetting hosts suitable for reconnect");
         }
         // reset hosts that are suitable candidates for reconnect
         resetHosts(managementServerId, lastPingSecondsAfter);
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Completed resetting hosts suitable for reconnect");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Completed resetting hosts suitable for reconnect");
         }
 
         List<HostVO> assignedHosts = new ArrayList<HostVO>();
 
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Acquiring hosts for clusters already owned by this management server");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Acquiring hosts for clusters already owned by this management server");
         }
         List<Long> clusters = findClustersOwnedByManagementServer(managementServerId);
         txn.start();
@@ -673,17 +674,17 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
                 sb.append(host.getId());
                 sb.append(" ");
             }
-            if (s_logger.isTraceEnabled()) {
-                s_logger.trace("Following hosts got acquired for clusters already owned: " + sb.toString());
+            if (logger.isTraceEnabled()) {
+                logger.trace("Following hosts got acquired for clusters already owned: " + sb.toString());
             }
         }
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Completed acquiring hosts for clusters already owned by this management server");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Completed acquiring hosts for clusters already owned by this management server");
         }
 
         if (assignedHosts.size() < limit) {
-            if (s_logger.isDebugEnabled()) {
-                s_logger.debug("Acquiring hosts for clusters not owned by any management server");
+            if (logger.isDebugEnabled()) {
+                logger.debug("Acquiring hosts for clusters not owned by any management server");
             }
             // for remaining hosts not owned by any MS check if they can be owned (by owning full cluster)
             clusters = findClustersForHostsNotOwnedByAnyManagementServer();
@@ -723,12 +724,12 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
                         break;
                     }
                 }
-                if (s_logger.isTraceEnabled()) {
-                    s_logger.trace("Following hosts got acquired from newly owned clusters: " + sb.toString());
+                if (logger.isTraceEnabled()) {
+                    logger.trace("Following hosts got acquired from newly owned clusters: " + sb.toString());
                 }
             }
-            if (s_logger.isDebugEnabled()) {
-                s_logger.debug("Completed acquiring hosts for clusters not owned by any management server");
+            if (logger.isDebugEnabled()) {
+                logger.debug("Completed acquiring hosts for clusters not owned by any management server");
             }
         }
         txn.commit();
@@ -899,7 +900,7 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
                 }
             }
         } catch (SQLException e) {
-            s_logger.warn("Exception: ", e);
+            logger.warn("Exception: ", e);
         }
         return result;
     }
@@ -1009,15 +1010,15 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
                 l.add(info);
             }
         } catch (SQLException e) {
-            s_logger.debug("SQLException caught", e);
+            logger.debug("SQLException caught", e);
         }
         return l;
     }
 
     @Override
     public long getNextSequence(long hostId) {
-        if (s_logger.isTraceEnabled()) {
-            s_logger.trace("getNextSequence(), hostId: " + hostId);
+        if (logger.isTraceEnabled()) {
+            logger.trace("getNextSequence(), hostId: " + hostId);
         }
 
         TableGenerator tg = _tgs.get("host_req_sq");
@@ -1419,7 +1420,7 @@ public class HostDaoImpl extends GenericDaoBase<HostVO, Long> implements HostDao
                 result.add(resultSet.getString(1));
             }
         } catch (SQLException e) {
-            s_logger.error("Error trying to obtain hypervisor version on datacenter", e);
+            logger.error("Error trying to obtain hypervisor version on datacenter", e);
         }
         return result;
     }

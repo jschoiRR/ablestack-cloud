@@ -17,57 +17,55 @@
 # under the License.
 
 # Security Check 
-# JAVA로 작성된 Test 코드를 실행하는 Junit.jar 파일을 사용하여 보안 기능과 관련된 Utils 프로세스가 정상적으로 작동하는지 확인하는 스크립트
-# 항목 : string, encrypt(db), encrypt(rsa), password, sshkey, http
-# return : {이름, 결과}
+# JAVA로 작성된 Test 코드를 실행하는 Junit.jar 파일을 사용하여 보안 기능과 관련된 Utils, API, Framework 모듈이 정상적으로 작동하는지 확인하는 스크립트
+# return : {테스트 파일의 클래스 명, 결과}
 
 jarfile='/usr/share/cloudstack-common/lib/'
-cmd=${jarfile}junit-4.13.2.jar:${jarfile}hamcrest-all-1.3.jar:${jarfile}cloudstack-utils-test.jar:${jarfile}cloudstack-utils.jar
 
-# String 유틸리티 
-string_result=$(java -classpath $cmd org.junit.runner.JUnitCore com.cloud.utils.StringUtilsTest | grep -i OK)
-if [ -n "$string_result" ]; then
-    echo "string,true"
-else
-    echo "string,false"
-fi
+# utils 55 count
+utils_cmd=${jarfile}junit-4.13.2.jar:${jarfile}hamcrest-all-1.3.jar:${jarfile}cloudstack-utils-test.jar:${jarfile}cloudstack-utils.jar:${jarfile}commons-lang-2.6.jar:${jarfile}commons-io-2.8.0.jar:${jarfile}bcprov-jdk15on-1.70.jar:${jarfile}guava-testlib-18.0.jar:${jarfile}guava-31.1-jre.jar:${jarfile}httpcore-4.4.16.jar:${jarfile}httpclient-4.5.14.jar:${jarfile}mockito-core-3.12.4.jar:${jarfile}byte-buddy-1.10.5.jar:${jarfile}byte-buddy-agent-1.10.5.jar:${jarfile}commons-validator-1.6.jar:${jarfile}commons-net-3.7.2.jar:${jarfile}commons-lang3-3.11.jar:${jarfile}java-ipv6-0.17.jar:${jarfile}objenesis-3.2.jar:${jarfile}commons-collections4-4.4.jar:${jarfile}commons-collections-3.2.2.jar:${jarfile}spring-core-5.3.26.jar:${jarfile}commons-logging-1.2.jar:${jarfile}gson-1.7.2.jar:${jarfile}jackson-core-2.13.3.jar:${jarfile}jackson-databind-2.13.3.jar:${jarfile}jackson-annotations-2.13.3.jar:${jarfile}trilead-ssh2-1.0.0-build217.jar:${jarfile}joda-time-2.12.5.jar:${jarfile}jsch-0.1.55.jar:${jarfile}commons-compress-1.21.jar:${jarfile}reflections-0.10.2.jar:${jarfile}commons-httpclient-3.1.jar:${jarfile}xercesImpl-2.12.2.jar:${jarfile}nashorn-core-15.3.jar:${jarfile}activation-1.1.1.jar:${jarfile}mail-1.5.0-b01.jar:${jarfile}bcpkix-jdk15on-1.70.jar:${jarfile}bctls-jdk15on-1.70.jar:${jarfile}bcutil-jdk15on-1.70.jar:${jarfile}aws-java-sdk-core-1.12.439.jar:${jarfile}junit-dataprovider-1.13.1.jar:${jarfile}javax.servlet-api-4.0.1.jar:${jarfile}spring-test-5.3.26.jar
 
-# encrypt(db) 유틸리티 
-encrypt_db_result=$(java -classpath $cmd org.junit.runner.JUnitCore com.cloud.utils.crypt.EncryptionSecretKeyCheckerTest | grep -i OK)
-if [ -n "$encrypt_db_result" ]; then
-    echo "encrypt(db),true"
-else
-    echo "encrypt(db),false"
-fi
+utils_class_name=("com.cloud.utils.backoff.impl.ConstantTimeBackoffTest" "com.cloud.utils.compression.CompressionUtilTest" "com.cloud.utils.crypt.EncryptionSecretKeyCheckerTest" "com.cloud.utils.crypto.EncryptionSecretKeyCheckerTest" "com.cloud.utils.crypto.RSAHelperTest" "com.cloud.utils.encoding.UrlEncoderTest" "com.cloud.utils.exception.ExceptionUtilTest" "com.cloud.utils.net.Ip4AddressTest" "com.cloud.utils.net.IpTest" "com.cloud.utils.net.MacAddressTest" "com.cloud.utils.net.NetUtilsTest" "com.cloud.utils.rest.BasicRestClientTest" "com.cloud.utils.rest.HttpClientHelperTest" "com.cloud.utils.rest.HttpStatusCodeHelperTest" "com.cloud.utils.rest.HttpUriRequestBuilderTest" "com.cloud.utils.rest.RESTServiceConnectorTest" "com.cloud.utils.security.SSLUtilsTest" "com.cloud.utils.ssh.SshHelperTest" "com.cloud.utils.ssh.SSHKeysHelperTest" "com.cloud.utils.storage.QCOW2UtilsTest" "com.cloud.utils.testcase.NioTest" "com.cloud.utils.validation.ChecksumUtilTest" "com.cloud.utils.xmlobject.TestXmlObject" "com.cloud.utils.xmlobject.TestXmlObject2" "com.cloud.utils.DateUtilTest" "com.cloud.utils.FileUtilTest" "com.cloud.utils.HttpUtilsTest" "com.cloud.utils.HumanReadableJsonTest" "com.cloud.utils.LogUtilsTest" "com.cloud.utils.NumbersUtilTest" "com.cloud.utils.PasswordGeneratorTest" "com.cloud.utils.ProcessUtilTest" "com.cloud.utils.PropertiesUtilsTest" "com.cloud.utils.ReflectUtilTest" "com.cloud.utils.ScriptTest" "com.cloud.utils.StringUtilsTest" "com.cloud.utils.SwiftUtilTest" "com.cloud.utils.TernaryTest" "com.cloud.utils.TestProfiler" "com.cloud.utils.UriUtilsParametrizedTest" "com.cloud.utils.UriUtilsTest" "com.cloud.utils.UuidUtilsTest" "org.apache.cloudstack.utils.bytescale.ByteScaleUtilsTest" "org.apache.cloudstack.utils.hypervisor.HypervisorUtilsTest" "org.apache.cloudstack.utils.imagestore.ImageStoreUtilTest" "org.apache.cloudstack.utils.jsinterpreter.JsInterpreterTest" "org.apache.cloudstack.utils.mailing.SMTPMailSenderTest" "org.apache.cloudstack.utils.process.ProcessTest" "org.apache.cloudstack.utils.redfish.RedfishClientTest" "org.apache.cloudstack.utils.reflectiontostringbuilderutils.ReflectionToStringBuilderUtilsTest" "org.apache.cloudstack.utils.security.CertUtilsTest" "org.apache.cloudstack.utils.security.DigestHelperTest" "org.apache.cloudstack.utils.security.ParserUtilsTest" "org.apache.cloudstack.utils.volume.VirtualMachineDiskInfoTest" "org.apache.cloudstack.utils.CloudStackVersionTest")
 
-# encrypt(ras) 유틸리티 
-encrypt_ras_result=$(java -classpath $cmd:${jarfile}bcprov-jdk15on-1.70.jar org.junit.runner.JUnitCore com.cloud.utils.crypto.RSAHelperTest | grep -i OK)
-if [ -n "$encrypt_ras_result" ]; then
-    echo "encrypt(rsa),true"
-else
-    echo "encrypt(rsa),false"
-fi
+for i in  "${utils_class_name[@]}"
+do
+    utils_class=$(echo $i)
+    utils_result=$(java -classpath $utils_cmd org.junit.runner.JUnitCore $utils_class | grep -i OK)
+    if [ -n "$utils_result" ]; then
+        echo "$utils_class,true"
+    else
+        echo "$utils_class,false"
+    fi
+done
 
-# password 유틸리티 
-password_result=$(java -classpath $cmd:${jarfile}bcprov-jdk15on-1.70.jar org.junit.runner.JUnitCore com.cloud.utils.PasswordGeneratorTest | grep -i OK)
-if [ -n "$password_result" ]; then
-    echo "password,true"
-else
-    echo "password,false"
-fi
+# api 75 count
+api_cmd=${jarfile}junit-4.13.2.jar:${jarfile}hamcrest-all-1.3.jar:${jarfile}cloudstack-utils.jar:${jarfile}cloudstack-api-test.jar:${jarfile}cloudstack-api.jar:${jarfile}commons-lang3-3.11.jar:${jarfile}commons-collections-3.2.2.jar:${jarfile}log4j-api-2.22.0.jar:${jarfile}guava-31.1-jre.jar:${jarfile}mockito-core-3.12.4.jar:${jarfile}byte-buddy-1.10.5.jar:${jarfile}cloudstack-framework-config.jar:${jarfile}spring-test-5.3.26.jar:${jarfile}commons-logging-1.2.jar:${jarfile}spring-core-5.3.26.jar:${jarfile}cloudstack-framework-direct-download.jar:${jarfile}cloudstack-framework-managed-context.jar:${jarfile}xercesImpl-2.12.2.jar:${jarfile}commons-lang-2.6.jar:${jarfile}java-ipv6-0.17.jar:${jarfile}objenesis-3.2.jar:${jarfile}commons-collections4-4.4.jar
 
-# sshkey 유틸리티 
-sshkey_result=$(java -classpath $cmd:${jarfile}jsch-0.1.55.jar org.junit.runner.JUnitCore com.cloud.utils.ssh.SSHKeysHelperTest | grep -i OK)
-if [ -n "$sshkey_result" ]; then
-    echo "sshkey,true"
-else
-    echo "sshkey,false"
-fi
+api_class_name=("com.cloud.agent.api.storage.OVFHelperTest" "com.cloud.agent.api.to.LoadBalancerTOTest" "com.cloud.deploy.DataCenterDeploymentTest" "com.cloud.host.ControlStateTest" "com.cloud.network.as.AutoScalePolicyTest" "com.cloud.network.as.AutoScaleVmGroupTest" "com.cloud.network.router.VirtualRouterAutoScaleTest" "com.cloud.network.IsolationMethodTest" "com.cloud.network.NetworksTest" "com.cloud.storage.StorageTest" "com.cloud.user.AccountTypeTest" "org.apache.cloudstack.acl.RoleTypeTest" "org.apache.cloudstack.acl.RuleTest" "org.apache.cloudstack.api.command.admin.account.CreateAccountCmdTest" "org.apache.cloudstack.api.command.admin.annotation.AddAnnotationCmdTest" "org.apache.cloudstack.api.command.admin.offering.CreateDiskOfferingCmdTest" "org.apache.cloudstack.api.command.admin.offering.CreateNetworkOfferingCmdTest" "org.apache.cloudstack.api.command.admin.offering.CreateServiceOfferingCmdTest" "org.apache.cloudstack.api.command.admin.storage.CreateSecondaryStagingStoreCmdTest" "org.apache.cloudstack.api.command.admin.storage.FindStoragePoolsForMigrationCmdTest" "org.apache.cloudstack.api.command.admin.systemvm.PatchSystemVMCmdTest" "org.apache.cloudstack.api.command.admin.user.CreateUserCmdTest" "org.apache.cloudstack.api.command.admin.vlan.UpdateVlanIpRangeCmdTest" "org.apache.cloudstack.api.command.admin.vm.MigrateVirtualMachineWithVolumeCmdTest" "org.apache.cloudstack.api.command.admin.vpc.CreateVPCOfferingCmdTest" "org.apache.cloudstack.api.command.admin.zone.CreateZoneCmdTest" "org.apache.cloudstack.api.command.test.ActivateProjectCmdTest" "org.apache.cloudstack.api.command.test.AddAccountToProjectCmdTest" "org.apache.cloudstack.api.command.test.AddClusterCmdTest" "org.apache.cloudstack.api.command.test.AddHostCmdTest" "org.apache.cloudstack.api.command.test.AddIpToVmNicTest" "org.apache.cloudstack.api.command.test.AddNetworkServiceProviderCmdTest" "org.apache.cloudstack.api.command.test.AddSecondaryStorageCmdTest" "org.apache.cloudstack.api.command.test.AddVpnUserCmdTest" "org.apache.cloudstack.api.command.test.CreateAutoScaleVmProfileCmdTest" "org.apache.cloudstack.api.command.test.CreateRoleCmdTest" "org.apache.cloudstack.api.command.test.CreateSnapshotCmdTest" "org.apache.cloudstack.api.command.test.ImportRoleCmdTest" "org.apache.cloudstack.api.command.test.ListCfgCmdTest" "org.apache.cloudstack.api.command.test.RegionCmdTest" "org.apache.cloudstack.api.command.test.ResetVMUserDataCmdTest" "org.apache.cloudstack.api.command.test.ScaleVMCmdTest" "org.apache.cloudstack.api.command.test.UpdateAutoScaleVmProfileCmdTest" "org.apache.cloudstack.api.command.test.UpdateCfgCmdTest" "org.apache.cloudstack.api.command.test.UpdateConditionCmdTest" "org.apache.cloudstack.api.command.test.UpdateHostPasswordCmdTest" "org.apache.cloudstack.api.command.test.UpdateRoleCmdTest" "org.apache.cloudstack.api.command.test.UpdateVmNicIpTest" "org.apache.cloudstack.api.command.test.UsageCmdTest" "org.apache.cloudstack.api.command.user.firewall.CreateEgressFirewallRuleCmdTest" "org.apache.cloudstack.api.command.user.iso.RegisterIsoCmdTest" "org.apache.cloudstack.api.command.user.network.CreateNetworkCmdTest" "org.apache.cloudstack.api.command.user.network.UpdateNetworkCmdTest" "org.apache.cloudstack.api.command.user.project.CreateProjectCmdTest" "org.apache.cloudstack.api.command.user.snapshot.CreateSnapshotPolicyCmdTest" "org.apache.cloudstack.api.command.user.template.CopyTemplateCmdByAdminTest" "org.apache.cloudstack.api.command.user.template.CopyTemplateCmdTest" "org.apache.cloudstack.api.command.user.template.RegisterTemplateCmdByAdminTest" "org.apache.cloudstack.api.command.user.template.RegisterTemplateCmdTest" "org.apache.cloudstack.api.command.user.userdata.DeleteUserDataCmdTest" "org.apache.cloudstack.api.command.user.userdata.LinkUserDataToTemplateCmdTest" "org.apache.cloudstack.api.command.user.userdata.ListUserDataCmdTest" "org.apache.cloudstack.api.command.user.userdata.RegisterUserDataCmdTest" "org.apache.cloudstack.api.command.user.vm.CreateVMScheduleCmdTest" "org.apache.cloudstack.api.command.user.vm.DeleteVMScheduleCmdTest" "org.apache.cloudstack.api.command.user.vm.ListVMScheduleCmdTest" "org.apache.cloudstack.api.command.user.vm.UpdateVMScheduleCmdTest" "org.apache.cloudstack.api.command.user.vpc.CreateVPCCmdTest" "org.apache.cloudstack.api.command.user.vpc.UpdateVPCCmdTest" "org.apache.cloudstack.api.response.HostResponseTest" "org.apache.cloudstack.api.response.StatsResponseTest" "org.apache.cloudstack.api.ApiCommandResourceTypeTest" "org.apache.cloudstack.api.BaseCmdTest" "org.apache.cloudstack.context.CallContextTest" "org.apache.cloudstack.usage.UsageUnitTypesTest")
 
-# http 유틸리티 
-http_result=$(java -classpath $cmd:${jarfile}javax.servlet-api-4.0.1.jar:${jarfile}spring-test-5.3.26.jar:${jarfile}spring-core-5.3.26.jar:${jarfile}commons-logging-1.2.jar org.junit.runner.JUnitCore com.cloud.utils.HttpUtilsTest | grep -i OK)
-if [ -n "$http_result" ]; then
-    echo "http,true"
-else
-    echo "http,false"
-fi
+for i in  "${api_class_name[@]}"
+do
+    api_class=$(echo $i)
+    api_result=$(java -classpath $api_cmd org.junit.runner.JUnitCore $api_class | grep -i OK)
+    if [ -n "$api_result" ]; then
+        echo "$api_class,true"
+    else
+        echo "$api_class,false"
+    fi
+done
+
+# framework 29 count
+fw_cmd=${jarfile}junit-4.13.2.jar:${jarfile}hamcrest-all-1.3.jar:${jarfile}cloudstack-utils.jar:${jarfile}cloudstack-framework-cluster.jar:${jarfile}cloudstack-framework-cluster-test.jar:${jarfile}mockito-core-3.12.4.jar:${jarfile}byte-buddy-1.10.5.jar:${jarfile}cloudstack-framework-db.jar:${jarfile}cloudstack-framework-config.jar:${jarfile}cloudstack-api.jar:${jarfile}objenesis-3.2.jar:${jarfile}httpcore-4.4.16.jar:${jarfile}cloudstack-framework-config-test.jar:${jarfile}commons-lang-2.6.jar:${jarfile}guava-testlib-18.0.jar:${jarfile}guava-31.1-jre.jar:${jarfile}cloudstack-framework-db-test.jar:${jarfile}gson-1.7.2.jar:${jarfile}cloudstack-engine-schema.jar:${jarfile}cloudstack-engine-api.jar:${jarfile}commons-configuration-1.10.jar:${jarfile}spring-test-5.3.26.jar:${jarfile}commons-logging-1.2.jar:${jarfile}spring-core-5.3.26.jar:${jarfile}reflections-0.10.2.jar:${jarfile}cglib-nodep-3.3.0.jar:${jarfile}javax.persistence-2.2.1.jar:${jarfile}commons-lang3-3.11.jar:${jarfile}cloudstack-framework-ipc-test.jar:${jarfile}cloudstack-framework-ipc.jar:${jarfile}cloudstack-framework-jobs.jar:${jarfile}cloudstack-framework-jobs-test.jar:${jarfile}cloudstack-framework-managed-context.jar:${jarfile}cloudstack-framework-managed-context-test.jar:${jarfile}cloudstack-framework-quota-test.jar:${jarfile}cloudstack-framework-quota.jar:${jarfile}mail-1.5.0-b01.jar:${jarfile}commons-dbcp2-2.9.0.jar:${jarfile}commons-pool2-2.9.0.jar:${jarfile}commons-collections-3.2.2.jar:${jarfile}cloudstack-usage.jar:${jarfile}nashorn-core-15.3.jar:${jarfile}jackson-core-2.13.3.jar:${jarfile}jackson-databind-2.13.3.jar:${jarfile}jackson-module-jaxb-annotations-2.13.3.jar:${jarfile}cloudstack-framework-rest-test.jar:${jarfile}cloudstack-framework-rest.jar:${jarfile}cloudstack-framework-spring-module-test.jar:${jarfile}cloudstack-framework-spring-module.jar:${jarfile}spring-beans-5.3.26.jar:${jarfile}spring-context-5.3.26.jar:${jarfile}log4j-api-2.22.0.jar:${jarfile}spring-expression-5.3.26.jar:${jarfile}spring-aop-5.3.26.jar:${jarfile}commons-logging-1.2.jar:${jarfile}commons-io-2.8.0.jar
+
+fw_class_name=("com.cloud.cluster.ClusterServiceServletAdapterTest" "org.apache.cloudstack.framework.config.impl.ConfigDepotAdminTest" "org.apache.cloudstack.framework.config.impl.ConfigDepotImplTest" "org.apache.cloudstack.framework.config.ConfigKeyTest" "com.cloud.utils.crypt.EncryptionSecretKeyChangerTest" "com.cloud.utils.db.ElementCollectionTest" "com.cloud.utils.db.FilterTest" "com.cloud.utils.db.GenericDaoBaseTest" "org.apache.cloudstack.framework.jobs.AsyncJobManagerTest" "org.apache.cloudstack.managed.context.impl.DefaultManagedContextTest" "org.apache.cloudstack.quota.activationrule.presetvariables.AccountTest" "org.apache.cloudstack.quota.activationrule.presetvariables.BackupOfferingTest" "org.apache.cloudstack.quota.activationrule.presetvariables.ComputeOfferingTest" "org.apache.cloudstack.quota.activationrule.presetvariables.ComputingResourcesTest" "org.apache.cloudstack.quota.activationrule.presetvariables.DomainTest" "org.apache.cloudstack.quota.activationrule.presetvariables.GenericPresetVariableTest" "org.apache.cloudstack.quota.activationrule.presetvariables.HostTest" "org.apache.cloudstack.quota.activationrule.presetvariables.PresetVariableHelperTest" "org.apache.cloudstack.quota.activationrule.presetvariables.ResourceTest" "org.apache.cloudstack.quota.activationrule.presetvariables.RoleTest" "org.apache.cloudstack.quota.activationrule.presetvariables.StorageTest" "org.apache.cloudstack.quota.activationrule.presetvariables.ValueTest" "org.apache.cloudstack.quota.constant.QuotaTypesTest" "org.apache.cloudstack.quota.vo.QuotaTariffVOTest" "org.apache.cloudstack.quota.QuotaManagerImplTest" "org.apache.cloudstack.framework.ws.jackson.CSJacksonAnnotationTest" "org.apache.cloudstack.spring.module.factory.ModuleBasedContextFactoryTest" "org.apache.cloudstack.spring.module.locator.impl.ClasspathModuleDefinitionSetLocatorTest" "org.apache.cloudstack.spring.module.model.impl.DefaultModuleDefinitionTest")
+
+for i in  "${fw_class_name[@]}"
+do
+    fw_class=$(echo $i)
+    fw_result=$(java -classpath $fw_cmd org.junit.runner.JUnitCore $fw_class | grep -i OK)
+    if [ -n "$fw_result" ]; then
+        echo "$fw_class,true"
+    else
+        echo "$fw_class,false"
+    fi
+done

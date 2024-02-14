@@ -19,7 +19,8 @@ package org.apache.cloudstack.api.command.admin.domain;
 import javax.inject.Inject;
 
 import org.apache.cloudstack.api.ApiCommandResourceType;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
@@ -37,7 +38,7 @@ import com.cloud.user.Account;
 @APICommand(name = "updateDomain", description = "Updates a domain with a new name", responseObject = DomainResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateDomainCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(UpdateDomainCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateDomainCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

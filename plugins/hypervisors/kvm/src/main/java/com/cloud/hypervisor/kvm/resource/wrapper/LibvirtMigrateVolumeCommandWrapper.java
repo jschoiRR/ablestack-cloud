@@ -44,7 +44,8 @@ import org.apache.cloudstack.storage.to.PrimaryDataStoreTO;
 import org.apache.cloudstack.storage.to.VolumeObjectTO;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.libvirt.Connect;
 import org.libvirt.Domain;
 import org.libvirt.DomainBlockJobInfo;
@@ -69,7 +70,7 @@ import javax.xml.transform.stream.StreamResult;
 
 @ResourceWrapper(handles =  MigrateVolumeCommand.class)
 public class LibvirtMigrateVolumeCommandWrapper extends CommandWrapper<MigrateVolumeCommand, Answer, LibvirtComputingResource> {
-    private static final Logger LOGGER = Logger.getLogger(LibvirtMigrateVolumeCommandWrapper.class);
+    protected static Logger LOGGER = LogManager.getLogger(LibvirtMigrateVolumeCommandWrapper.class);
 
     @Override
     public Answer execute(final MigrateVolumeCommand command, final LibvirtComputingResource libvirtComputingResource) {

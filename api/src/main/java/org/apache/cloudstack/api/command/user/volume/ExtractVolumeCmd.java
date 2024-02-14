@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.user.volume;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
 import org.apache.cloudstack.api.ACL;
@@ -41,7 +42,7 @@ import com.cloud.user.Account;
 @APICommand(name = "extractVolume", description = "Extracts volume", responseObject = ExtractResponse.class, entityType = {Volume.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ExtractVolumeCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(ExtractVolumeCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ExtractVolumeCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

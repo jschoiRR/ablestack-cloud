@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.cloudstack.storage.to.VolumeObjectTO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.MigrateWithStorageCompleteAnswer;
@@ -41,7 +42,7 @@ import com.xensource.xenapi.VM;
 @ResourceWrapper(handles =  MigrateWithStorageCompleteCommand.class)
 public final class XenServer610MigrateWithStorageCompleteCommandWrapper extends CommandWrapper<MigrateWithStorageCompleteCommand, Answer, XenServer610Resource> {
 
-    private static final Logger s_logger = Logger.getLogger(XenServer610MigrateWithStorageCompleteCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(XenServer610MigrateWithStorageCompleteCommandWrapper.class);
 
     @Override
     public Answer execute(final MigrateWithStorageCompleteCommand command, final XenServer610Resource xenServer610Resource) {
@@ -73,10 +74,10 @@ public final class XenServer610MigrateWithStorageCompleteCommandWrapper extends 
 
             return new MigrateWithStorageCompleteAnswer(command, volumeToSet);
         } catch (final CloudRuntimeException e) {
-            s_logger.error("Migration of vm " + name + " with storage failed due to " + e.toString(), e);
+            logger.error("Migration of vm " + name + " with storage failed due to " + e.toString(), e);
             return new MigrateWithStorageCompleteAnswer(command, e);
         } catch (final Exception e) {
-            s_logger.error("Migration of vm " + name + " with storage failed due to " + e.toString(), e);
+            logger.error("Migration of vm " + name + " with storage failed due to " + e.toString(), e);
             return new MigrateWithStorageCompleteAnswer(command, e);
         }
     }

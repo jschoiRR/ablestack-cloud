@@ -27,7 +27,8 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.FirewallRuleResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.ResourceUnavailableException;
@@ -41,7 +42,7 @@ import com.cloud.user.Account;
         responseHasSensitiveInfo = false,
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User})
 public class DeleteIpv6FirewallRuleCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeleteIpv6FirewallRuleCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DeleteIpv6FirewallRuleCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

@@ -36,7 +36,8 @@ import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.storage.to.TemplateObjectTO;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.MigrateCommand;
@@ -74,7 +75,7 @@ public class KvmNonManagedStorageDataMotionStrategy extends StorageSystemDataMot
     @Inject
     private VirtualMachineManager virtualMachineManager;
 
-    private static final Logger LOGGER = Logger.getLogger(KvmNonManagedStorageDataMotionStrategy.class);
+    protected static Logger LOGGER = LogManager.getLogger(KvmNonManagedStorageDataMotionStrategy.class);
 
     /**
      * Uses the canHandle from the Super class {@link StorageSystemDataMotionStrategy}. If the storage pool is of file and the internalCanHandle from {@link StorageSystemDataMotionStrategy} CANT_HANDLE, returns the StrategyPriority.HYPERVISOR strategy priority. otherwise returns CANT_HANDLE.

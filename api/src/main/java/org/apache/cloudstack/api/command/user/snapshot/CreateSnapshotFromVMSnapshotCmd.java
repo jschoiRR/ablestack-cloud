@@ -28,7 +28,8 @@ import org.apache.cloudstack.api.response.SnapshotResponse;
 import org.apache.cloudstack.api.response.VMSnapshotResponse;
 import org.apache.cloudstack.api.response.VolumeResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.InvalidParameterValueException;
@@ -43,7 +44,7 @@ import com.cloud.vm.snapshot.VMSnapshot;
 @APICommand(name = "createSnapshotFromVMSnapshot", description = "Creates an instant snapshot of a volume from existing vm snapshot.", responseObject = SnapshotResponse.class, entityType = {Snapshot.class}, since = "4.10.0",
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateSnapshotFromVMSnapshotCmd extends BaseAsyncCreateCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateSnapshotFromVMSnapshotCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateSnapshotFromVMSnapshotCmd.class.getName());
 
     // ///////////////////////////////////////////////////
     // ////////////// API parameters /////////////////////
@@ -166,7 +167,7 @@ public class CreateSnapshotFromVMSnapshotCmd extends BaseAsyncCreateCmd {
 
     @Override
     public void execute() {
-        s_logger.info("CreateSnapshotFromVMSnapshotCmd with vm snapshot id:" + getVMSnapshotId() + " and snapshot id:" + getEntityId() + " starts:" + System.currentTimeMillis());
+        logger.info("CreateSnapshotFromVMSnapshotCmd with vm snapshot id:" + getVMSnapshotId() + " and snapshot id:" + getEntityId() + " starts:" + System.currentTimeMillis());
         CallContext.current().setEventDetails("Vm Snapshot Id: "+ this._uuidMgr.getUuid(VMSnapshot.class, getVMSnapshotId()));
         Snapshot snapshot = null;
         try {
@@ -181,14 +182,14 @@ public class CreateSnapshotFromVMSnapshotCmd extends BaseAsyncCreateCmd {
         } catch (InvalidParameterValueException ex) {
             throw ex;
         } catch (Exception e) {
-            s_logger.debug("Failed to create snapshot", e);
+            logger.debug("Failed to create snapshot", e);
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to create snapshot due to an internal error creating snapshot from vm snapshot " + getVMSnapshotId());
         } finally {
             if (snapshot == null) {
                 try {
                     _snapshotService.deleteSnapshot(getEntityId(), null);
                 } catch (Exception e) {
-                    s_logger.debug("Failed to clean failed snapshot" + getEntityId());
+                    logger.debug("Failed to clean failed snapshot" + getEntityId());
                 }
             }
         }

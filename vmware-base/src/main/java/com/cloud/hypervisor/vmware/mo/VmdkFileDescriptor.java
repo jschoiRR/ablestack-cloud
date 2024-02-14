@@ -25,10 +25,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class VmdkFileDescriptor {
-    private static final Logger s_logger = Logger.getLogger(VmdkFileDescriptor.class);
+    protected static Logger logger = LogManager.getLogger(VmdkFileDescriptor.class);
     private static final String VMDK_PROPERTY_CREATE_TYPE = "createType";
     private static final String VMDK_CREATE_TYPE_VMFSSPARSE = "vmfsSparse";
     private static final String VMDK_CREATE_TYPE_SESPARSE = "SEsparse";
@@ -72,7 +73,7 @@ public class VmdkFileDescriptor {
 
                         _baseFileName = line.substring(startPos + 1, endPos);
                     } else {
-                        s_logger.warn("Unrecognized vmdk line content: " + line);
+                        logger.warn("Unrecognized vmdk line content: " + line);
                     }
                 }
             }
@@ -214,7 +215,7 @@ public class VmdkFileDescriptor {
                             out.newLine();
                         }
                     } else {
-                        s_logger.warn("Unrecognized vmdk line content: " + line);
+                        logger.warn("Unrecognized vmdk line content: " + line);
                     }
                 }
             }

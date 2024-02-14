@@ -38,7 +38,8 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.component.AdapterBase;
 import com.cloud.utils.exception.CloudRuntimeException;
@@ -62,7 +63,7 @@ public class CloudInitUserDataProvider extends AdapterBase implements UserDataPr
             Map.entry(FormatType.INCLUDE_FILE, INCLUDE_FILE_CONTENT_TYPE)
     );
 
-    private static final Logger LOGGER = Logger.getLogger(CloudInitUserDataProvider.class);
+    protected static Logger LOGGER = LogManager.getLogger(CloudInitUserDataProvider.class);
 
     private static final Session session = Session.getDefaultInstance(new Properties());
 

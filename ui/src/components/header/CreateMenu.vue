@@ -38,7 +38,7 @@
             </a-row>
           </router-link>
         </a-menu-item>
-        <a-menu-item style="width: 100%; padding: 12px" v-if="'listKubernetesClusters' in $store.getters.apis">
+        <a-menu-item style="width: 100%; padding: 12px" v-if="('listKubernetesClusters' in $store.getters.apis) && (isAllowedKubernetesCreateMenu)">
           <router-link :to="{ path: '/kubernetes', query: { action: 'createKubernetesCluster' } }">
             <a-row>
               <a-col style="margin-right: 12px">
@@ -163,8 +163,15 @@
 
 <script>
 
+import store from '@/store'
+
 export default {
   name: 'CreateMenu',
+  computed: {
+    isAllowedKubernetesCreateMenu () {
+      return Boolean(!store.getters.features.securityfeaturesenabled)
+    }
+  },
   components: {
   }
 }

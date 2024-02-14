@@ -25,7 +25,8 @@ import static com.cloud.network.resource.NiciraNvpResource.NUM_RETRIES;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.CreateLogicalRouterAnswer;
@@ -50,7 +51,7 @@ import com.cloud.resource.ResourceWrapper;
 @ResourceWrapper(handles =  CreateLogicalRouterCommand.class)
 public final class NiciraNvpCreateLogicalRouterCommandWrapper extends CommandWrapper<CreateLogicalRouterCommand, Answer, NiciraNvpResource> {
 
-    private static final Logger s_logger = Logger.getLogger(NiciraNvpCreateLogicalRouterCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(NiciraNvpCreateLogicalRouterCommandWrapper.class);
 
     @Override
     public Answer execute(final CreateLogicalRouterCommand command, final NiciraNvpResource niciraNvpResource) {
@@ -65,7 +66,7 @@ public final class NiciraNvpCreateLogicalRouterCommandWrapper extends CommandWra
         final String publicNetworkIpAddress = command.getPublicIpCidr();
         final String internalNetworkAddress = command.getInternalIpCidr();
 
-        s_logger.debug("Creating a logical router with external ip " + publicNetworkIpAddress + " and internal ip " + internalNetworkAddress + "on gateway service " +
+        logger.debug("Creating a logical router with external ip " + publicNetworkIpAddress + " and internal ip " + internalNetworkAddress + "on gateway service " +
                 gatewayServiceUuid);
 
         final NiciraNvpApi niciraNvpApi = niciraNvpResource.getNiciraNvpApi();

@@ -27,14 +27,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.hypervisor.Hypervisor;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade41500to41510 implements DbUpgrade, DbUpgradeSystemVmTemplate {
 
-    final static Logger LOG = Logger.getLogger(Upgrade41500to41510.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41500to41510.class);
 
     @Override
     public String[] getUpgradableVersionRange() {

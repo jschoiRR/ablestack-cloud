@@ -22,14 +22,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.apache.cloudstack.storage.datastore.util.NexentaNmsClient.NmsResponse;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.exception.CloudRuntimeException;
 import com.google.gson.annotations.SerializedName;
 
 public class NexentaStorAppliance {
-    private static final Logger logger = LogManager.getLogger(NexentaStorAppliance.class);
+    protected static Logger logger = LogManager.getLogger(NexentaStorAppliance.class);
 
     protected NexentaNmsClient client;
     protected NexentaUtil.NexentaPluginParameters parameters;
@@ -43,7 +43,6 @@ public class NexentaStorAppliance {
         this.client = client;
         this.parameters = parameters;
     }
-
     String getVolumeName(String volumeName) {
         if (volumeName.startsWith("/")) {
             return String.format("%s%s", parameters.getVolume(), volumeName);

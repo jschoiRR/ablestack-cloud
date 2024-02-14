@@ -26,7 +26,8 @@ import org.apache.cloudstack.annotation.dao.AnnotationDao;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.response.DiskOfferingResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.api.ApiDBUtils;
@@ -44,7 +45,7 @@ import com.cloud.utils.db.SearchCriteria;
 
 @Component
 public class DiskOfferingJoinDaoImpl extends GenericDaoBase<DiskOfferingJoinVO, Long> implements DiskOfferingJoinDao {
-    public static final Logger s_logger = Logger.getLogger(DiskOfferingJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(DiskOfferingJoinDaoImpl.class);
 
     @Inject
     VsphereStoragePolicyDao _vsphereStoragePolicyDao;

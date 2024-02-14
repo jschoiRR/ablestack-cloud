@@ -36,7 +36,8 @@ import org.apache.cloudstack.utils.qemu.QemuImgException;
 import org.apache.cloudstack.utils.qemu.QemuImgFile;
 import org.apache.cloudstack.utils.qemu.QemuObject;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.libvirt.LibvirtException;
 
 import com.cloud.agent.api.Answer;
@@ -54,7 +55,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 @ResourceWrapper(handles = StorPoolSetVolumeEncryptionCommand.class)
 public class StorPoolSetVolumeEncryptionCommandWrapper extends
         CommandWrapper<StorPoolSetVolumeEncryptionCommand, StorPoolSetVolumeEncryptionAnswer, LibvirtComputingResource> {
-    private static final Logger logger = Logger.getLogger(StorPoolSetVolumeEncryptionCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(StorPoolSetVolumeEncryptionCommandWrapper.class);
 
     @Override
     public StorPoolSetVolumeEncryptionAnswer execute(StorPoolSetVolumeEncryptionCommand command,

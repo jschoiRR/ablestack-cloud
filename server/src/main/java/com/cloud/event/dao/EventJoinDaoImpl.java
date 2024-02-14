@@ -27,7 +27,8 @@ import org.apache.cloudstack.api.Identity;
 import org.apache.cloudstack.api.response.EventResponse;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.api.ApiResponseHelper;
@@ -42,7 +43,7 @@ import com.cloud.utils.db.SearchCriteria;
 
 @Component
 public class EventJoinDaoImpl extends GenericDaoBase<EventJoinVO, Long> implements EventJoinDao {
-    public static final Logger s_logger = Logger.getLogger(EventJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(EventJoinDaoImpl.class);
 
     private SearchBuilder<EventJoinVO> vrSearch;
 

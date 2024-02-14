@@ -20,7 +20,8 @@
 package com.cloud.hypervisor.kvm.resource;
 
 import org.apache.commons.compress.utils.Sets;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.libvirt.LibvirtException;
 
 import com.cloud.agent.api.to.NicTO;
@@ -31,7 +32,7 @@ import java.util.Map;
 
 public class DirectVifDriver extends VifDriverBase {
 
-    private static final Logger s_logger = Logger.getLogger(DirectVifDriver.class);
+    protected static Logger logger = LogManager.getLogger(DirectVifDriver.class);
 
     /**
      * Experimental driver to configure direct networking in libvirt. This should only

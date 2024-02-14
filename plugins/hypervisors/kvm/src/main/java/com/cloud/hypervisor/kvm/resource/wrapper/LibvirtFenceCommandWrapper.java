@@ -25,7 +25,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.FenceAnswer;
@@ -40,7 +41,7 @@ import com.cloud.resource.ResourceWrapper;
 @ResourceWrapper(handles =  FenceCommand.class)
 public final class LibvirtFenceCommandWrapper extends CommandWrapper<FenceCommand, Answer, LibvirtComputingResource> {
 
-    private static final Logger s_logger = Logger.getLogger(LibvirtFenceCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(LibvirtFenceCommandWrapper.class);
 
     @Override
     public Answer execute(final FenceCommand command, final LibvirtComputingResource libvirtComputingResource) {
@@ -58,15 +59,15 @@ public final class LibvirtFenceCommandWrapper extends CommandWrapper<FenceComman
          */
         if (pools.size() == 0) {
             String logline = String.format("No NFS storage pools found. No way to safely fence %s on host %s", command.getVmName(), command.getHostGuid());
-            s_logger.warn(logline);
+            logger.warn(logline);
             return new FenceAnswer(command, false, logline);
         } else if (rbdpools.size() == 0) {
             String logline = String.format("No RBD storage pools found. No way to safely fence %s on host %s", command.getVmName(), command.getHostGuid());
-            s_logger.warn(logline);
+            logger.warn(logline);
             return new FenceAnswer(command, false, logline);
         }else if (clvmpools.size() == 0) {
             String logline = String.format("No CLVM storage pools found. No way to safely fence %s on host %s", command.getVmName(), command.getHostGuid());
-            s_logger.warn(logline);
+            logger.warn(logline);
             return new FenceAnswer(command, false, logline);
         }
 
@@ -81,10 +82,10 @@ public final class LibvirtFenceCommandWrapper extends CommandWrapper<FenceComman
                 return new FenceAnswer(command);
             }
         } catch (final InterruptedException e) {
-            s_logger.warn("Unable to fence", e);
+            logger.warn("Unable to fence", e);
             return new FenceAnswer(command, false, e.getMessage());
         } catch (final ExecutionException e) {
-            s_logger.warn("Unable to fence", e);
+            logger.warn("Unable to fence", e);
             return new FenceAnswer(command, false, e.getMessage());
         }
     }

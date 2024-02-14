@@ -198,7 +198,7 @@ jobs:
                 "component/test_vpc_network_lbrules" ]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 

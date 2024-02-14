@@ -22,7 +22,8 @@ import java.util.List;
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.response.PhysicalNetworkResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
@@ -39,7 +40,7 @@ import com.cloud.utils.Pair;
         since = "4.17.0",
         authorized = {RoleType.Admin})
 public class ListGuestVlansCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListGuestVlansCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListGuestVlansCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

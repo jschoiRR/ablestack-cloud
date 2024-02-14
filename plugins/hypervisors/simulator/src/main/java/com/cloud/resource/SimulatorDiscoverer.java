@@ -27,7 +27,8 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.naming.ConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.Listener;
@@ -53,7 +54,7 @@ import com.cloud.storage.dao.VMTemplateDao;
 import com.cloud.storage.dao.VMTemplateZoneDao;
 
 public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, Listener, ResourceStateAdapter {
-    private static final Logger s_logger = Logger.getLogger(SimulatorDiscoverer.class);
+    protected static Logger logger = LogManager.getLogger(SimulatorDiscoverer.class);
 
     @Inject
     HostDao _hostDao;
@@ -92,8 +93,8 @@ public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, L
             if (scheme.equals("http")) {
                 if (host == null || !host.startsWith("sim")) {
                     String msg = "uri is not of simulator type so we're not taking care of the discovery for this: " + uri;
-                    if (s_logger.isDebugEnabled()) {
-                        s_logger.debug(msg);
+                    if (logger.isDebugEnabled()) {
+                        logger.debug(msg);
                     }
                     return null;
                 }
@@ -119,8 +120,8 @@ public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, L
                 }
             } else {
                 String msg = "uriString is not http so we're not taking care of the discovery for this: " + uri;
-                if (s_logger.isDebugEnabled()) {
-                    s_logger.debug(msg);
+                if (logger.isDebugEnabled()) {
+                    logger.debug(msg);
                 }
                 return null;
             }
@@ -128,15 +129,15 @@ public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, L
             String cluster = null;
             if (clusterId == null) {
                 String msg = "must specify cluster Id when adding host";
-                if (s_logger.isDebugEnabled()) {
-                    s_logger.debug(msg);
+                if (logger.isDebugEnabled()) {
+                    logger.debug(msg);
                 }
                 throw new RuntimeException(msg);
             } else {
                 ClusterVO clu = _clusterDao.findById(clusterId);
                 if (clu == null || (clu.getHypervisorType() != HypervisorType.Simulator)) {
-                    if (s_logger.isInfoEnabled())
-                        s_logger.info("invalid cluster id or cluster is not for Simulator hypervisors");
+                    if (logger.isInfoEnabled())
+                        logger.info("invalid cluster id or cluster is not for Simulator hypervisors");
                     return null;
                 }
                 cluster = Long.toString(clusterId);
@@ -149,8 +150,8 @@ public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, L
             String pod;
             if (podId == null) {
                 String msg = "must specify pod Id when adding host";
-                if (s_logger.isDebugEnabled()) {
-                    s_logger.debug(msg);
+                if (logger.isDebugEnabled()) {
+                    logger.debug(msg);
                 }
                 throw new RuntimeException(msg);
             } else {
@@ -174,17 +175,17 @@ public class SimulatorDiscoverer extends DiscovererBase implements Discoverer, L
             resources = createAgentResources(params);
             return resources;
         } catch (Exception ex) {
-            s_logger.error("Exception when discovering simulator hosts: " + ex.getMessage());
+            logger.error("Exception when discovering simulator hosts: " + ex.getMessage());
         }
         return null;
     }
 
     private Map<AgentResourceBase, Map<String, String>> createAgentResources(Map<String, Object> params) {
         try {
-            s_logger.info("Creating Simulator Resources");
+            logger.info("Creating Simulator Resources");
             return _mockAgentMgr.createServerResources(params);
         } catch (Exception ex) {
-            s_logger.warn("Caught exception at agent resource creation: " + ex.getMessage(), ex);
+            logger.warn("Caught exception at agent resource creation: " + ex.getMessage(), ex);
         }
         return null;
     }

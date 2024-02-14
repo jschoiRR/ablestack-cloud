@@ -93,8 +93,8 @@ const err = (error) => {
       } else {
         notification.error({
           top: '65px',
-          message: i18n.global.t('label.unauthorized'),
-          description: i18n.global.t('message.authorization.failed'),
+          message: i18n.global.t('message.login.failed'),
+          description: i18n.global.t('message.login.failed.security'),
           key: 'http-401',
           duration: 0,
           onClose: () => {
@@ -125,6 +125,14 @@ const err = (error) => {
         }
       })
       router.push({ path: '/exception/404' })
+    }
+    if (response.status === 530) {
+      for (const key in response.data) {
+        if (response.data[key].errortext.includes("Failed to authenticate user 'admin' from ip")) {
+          var url = window.location.origin
+          window.location.href = url + '/error.html'
+        }
+      }
     }
     // if (response.status === 531) {
     //   console.log('request.js 531')

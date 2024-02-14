@@ -19,7 +19,8 @@
 
 package com.cloud.hypervisor.kvm.resource.wrapper;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.OvsDestroyBridgeCommand;
@@ -30,14 +31,14 @@ import com.cloud.resource.ResourceWrapper;
 @ResourceWrapper(handles =  OvsDestroyBridgeCommand.class)
 public final class LibvirtOvsDestroyBridgeCommandWrapper extends CommandWrapper<OvsDestroyBridgeCommand, Answer, LibvirtComputingResource> {
 
-    private static final Logger s_logger = Logger.getLogger(LibvirtOvsDestroyBridgeCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(LibvirtOvsDestroyBridgeCommandWrapper.class);
 
     @Override
     public Answer execute(final OvsDestroyBridgeCommand command, final LibvirtComputingResource libvirtComputingResource) {
         final boolean result = libvirtComputingResource.destroyTunnelNetwork(command.getBridgeName());
 
         if (!result) {
-            s_logger.debug("Error trying to destroy OVS Bridge!");
+            logger.debug("Error trying to destroy OVS Bridge!");
         }
 
         return new Answer(command, result, null);

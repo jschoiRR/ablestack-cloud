@@ -34,7 +34,8 @@ import org.apache.cloudstack.storage.datastore.db.ImageStoreDao;
 import org.apache.cloudstack.storage.to.TemplateObjectTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.HandleConfigDriveIsoAnswer;
@@ -93,7 +94,7 @@ import com.cloud.vm.dao.UserVmDetailsDao;
 
 public class ConfigDriveNetworkElement extends AdapterBase implements NetworkElement, UserDataServiceProvider,
         StateListener<VirtualMachine.State, VirtualMachine.Event, VirtualMachine>, NetworkMigrationResponder {
-    private static final Logger LOG = Logger.getLogger(ConfigDriveNetworkElement.class);
+    protected static Logger LOG = LogManager.getLogger(ConfigDriveNetworkElement.class);
 
     private static final Map<Service, Map<Capability, String>> capabilities = setCapabilities();
 

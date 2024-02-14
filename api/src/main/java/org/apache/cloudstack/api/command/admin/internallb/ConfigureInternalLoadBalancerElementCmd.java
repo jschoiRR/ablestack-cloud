@@ -21,7 +21,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
@@ -47,7 +48,7 @@ import com.cloud.user.Account;
             requestHasSensitiveInfo = false,
             responseHasSensitiveInfo = false)
 public class ConfigureInternalLoadBalancerElementCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(ConfigureInternalLoadBalancerElementCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ConfigureInternalLoadBalancerElementCmd.class.getName());
 
     @Inject
     private List<InternalLoadBalancerElementService> _service;

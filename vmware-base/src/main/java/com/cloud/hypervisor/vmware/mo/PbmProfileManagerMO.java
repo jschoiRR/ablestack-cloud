@@ -28,7 +28,8 @@ import com.vmware.pbm.PbmProfileResourceTypeEnum;
 import com.vmware.vim25.ManagedObjectReference;
 
 import com.vmware.vim25.VirtualMachineDefinedProfileSpec;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
 
 public class PbmProfileManagerMO extends BaseMO {
 
-    private static final Logger LOGGER = Logger.getLogger(PbmProfileManagerMO.class);
+    protected static Logger LOGGER = LogManager.getLogger(PbmProfileManagerMO.class);
 
     public PbmProfileManagerMO (VmwareContext context) {
         super(context, context.getPbmServiceContent().getProfileManager());

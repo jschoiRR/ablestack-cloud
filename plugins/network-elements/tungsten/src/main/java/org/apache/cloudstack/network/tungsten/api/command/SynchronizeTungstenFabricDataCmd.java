@@ -31,14 +31,15 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.network.tungsten.api.response.TungstenFabricProviderResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 
 @APICommand(name = SynchronizeTungstenFabricDataCmd.APINAME, description = "Synchronize Tungsten-Fabric data",
     responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class SynchronizeTungstenFabricDataCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(SynchronizeTungstenFabricDataCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(SynchronizeTungstenFabricDataCmd.class.getName());
     public static final String APINAME = "synchronizeTungstenFabricData";
 
     @Parameter(name = ApiConstants.ID, type = CommandType.UUID, entityType = TungstenFabricProviderResponse.class,

@@ -26,6 +26,20 @@
     <div v-else>
       <usage-dashboard :resource="$store.getters.project" :showProject="project" />
     </div>
+    <a-modal
+      :visible="showModal"
+      :title="$t('label.alert')"
+      :closable="true"
+      :maskClosable="false"
+      :footer="null"
+      @cancel="closeModal"
+      centered
+      style="top: 20px;"
+      width="80vw">
+      <popup-alert
+        @close-action="closeModal"
+      />
+    </a-modal>
   </div>
 </template>
 
@@ -38,6 +52,7 @@ import OnboardingDashboard from './OnboardingDashboard'
 import VerifyTwoFa from './VerifyTwoFa'
 import SetupTwoFaAtLogin from './SetupTwoFaAtLogin'
 import FirstLogin from './FirstLogin'
+import PopupAlert from './PopupAlert.vue'
 
 export default {
   name: 'Dashboard',
@@ -47,7 +62,8 @@ export default {
     OnboardingDashboard,
     VerifyTwoFa,
     SetupTwoFaAtLogin,
-    FirstLogin
+    FirstLogin,
+    PopupAlert
   },
   provide: function () {
     return {
@@ -58,7 +74,8 @@ export default {
     return {
       showCapacityDashboard: false,
       project: false,
-      showOnboarding: false
+      showOnboarding: false,
+      showModal: false
     }
   },
   created () {
@@ -89,6 +106,21 @@ export default {
       api('listZones').then(json => {
         this.showOnboarding = json.listzonesresponse.count ? json.listzonesresponse.count === 0 : true
       })
+      api('listAlerts').then(json => {
+        if (json && json.listalertsresponse && json.listalertsresponse.alert) {
+          const alerts = json.listalertsresponse.alert
+          for (var i = 0; i < alerts.length; i++) {
+            if (alerts[i].showalert === true && this.$store.getters.showAlert && this.$store.getters.features.securityfeaturesenabled) {
+              this.showModal = true
+            }
+          }
+        }
+      })
+    },
+    closeModal () {
+      this.$emit('close-action')
+      this.showModal = false
+      this.$store.commit('SET_SHOW_ALERT', false)
     }
   }
 }

@@ -36,7 +36,8 @@ import org.apache.cloudstack.storage.datastore.util.StorPoolUtil.SpConnectionDes
 import org.apache.cloudstack.storage.to.VolumeObjectTO;
 import org.apache.cloudstack.storage.vmsnapshot.DefaultVMSnapshotStrategy;
 import org.apache.cloudstack.storage.vmsnapshot.VMSnapshotHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.agent.api.VMSnapshotTO;
@@ -66,7 +67,7 @@ import com.google.gson.JsonObject;
 
 @Component
 public class StorPoolVMSnapshotStrategy extends DefaultVMSnapshotStrategy {
-    private static final Logger log = Logger.getLogger(StorPoolVMSnapshotStrategy.class);
+    protected static Logger log = LogManager.getLogger(StorPoolVMSnapshotStrategy.class);
 
     @Inject
     private VMSnapshotHelper vmSnapshotHelper;

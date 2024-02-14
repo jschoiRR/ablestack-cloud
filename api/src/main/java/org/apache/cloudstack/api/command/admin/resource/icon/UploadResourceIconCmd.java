@@ -31,7 +31,8 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.awt.image.BufferedImage;
 
@@ -46,7 +47,7 @@ import java.util.List;
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false,
         authorized = {RoleType.Admin, RoleType.DomainAdmin, RoleType.ResourceAdmin, RoleType.User})
 public class UploadResourceIconCmd extends BaseCmd {
-    public static final Logger LOGGER = Logger.getLogger(UploadResourceIconCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(UploadResourceIconCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

@@ -23,7 +23,8 @@ import com.vmware.vim25.VStorageObject;
 import com.vmware.vim25.BaseConfigInfoDiskFileBackingInfoProvisioningType;
 import com.vmware.vim25.VslmCreateSpec;
 import com.vmware.vim25.VslmCreateSpecDiskFileBackingSpec;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.vmware.vim25.ManagedObjectReference;
 
@@ -31,7 +32,7 @@ import com.cloud.hypervisor.vmware.util.VmwareContext;
 
 public class VirtualStorageObjectManagerMO extends BaseMO {
     @SuppressWarnings("unused")
-    private static final Logger LOGGER = Logger.getLogger(VirtualStorageObjectManagerMO.class);
+    protected static Logger LOGGER = LogManager.getLogger(VirtualStorageObjectManagerMO.class);
 
     public VirtualStorageObjectManagerMO(VmwareContext context) {
         super(context, context.getServiceContent().getVStorageObjectManager());

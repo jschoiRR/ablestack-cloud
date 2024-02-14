@@ -67,6 +67,7 @@ export default {
       docHelp: 'adminguide/virtual_machines.html#importing-and-unmanaging-virtual-machine',
       resourceType: 'UserVm',
       permission: ['listInfrastructure', 'listUnmanagedInstances'],
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       component: () => import('@/views/tools/ManageInstances.vue')
     }
   ]

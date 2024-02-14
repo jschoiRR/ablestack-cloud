@@ -20,7 +20,8 @@ package org.apache.cloudstack.network.contrail.model;
 import java.io.IOException;
 
 import org.apache.cloudstack.network.contrail.management.ContrailManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.InternalErrorException;
 import com.cloud.network.Network;
@@ -33,7 +34,7 @@ import net.juniper.contrail.api.types.VirtualMachineInterface;
 import net.juniper.contrail.api.types.VirtualMachineInterfacePropertiesType;
 
 public class VMInterfaceModel extends ModelObjectBase {
-    private static final Logger s_logger = Logger.getLogger(VMInterfaceModel.class);
+    protected static Logger logger = LogManager.getLogger(VMInterfaceModel.class);
 
     private String _uuid;
 
@@ -187,7 +188,7 @@ public class VMInterfaceModel extends ModelObjectBase {
     @Override
     public void update(ModelController controller) throws InternalErrorException, IOException {
         if (!_netActive || !_nicActive) {
-            s_logger.debug("vm interface update, _netActive: " + _netActive + ", _nicActive: " + _nicActive);
+            logger.debug("vm interface update, _netActive: " + _netActive + ", _nicActive: " + _nicActive);
             delete(controller);
             return;
         }
@@ -246,7 +247,7 @@ public class VMInterfaceModel extends ModelObjectBase {
         // TODO: if there are no instance-ip successors present and we have an instance-ip object reference
         // delete the object.
         if (ipCount == 0) {
-            s_logger.warn("virtual-machine-interface " + _uuid + " has no instance-ip");
+            logger.warn("virtual-machine-interface " + _uuid + " has no instance-ip");
         }
     }
 

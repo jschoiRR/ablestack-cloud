@@ -53,7 +53,8 @@ import org.apache.cloudstack.storage.resource.SecondaryStorageResource;
 import org.apache.cloudstack.utils.security.ChecksumValue;
 import org.apache.cloudstack.utils.security.DigestHelper;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.storage.DownloadAnswer;
 import com.cloud.agent.api.to.DataStoreTO;
@@ -249,7 +250,7 @@ public class DownloadManagerImpl extends ManagerBase implements DownloadManager 
         }
     }
 
-    public static final Logger LOGGER = Logger.getLogger(DownloadManagerImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(DownloadManagerImpl.class);
     private String _templateDir;
     private String _volumeDir;
     private String createTmpltScr;

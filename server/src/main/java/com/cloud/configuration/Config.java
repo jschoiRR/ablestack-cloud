@@ -152,6 +152,14 @@ public enum Config {
             "0.75",
             "Percentage (as a value between 0 and 1) of management server database storage utilization above which alerts will be sent about low database storage available",
             null),
+    ManagementServerDatabaseStorageCapacityDeleteThreshold(
+            "Alert",
+            ManagementServer.class,
+            Float.class,
+            "management.server.database.capacity.delete.notificationthreshold",
+            "0.90",
+            "Management server database storage utilization (value between 0 and 1) at which saturation warnings are sent for data deletion in event tables due to insufficient available database storage.",
+            null),
 
     // Storage
 
@@ -523,7 +531,7 @@ public enum Config {
             "The time interval in seconds when the management server polls for snapshots to be scheduled.",
             null),
     SnapshotDeltaMax("Snapshots", SnapshotManager.class, Integer.class, "snapshot.delta.max", "16", "max delta snapshots between two full snapshots.", null),
-    KVMSnapshotEnabled("Hidden", SnapshotManager.class, Boolean.class, "kvm.snapshot.enabled", "false", "whether snapshot is enabled for KVM hosts", null),
+    KVMSnapshotEnabled("Hidden", SnapshotManager.class, Boolean.class, "kvm.snapshot.enabled", "true", "whether snapshot is enabled for KVM hosts", null),
 
     // Advanced
     EventPurgeInterval(

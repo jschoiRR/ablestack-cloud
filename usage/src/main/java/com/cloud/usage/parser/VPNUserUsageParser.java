@@ -25,7 +25,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.usage.UsageTypes;
@@ -39,7 +40,7 @@ import com.cloud.utils.Pair;
 
 @Component
 public class VPNUserUsageParser {
-    public static final Logger s_logger = Logger.getLogger(VPNUserUsageParser.class.getName());
+    protected static Logger logger = LogManager.getLogger(VPNUserUsageParser.class.getName());
 
     private static UsageDao s_usageDao;
     private static UsageVPNUserDao s_usageVPNUserDao;
@@ -56,8 +57,8 @@ public class VPNUserUsageParser {
     }
 
     public static boolean parse(AccountVO account, Date startDate, Date endDate) {
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Parsing all VPN user usage events for account: " + account.getId());
+        if (logger.isDebugEnabled()) {
+            logger.debug("Parsing all VPN user usage events for account: " + account.getId());
         }
         if ((endDate == null) || endDate.after(new Date())) {
             endDate = new Date();
@@ -66,7 +67,7 @@ public class VPNUserUsageParser {
         List<UsageVPNUserVO> usageVUs = s_usageVPNUserDao.getUsageRecords(account.getId(), account.getDomainId(), startDate, endDate, false, 0);
 
         if (usageVUs.isEmpty()) {
-            s_logger.debug("No VPN user usage events for this period");
+            logger.debug("No VPN user usage events for this period");
             return true;
         }
 
@@ -132,8 +133,8 @@ public class VPNUserUsageParser {
 
     private static void createUsageRecord(int type, long runningTime, Date startDate, Date endDate, AccountVO account, long userId, String userName, long zoneId) {
         // Our smallest increment is hourly for now
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Total running time " + runningTime + "ms");
+        if (logger.isDebugEnabled()) {
+            logger.debug("Total running time " + runningTime + "ms");
         }
 
         float usage = runningTime / 1000f / 60f / 60f;
@@ -141,8 +142,8 @@ public class VPNUserUsageParser {
         DecimalFormat dFormat = new DecimalFormat("#.######");
         String usageDisplay = dFormat.format(usage);
 
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Creating VPN user:" + userId + " usage record, usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate +
+        if (logger.isDebugEnabled()) {
+            logger.debug("Creating VPN user:" + userId + " usage record, usage: " + usageDisplay + ", startDate: " + startDate + ", endDate: " + endDate +
                 ", for account: " + account.getId());
         }
 

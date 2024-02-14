@@ -31,7 +31,8 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.NetworkOfferingResponse;
 import org.apache.cloudstack.api.response.NetworkResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.ConcurrentOperationException;
@@ -43,7 +44,7 @@ import com.cloud.offering.NetworkOffering;
 @APICommand(name = "updateNetwork", description = "Updates a network", responseObject = NetworkResponse.class, responseView = ResponseView.Restricted, entityType = {Network.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateNetworkCmd extends BaseAsyncCustomIdCmd implements UserCmd {
-    public static final Logger s_logger = Logger.getLogger(UpdateNetworkCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateNetworkCmd.class.getName());
 
     private static final String s_name = "updatenetworkresponse";
 

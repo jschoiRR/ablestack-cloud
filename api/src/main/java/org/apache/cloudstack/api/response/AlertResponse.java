@@ -57,6 +57,10 @@ public class AlertResponse extends BaseResponse {
     @Param(description = "the date and time the alert was sent")
     private Date lastSent;
 
+    @SerializedName(ApiConstants.SHOW_ALERT)
+    @Param(description = "the show type of the alert")
+    private Boolean showAlert;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -75,5 +79,9 @@ public class AlertResponse extends BaseResponse {
 
     public void setName(String name) {
         this.alertName = name;
+    }
+
+    public void setShowAlert(Boolean showAlert) {
+        this.showAlert = showAlert;
     }
 }

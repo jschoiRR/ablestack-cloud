@@ -20,12 +20,13 @@ import com.cloud.api.ApiSerializerHelper;
 import junit.framework.TestCase;
 import org.apache.cloudstack.api.response.AlertResponse;
 import org.apache.cloudstack.api.response.UserVmResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.After;
 import org.junit.Before;
 
 public class KeystoreTest extends TestCase {
-    private final static Logger s_logger = Logger.getLogger(KeystoreTest.class);
+    private final static Logger logger = LogManager.getLogger(KeystoreTest.class);
 
     private final String keyContent = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALV5vGlkiWwoZX4hTRplPXP8qtST\n"
         + "hwZhko8noeY5vf8ECwmd+vrCTw/JvnOtkx/8oYNbg/SeUt1EfOsk6gqJdBblGFBZRMcUJlIpqE9z\n"

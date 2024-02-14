@@ -34,7 +34,8 @@ import com.cloud.agent.api.to.deployasis.OVFVirtualHardwareSectionTO;
 import com.cloud.agent.api.to.deployasis.OVFNetworkTO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -52,7 +53,7 @@ import com.cloud.utils.script.Script;
  * processes the content of an OVA for registration of a template
  */
 public class OVAProcessor extends AdapterBase implements Processor {
-    private static final Logger LOGGER = Logger.getLogger(OVAProcessor.class);
+    protected static Logger LOGGER = LogManager.getLogger(OVAProcessor.class);
     StorageLayer _storage;
 
     @Override

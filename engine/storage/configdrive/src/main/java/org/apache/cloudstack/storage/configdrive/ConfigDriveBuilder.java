@@ -37,7 +37,8 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.joda.time.Duration;
 
 import com.cloud.network.NetworkModel;
@@ -49,7 +50,7 @@ import com.google.gson.JsonObject;
 
 public class ConfigDriveBuilder {
 
-    public static final Logger LOG = Logger.getLogger(ConfigDriveBuilder.class);
+    protected static Logger LOG = LogManager.getLogger(ConfigDriveBuilder.class);
 
     /**
      * This is for mocking the File class. We cannot mock the File class directly because Mockito uses it internally.

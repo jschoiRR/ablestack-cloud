@@ -37,11 +37,12 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 import org.apache.cloudstack.storage.to.PrimaryDataStoreTO;
 import org.apache.cloudstack.storage.to.VolumeObjectTO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 @ResourceWrapper(handles =  CopyVolumeCommand.class)
 public final class LibvirtCopyVolumeCommandWrapper extends CommandWrapper<CopyVolumeCommand, Answer, LibvirtComputingResource> {
-    private static final Logger LOGGER = Logger.getLogger(LibvirtCopyVolumeCommandWrapper.class);
+    protected static Logger LOGGER = LogManager.getLogger(LibvirtCopyVolumeCommandWrapper.class);
 
     @Override
     public Answer execute(final CopyVolumeCommand command, final LibvirtComputingResource libvirtComputingResource) {

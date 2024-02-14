@@ -28,7 +28,8 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.NetworkResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.InvalidParameterValueException;
@@ -37,7 +38,7 @@ import com.cloud.network.Network;
 @APICommand(name = "deleteNetwork", description = "Deletes a network", responseObject = SuccessResponse.class, entityType = {Network.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteNetworkCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeleteNetworkCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DeleteNetworkCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

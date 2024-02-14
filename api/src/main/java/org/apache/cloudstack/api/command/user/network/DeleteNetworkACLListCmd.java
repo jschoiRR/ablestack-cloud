@@ -17,7 +17,8 @@
 package org.apache.cloudstack.api.command.user.network;
 
 import org.apache.cloudstack.api.ApiCommandResourceType;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
@@ -36,7 +37,7 @@ import com.cloud.user.Account;
 @APICommand(name = "deleteNetworkACLList", description = "Deletes a network ACL", responseObject = SuccessResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteNetworkACLListCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeleteNetworkACLListCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DeleteNetworkACLListCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

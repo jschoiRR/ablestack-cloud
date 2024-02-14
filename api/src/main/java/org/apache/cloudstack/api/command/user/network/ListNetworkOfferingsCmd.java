@@ -28,7 +28,8 @@ import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.NetworkOfferingResponse;
 import org.apache.cloudstack.api.response.NetworkResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.offering.NetworkOffering;
 import com.cloud.utils.Pair;
@@ -36,7 +37,7 @@ import com.cloud.utils.Pair;
 @APICommand(name = "listNetworkOfferings", description = "Lists all available network offerings.", responseObject = NetworkOfferingResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListNetworkOfferingsCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListNetworkOfferingsCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListNetworkOfferingsCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

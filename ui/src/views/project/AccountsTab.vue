@@ -214,6 +214,8 @@ export default {
       this.loading.user = true
       api('listUsers', { listall: true }).then(response => {
         this.users = response.listusersresponse.user || []
+        // const itemsToExclude = ['baremetal-system-account']
+        // this.users = this.users.filter(item => !itemsToExclude.includes(item))
       }).catch(error => {
         this.$notifyError(error)
       }).finally(() => {

@@ -27,7 +27,8 @@ import org.apache.cloudstack.acl.ProjectRole;
 import org.apache.cloudstack.acl.RolePermissionEntity.Permission;
 import org.apache.cloudstack.acl.ProjectRolePermission;
 import org.apache.cloudstack.acl.ProjectRolePermissionVO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.db.Attribute;
 import com.cloud.utils.db.Filter;
@@ -42,7 +43,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 public class ProjectRolePermissionsDaoImpl  extends GenericDaoBase<ProjectRolePermissionVO, Long>  implements  ProjectRolePermissionsDao{
 
-    private static final Logger LOGGER = Logger.getLogger(ProjectRolePermissionsDaoImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(ProjectRolePermissionsDaoImpl.class);
     private final SearchBuilder<ProjectRolePermissionVO> ProjectRolePermissionsSearch;
     private Attribute sortOrderAttribute;
 

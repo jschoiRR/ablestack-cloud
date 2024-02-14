@@ -33,6 +33,7 @@ import com.cloud.utils.concurrency.NamedThreadFactory;
 import com.cloud.utils.db.Filter;
 import com.cloud.utils.db.SearchBuilder;
 import com.cloud.utils.db.SearchCriteria;
+import com.cloud.utils.exception.CloudRuntimeException;
 import org.apache.cloudstack.api.command.admin.GetIntegrityVerificationCmd;
 import org.apache.cloudstack.api.command.admin.GetIntegrityVerificationFinalResultCmd;
 import org.apache.cloudstack.api.command.admin.RunIntegrityVerificationCmd;
@@ -47,15 +48,17 @@ import org.apache.cloudstack.managed.context.ManagedContextRunnable;
 import org.apache.cloudstack.management.ManagementServerHost;
 import org.apache.cloudstack.utils.identity.ManagementServerNode;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import javax.naming.ConfigurationException;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -70,11 +73,12 @@ import java.util.Date;
 
 public class IntegrityVerificationServiceImpl extends ManagerBase implements PluggableService, IntegrityVerificationService, Configurable {
 
-    private static final Logger LOGGER = Logger.getLogger(IntegrityVerificationServiceImpl.class);
+    private static final Logger LOGGER = LogManager.getLogger(IntegrityVerificationServiceImpl.class);
 
     private static final ConfigKey<Integer> IntegrityVerificationInterval = new ConfigKey<>("Advanced", Integer.class,
             "integrity.verification.interval", "1",
             "The interval integrity verification background tasks in days", false);
+    private static String runMode = "";
 
     @Inject
     private IntegrityVerificationDao integrityVerificationDao;
@@ -94,11 +98,18 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
 
     @Override
     public boolean start() {
+        runMode = "first";
         if(IntegrityVerificationInterval.value() != 0) {
             executor.scheduleAtFixedRate(new IntegrityVerificationTask(), 0, IntegrityVerificationInterval.value(), TimeUnit.DAYS);
         }
         return true;
     }
+
+    public boolean stop() {
+        runMode = "";
+        return true;
+    }
+
     protected class IntegrityVerificationTask extends ManagedContextRunnable {
         @Override
         protected void runInContext() {
@@ -119,7 +130,12 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
             boolean verificationFinalResult;
             String comparisonHashValue;
             String uuid;
-            String type = "Routine";
+            String type = "";
+            if (runMode == "first") {
+                type = "Execution";
+            } else {
+                type = "Routine";
+            }
             List<IntegrityVerification> result = new ArrayList<>(integrityVerificationDao.getIntegrityVerifications(msHost.getId()));
             for (IntegrityVerification ivResult : result) {
                 String filePath = ivResult.getFilePath();
@@ -139,7 +155,7 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
                         verificationFailedList.add(filePath);
                     }
                     updateIntegrityVerificationResult(msHost.getId(), filePath, comparisonHashValue, verificationResult, verificationMessage);
-                } catch (NoSuchAlgorithmException e) {
+                } catch (NoSuchAlgorithmException | IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -148,29 +164,40 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
             String verificationFailedListToString = verificationFailedList.stream().collect(Collectors.joining(", "));
             verificationFailedListToString = verificationFailedListToString.replaceFirst(", $", "");
             updateIntegrityVerificationFinalResult(msHost.getId(), uuid, verificationFinalResult, verificationFailedListToString, type);
+            runMode = "";
         }
 
-        private String calculateHash(File file, String algorithm) throws NoSuchAlgorithmException {
-            MessageDigest md = MessageDigest.getInstance(algorithm);
-            try (DigestInputStream dis = new DigestInputStream(new FileInputStream(file), md)) {
-                // Read the file to update the digest
-                while (dis.read() != -1) ;
+        private String calculateHash(File file, String algorithm) throws NoSuchAlgorithmException, IOException {
+            ManagementServerHostVO msHost = msHostDao.findByMsid(ManagementServerNode.getManagementServerId());
+            MessageDigest digest = MessageDigest.getInstance(algorithm);
+            File tempFile = null;
+            if (!(file.exists())) {
+                tempFile = createTempFileWithRandomContent();
+                file = tempFile;
+            }
+            try (FileInputStream fis = new FileInputStream(file)) {
+                byte[] buffer = new byte[8192]; // Adjust the buffer size as needed
+                int bytesRead;
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    digest.update(buffer, 0, bytesRead);
+                }
             } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+                throw new CloudRuntimeException(String.format("Failed to execute integrity verification command for management server: Unable to find the file"+ e));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new CloudRuntimeException(String.format("Failed to execute integrity verification command for management server: "+msHost.getId()+ e));
             }
 
-            byte[] hashBytes = md.digest();
-            StringBuilder hexString = new StringBuilder();
+            byte[] hashBytes = digest.digest();
+
+            // Convert the byte array to a hexadecimal string
+            StringBuilder hexStringBuilder = new StringBuilder();
             for (byte hashByte : hashBytes) {
-                String hex = Integer.toHexString(0xFF & hashByte);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
+                hexStringBuilder.append(String.format("%02x", hashByte));
             }
-            return hexString.toString();
+            if (tempFile != null) {
+                tempFile.delete();
+            }
+            return hexStringBuilder.toString();
         }
     }
 
@@ -232,27 +259,79 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
         return response;
     }
 
-    private String calculateHash(File file, String algorithm) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance(algorithm);
-        try (DigestInputStream dis = new DigestInputStream(new FileInputStream(file), md)) {
-            // Read the file to update the digest
-            while (dis.read() != -1) ;
+    // Generate a temporary file with random content
+    private File createTempFileWithRandomContent() throws IOException {
+        File tempFile = File.createTempFile("randomFile", ".txt");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+            writer.write("Random content: " + Math.random());
+            // Add a new line if needed
+            writer.newLine();
+        }
+        return tempFile;
+    }
+
+//    private String calculateHash(File file, String algorithm) throws NoSuchAlgorithmException, IOException {
+//        ManagementServerHostVO msHost = msHostDao.findByMsid(ManagementServerNode.getManagementServerId());
+//        MessageDigest md = MessageDigest.getInstance(algorithm);
+//        File tempFile = null;
+//        if (!(file.exists())) {
+//            tempFile = createTempFileWithRandomContent();
+//            file = tempFile;
+//        }
+//        try (DigestInputStream dis = new DigestInputStream(new FileInputStream(file), md)) {
+//            // Read the file to update the digest
+//            while (dis.read() != -1) ;
+//        } catch (FileNotFoundException e) {
+//            throw new CloudRuntimeException(String.format("Failed to execute integrity verification command for management server: Unable to find the file"+ e));
+//        } catch (IOException e) {
+//            throw new CloudRuntimeException(String.format("Failed to execute integrity verification command for management server: "+msHost.getId()+ e));
+//        }
+//        byte[] hashBytes = md.digest();
+//        StringBuilder hexString = new StringBuilder();
+//        for (byte hashByte : hashBytes) {
+//            String hex = Integer.toHexString(0xFF & hashByte);
+//            if (hex.length() == 1) {
+//                hexString.append('0');
+//            }
+//            hexString.append(hex);
+//        }
+//        if (tempFile != null) {
+//            tempFile.delete();
+//        }
+//        return hexString.toString();
+//    }
+
+    private String calculateHash(File file, String algorithm) throws IOException, NoSuchAlgorithmException {
+        ManagementServerHostVO msHost = msHostDao.findByMsid(ManagementServerNode.getManagementServerId());
+        MessageDigest digest = MessageDigest.getInstance(algorithm);
+        File tempFile = null;
+        if (!(file.exists())) {
+            tempFile = createTempFileWithRandomContent();
+            file = tempFile;
+        }
+        try (FileInputStream fis = new FileInputStream(file)) {
+            byte[] buffer = new byte[8192]; // Adjust the buffer size as needed
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                digest.update(buffer, 0, bytesRead);
+            }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new CloudRuntimeException(String.format("Failed to execute integrity verification command for management server: Unable to find the file"+ e));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new CloudRuntimeException(String.format("Failed to execute integrity verification command for management server: "+msHost.getId()+ e));
         }
 
-        byte[] hashBytes = md.digest();
-        StringBuilder hexString = new StringBuilder();
+        byte[] hashBytes = digest.digest();
+
+        // Convert the byte array to a hexadecimal string
+        StringBuilder hexStringBuilder = new StringBuilder();
         for (byte hashByte : hashBytes) {
-            String hex = Integer.toHexString(0xFF & hashByte);
-            if (hex.length() == 1) {
-                hexString.append('0');
-            }
-            hexString.append(hex);
+            hexStringBuilder.append(String.format("%02x", hashByte));
         }
-        return hexString.toString();
+        if (tempFile != null) {
+            tempFile.delete();
+        }
+        return hexStringBuilder.toString();
     }
 
     public static boolean checkConditions(List<Boolean> conditions) {
@@ -266,7 +345,7 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
 
     @Override
     @ActionEvent(eventType = EventTypes.EVENT_INTEGRITY_VERIFICATION, eventDescription = "running manual integrity verification on management server when running the product.", async = true)
-    public boolean runIntegrityVerificationCommand(final RunIntegrityVerificationCmd cmd) throws NoSuchAlgorithmException {
+    public boolean runIntegrityVerificationCommand(final RunIntegrityVerificationCmd cmd) {
         Long mshostId = cmd.getMsHostId();
         List<Boolean> verificationResults = new ArrayList<>();
         List<String> verificationFailedList = new ArrayList<>();
@@ -296,6 +375,8 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
                 }
                 updateIntegrityVerificationResult(msHost.getId(), filePath, comparisonHashValue, verificationResult, verificationMessage);
             } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -339,12 +420,30 @@ public class IntegrityVerificationServiceImpl extends ManagerBase implements Plu
 
     private void updateIntegrityVerificationFinalResult(final long msHostId, String uuid, boolean verificationFinalResult, String verificationFailedListToString, String type) {
         if (verificationFinalResult == false) {
-            alertManager.sendAlert(AlertManager.AlertType.ALERT_TYPE_MANAGEMENT_NODE, 0, new Long(0), " integrity verification failed.(uuid:"+uuid+") could not be verified. at last verification.", "");
-            ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_INFO,
-                    EventTypes.EVENT_INTEGRITY_VERIFICATION, "Failed to execute "+type+" integrity verification on the management server when running the product.", new Long(0), null, 0);
+            if(type.equals("Execution")){
+                alertManager.sendAlert(AlertManager.AlertType.ALERT_TYPE_MANAGEMENT_NODE, 0, new Long(0), "Failed to execute integrity verification on the management server when running the product", "");
+                ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_ERROR,
+                        EventTypes.EVENT_INTEGRITY_VERIFICATION, "Failed to execute integrity verification on the management server when running the product", new Long(0), null, 0);
+            }else if(type.equals("Routine")){
+                alertManager.sendAlert(AlertManager.AlertType.ALERT_TYPE_MANAGEMENT_NODE, 0, new Long(0), "Failed to execute integrity verification schedule on the management server when operating the product", "");
+                ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_ERROR,
+                        EventTypes.EVENT_INTEGRITY_VERIFICATION, "Failed to execute integrity verification schedule on the management server when operating the product", new Long(0), null, 0);
+            }else if(type.equals("Manual")){
+                alertManager.sendAlert(AlertManager.AlertType.ALERT_TYPE_MANAGEMENT_NODE, 0, new Long(0), "Failed to execute integrity verification on the management server when operating the product", "");
+                ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_ERROR,
+                        EventTypes.EVENT_INTEGRITY_VERIFICATION, "Failed to execute integrity verification on the management server when operating the product", new Long(0), null, 0);
+            }
         }else {
-            ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_INFO,
-                    EventTypes.EVENT_INTEGRITY_VERIFICATION, "Successfully completed "+type+" integrity verification on the management server when running the product.", new Long(0), null, 0);
+            if(type.equals("Execution")){
+                ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_INFO,
+                        EventTypes.EVENT_INTEGRITY_VERIFICATION, "Successfully completed integrity verification perform on the management server when running the product", new Long(0), null, 0);
+            }else if(type.equals("Routine")){
+                ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_INFO,
+                        EventTypes.EVENT_INTEGRITY_VERIFICATION, "Successfully completed integrity verification schedule perform on the management server when operating the product", new Long(0), null, 0);
+            }else if(type.equals("Manual")){
+                ActionEventUtils.onCompletedActionEvent(CallContext.current().getCallingUserId(), CallContext.current().getCallingAccountId(), EventVO.LEVEL_INFO,
+                        EventTypes.EVENT_INTEGRITY_VERIFICATION, "Successfully completed integrity verification perform on the management server when operating the product", new Long(0), null, 0);
+            }
         }
         IntegrityVerificationFinalResultVO connectivityVO = new IntegrityVerificationFinalResultVO(msHostId, verificationFinalResult, verificationFailedListToString, type);
         connectivityVO.setUuid(uuid);

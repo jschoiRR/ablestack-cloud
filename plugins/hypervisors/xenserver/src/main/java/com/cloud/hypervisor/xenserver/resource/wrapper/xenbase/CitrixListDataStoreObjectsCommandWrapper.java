@@ -25,13 +25,14 @@ import com.cloud.resource.CommandWrapper;
 import com.cloud.resource.ResourceWrapper;
 import com.xensource.xenapi.Types.XenAPIException;
 import org.apache.cloudstack.storage.command.browser.ListDataStoreObjectsCommand;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlrpc.XmlRpcException;
 
 @ResourceWrapper(handles = ListDataStoreObjectsCommand.class)
 public final class CitrixListDataStoreObjectsCommandWrapper extends CommandWrapper<ListDataStoreObjectsCommand, Answer, CitrixResourceBase> {
 
-    private static final Logger LOGGER = Logger.getLogger(CitrixListDataStoreObjectsCommandWrapper.class);
+    protected static Logger LOGGER = LogManager.getLogger(CitrixListDataStoreObjectsCommandWrapper.class);
 
     @Override
     public Answer execute(final ListDataStoreObjectsCommand command, final CitrixResourceBase citrixResourceBase) {

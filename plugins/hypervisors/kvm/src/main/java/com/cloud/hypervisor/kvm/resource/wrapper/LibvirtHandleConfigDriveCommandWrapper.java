@@ -25,7 +25,8 @@ import java.nio.file.Paths;
 
 import org.apache.cloudstack.storage.configdrive.ConfigDriveBuilder;
 import org.apache.cloudstack.storage.to.PrimaryDataStoreTO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.HandleConfigDriveIsoAnswer;
@@ -42,7 +43,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 @ResourceWrapper(handles =  HandleConfigDriveIsoCommand.class)
 public final class LibvirtHandleConfigDriveCommandWrapper extends CommandWrapper<HandleConfigDriveIsoCommand, Answer, LibvirtComputingResource> {
-    private static final Logger LOG = Logger.getLogger(LibvirtHandleConfigDriveCommandWrapper.class);
+    protected static Logger LOG = LogManager.getLogger(LibvirtHandleConfigDriveCommandWrapper.class);
 
     @Override
     public Answer execute(final HandleConfigDriveIsoCommand command, final LibvirtComputingResource libvirtComputingResource) {

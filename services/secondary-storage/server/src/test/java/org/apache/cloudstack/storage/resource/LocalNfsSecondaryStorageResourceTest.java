@@ -34,7 +34,8 @@ import org.apache.cloudstack.storage.command.CopyCmdAnswer;
 import org.apache.cloudstack.storage.command.CopyCommand;
 import org.apache.cloudstack.storage.command.DownloadCommand;
 import org.apache.cloudstack.storage.to.TemplateObjectTO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -53,7 +54,7 @@ import java.util.UUID;
 public class LocalNfsSecondaryStorageResourceTest extends TestCase {
     private static Map<String, Object> testParams;
 
-    private static final Logger s_logger = Logger.getLogger(LocalNfsSecondaryStorageResourceTest.class.getName());
+    protected static Logger logger = LogManager.getLogger(LocalNfsSecondaryStorageResourceTest.class.getName());
 
     LocalNfsSecondaryStorageResource resource;
 
@@ -127,7 +128,7 @@ public class LocalNfsSecondaryStorageResourceTest extends TestCase {
             throw new ConfigurationException("Unable to find agent.properties.");
         }
 
-        s_logger.info("agent.properties found at " + file.getAbsolutePath());
+        logger.info("agent.properties found at " + file.getAbsolutePath());
 
         try(FileInputStream fs = new FileInputStream(file);) {
             properties.load(fs);

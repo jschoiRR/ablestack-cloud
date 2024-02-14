@@ -360,7 +360,7 @@
       <a-tab-pane :tab="$t('label.virtual.routers')" key="vr" v-if="$store.getters.userInfo.roletype === 'Admin'">
         <RoutersTab :resource="resource" :loading="loading" />
       </a-tab-pane>
-      <a-tab-pane :tab="$t('label.vnf.appliances')" key="vnf" v-if="'deployVnfAppliance' in $store.getters.apis">
+      <a-tab-pane :tab="$t('label.vnf.appliances')" key="vnf" v-if="'deployVnfAppliance' in ($store.getters.apis) && (!$store.getters.features.securityfeaturesenabled)">
         <VnfAppliancesTab :resource="resource" :loading="loading" />
       </a-tab-pane>
       <a-tab-pane :tab="$t('label.events')" key="events" v-if="'listEvents' in $store.getters.apis">

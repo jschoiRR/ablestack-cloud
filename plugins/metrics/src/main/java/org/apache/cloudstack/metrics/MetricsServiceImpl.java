@@ -79,7 +79,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.VmDiskStatsEntry;
 import com.cloud.agent.api.VmStatsEntryBase;
@@ -138,7 +139,7 @@ import com.cloud.vm.dao.VmStatsDao;
 import com.google.gson.Gson;
 
 public class MetricsServiceImpl extends MutualExclusiveIdsManagerBase implements MetricsService {
-    private static final Logger LOGGER = Logger.getLogger(MetricsServiceImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(MetricsServiceImpl.class);
 
     @Inject
     private DataCenterDao dataCenterDao;

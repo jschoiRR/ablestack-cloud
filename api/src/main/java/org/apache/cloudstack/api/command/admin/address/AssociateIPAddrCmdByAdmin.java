@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.admin.address;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ResponseObject.ResponseView;
@@ -27,5 +28,5 @@ import org.apache.cloudstack.api.response.IPAddressResponse;
 @APICommand(name = "associateIpAddress", description = "Acquires and associates a public IP to an account.", responseObject = IPAddressResponse.class, responseView = ResponseView.Full,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class AssociateIPAddrCmdByAdmin extends AssociateIPAddrCmd implements AdminCmd {
-    public static final Logger s_logger = Logger.getLogger(AssociateIPAddrCmdByAdmin.class.getName());
+    protected static Logger logger = LogManager.getLogger(AssociateIPAddrCmdByAdmin.class.getName());
 }

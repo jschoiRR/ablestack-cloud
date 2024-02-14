@@ -40,7 +40,8 @@ import org.apache.cloudstack.api.response.UnmanageVMInstanceResponse;
 import org.apache.cloudstack.api.response.UserVmResponse;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.vm.UnmanagedVMsManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 
@@ -53,7 +54,7 @@ import javax.inject.Inject;
         since = "4.15.0")
 public class UnmanageVMInstanceCmd extends BaseAsyncCmd {
 
-    public static final Logger LOGGER = Logger.getLogger(UnmanageVMInstanceCmd.class);
+    protected static Logger LOGGER = LogManager.getLogger(UnmanageVMInstanceCmd.class);
 
     @Inject
     private UnmanagedVMsManager unmanagedVMsManager;

@@ -28,32 +28,31 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.cloud.utils.StringUtils;
-
 @Entity
 @Table(name = "security_check")
 public class SecurityCheckVO implements SecurityCheck {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id")
     private long id;
 
-    @Column(name = "mshost_id", updatable = false, nullable = false)
+    @Column(name = "mshost_id")
     private long msHostId;
-
-    @Column(name = "check_name", updatable = false, nullable = false)
-    private String checkName;
 
     @Column(name = "check_result")
     private boolean checkResult;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_update", updatable = true, nullable = true)
-    private Date lastUpdateTime;
+    @Column(name = "check_date")
+    private Date checkDate;
 
-    @Column(name = "check_details", updatable = true, nullable = true)
-    private byte[] checkDetails;
+    @Column(name = "check_failed_list", length = 16777215)
+    private String checkFailedList;
 
+    @Column(name = "type")
+    private String type;
+
+    @Override
     public long getId() {
         return id;
     }
@@ -64,55 +63,60 @@ public class SecurityCheckVO implements SecurityCheck {
     }
 
     @Override
-    public String getCheckName() {
-        return checkName;
-    }
-
-    @Override
     public boolean getCheckResult() {
         return checkResult;
     }
 
     @Override
-    public Date getLastUpdateTime() {
-        return lastUpdateTime;
+    public Date getCheckDate() {
+        return checkDate;
     }
 
     @Override
-    public String getParsedCheckDetails() {
-        return checkDetails != null ? new String(checkDetails, StringUtils.getPreferredCharset()) : "";
+    public String getCheckFailedList() {
+        return checkFailedList;
     }
 
-    public byte[] getCheckDetails() {
-        return checkDetails;
+    @Override
+    public String getType() {
+        return type;
+    }
+
+    public void setMsHostId(long msHostId) {
+        this.msHostId = msHostId;
     }
 
     public void setCheckResult(boolean checkResult) {
         this.checkResult = checkResult;
     }
 
-    public void setLastUpdateTime(Date lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
+    public void setCheckDate(Date checkDate) {
+        this.checkDate = checkDate;
     }
 
-    public void setCheckDetails(byte[] checkDetails) {
-        this.checkDetails = checkDetails;
+    public void setCheckFailedList(String checkFailedList) {
+        this.checkFailedList = checkFailedList;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     protected SecurityCheckVO() {
     }
 
-    public SecurityCheckVO(long mshostId, String checkName) {
-        this.msHostId = mshostId;
-        this.checkName = checkName;
+    public SecurityCheckVO(long msHostId, boolean checkResult, String checkFailedList, String type) {
+        this.msHostId = msHostId;
+        this.checkResult = checkResult;
+        this.checkFailedList = checkFailedList;
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return super.toString() +
-                "- check name: " + checkName +
                 ", check result: " + checkResult +
-                ", check last update: " + lastUpdateTime +
-                ", details: " + getParsedCheckDetails();
+                ", check date: " + checkDate +
+                ", check failed list: " + checkFailedList;
     }
 }

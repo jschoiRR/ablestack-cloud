@@ -32,7 +32,8 @@ import org.apache.cloudstack.api.response.ProjectResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.api.response.UserResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.InvalidParameterValueException;
@@ -41,7 +42,7 @@ import com.cloud.projects.Project;
 @APICommand(name = "deleteUserFromProject", description = "Deletes user from the project", responseObject = SuccessResponse.class, since = "4.15.0",
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, authorized = {RoleType.Admin, RoleType.DomainAdmin, RoleType.ResourceAdmin, RoleType.User})
 public class DeleteUserFromProjectCmd extends BaseAsyncCmd {
-    public static final Logger LOGGER = Logger.getLogger(DeleteUserFromProjectCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(DeleteUserFromProjectCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

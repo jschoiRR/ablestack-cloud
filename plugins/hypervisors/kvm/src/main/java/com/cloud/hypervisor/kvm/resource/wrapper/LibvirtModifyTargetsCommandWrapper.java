@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.ModifyTargetsAnswer;
@@ -38,7 +39,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 @ResourceWrapper(handles =  ModifyTargetsCommand.class)
 public final class LibvirtModifyTargetsCommandWrapper extends CommandWrapper<ModifyTargetsCommand, Answer, LibvirtComputingResource> {
-    private static final Logger s_logger = Logger.getLogger(LibvirtModifyTargetsCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(LibvirtModifyTargetsCommandWrapper.class);
 
     @Override
     public Answer execute(final ModifyTargetsCommand command, final LibvirtComputingResource libvirtComputingResource) {

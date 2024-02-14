@@ -45,7 +45,8 @@ import org.apache.cloudstack.outofbandmanagement.dao.OutOfBandManagementDao;
 import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement.PowerState;
 import org.apache.cloudstack.outofbandmanagement.OutOfBandManagement;
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class KVMHostActivityChecker extends AdapterBase implements ActivityCheckerInterface<Host>, HealthCheckerInterface<Host> {
-    private final static Logger LOG = Logger.getLogger(KVMHostActivityChecker.class);
+    private final static Logger LOG = LogManager.getLogger(KVMHostActivityChecker.class);
 
     @Inject
     private VolumeDao volumeDao;

@@ -30,7 +30,8 @@ import org.apache.cloudstack.api.response.DomainResponse;
 import org.apache.cloudstack.api.response.GlobalLoadBalancerResponse;
 import org.apache.cloudstack.api.response.RegionResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.ResourceAllocationException;
@@ -42,7 +43,7 @@ import com.cloud.region.ha.GlobalLoadBalancingRulesService;
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateGlobalLoadBalancerRuleCmd extends BaseAsyncCreateCmd {
 
-    public static final Logger s_logger = Logger.getLogger(CreateGlobalLoadBalancerRuleCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateGlobalLoadBalancerRuleCmd.class.getName());
 
 
     /////////////////////////////////////////////////////
@@ -157,7 +158,7 @@ public class CreateGlobalLoadBalancerRuleCmd extends BaseAsyncCreateCmd {
             this.setEntityUuid(gslbRule.getUuid());
             CallContext.current().setEventDetails("Rule Id: " + getEntityId());
         } catch (Exception ex) {
-            s_logger.warn("Exception: ", ex);
+            logger.warn("Exception: ", ex);
             throw new ServerApiException(ApiErrorCode.PARAM_ERROR, ex.getMessage());
         } finally {
 

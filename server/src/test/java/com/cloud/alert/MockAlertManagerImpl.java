@@ -89,4 +89,9 @@ public class MockAlertManagerImpl extends ManagerBase implements AlertManager {
         return false;
     }
 
+    @Override
+    public boolean updateAlert(Long id, Boolean showAlert) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }

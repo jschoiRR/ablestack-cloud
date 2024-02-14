@@ -70,7 +70,8 @@ import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.utils.reflectiontostringbuilderutils.ReflectionToStringBuilderUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.api.ApiDispatcher;
 import com.cloud.api.ApiGsonHelper;
@@ -120,7 +121,7 @@ import com.cloud.vm.dao.VMInstanceDao;
 import com.google.gson.Gson;
 
 public class BackupManagerImpl extends ManagerBase implements BackupManager {
-    private static final Logger LOG = Logger.getLogger(BackupManagerImpl.class);
+    protected static Logger LOG = LogManager.getLogger(BackupManagerImpl.class);
 
     @Inject
     private BackupDao backupDao;

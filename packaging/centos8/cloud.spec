@@ -285,12 +285,41 @@ do
   cp client/target/conf/$name ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/management/$name
 done
 
-ln -sf log4j-cloud.xml  ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/management/log4j.xml
+ln -sf log4j-cloud.xml  ${RPM_BUILD_ROOT}%{_sysconfdir}/%{name}/management/log4j2.xml
 
 install python/bindir/cloud-external-ipallocator.py ${RPM_BUILD_ROOT}%{_bindir}/%{name}-external-ipallocator.py
 install -D client/target/pythonlibs/jasypt-1.9.3.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/jasypt-1.9.3.jar
 install -D utils/target/cloud-utils-%{_maventag}-bundled.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-utils.jar
 install -D utils/target/cloud-utils-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-utils-test.jar
+install -D api/target/cloud-api-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-api-test.jar
+install -D api/target/cloud-api-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-api.jar
+install -D usage/target/cloud-usage-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-usage.jar
+install -D usage/target/cloud-usage-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-usage-test.jar
+install -D engine/api/target/cloud-engine-api-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-engine-api.jar
+install -D engine/components-api/target/cloud-engine-components-api-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-engine-components-api.jar
+install -D engine/schema/target/cloud-engine-schema-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-engine-schema.jar
+install -D framework/agent-lb/target/cloud-framework-agent-lb-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-agent-lb.jar
+install -D framework/ca/target/cloud-framework-ca-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-ca.jar
+install -D framework/cluster/target/cloud-framework-cluster-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-cluster.jar
+install -D framework/cluster/target/cloud-framework-cluster-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-cluster-test.jar
+install -D framework/config/target/cloud-framework-config-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-config.jar
+install -D framework/config/target/cloud-framework-config-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-config-test.jar
+install -D framework/db/target/cloud-framework-db-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-db.jar
+install -D framework/db/target/cloud-framework-db-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-db-test.jar
+install -D framework/direct-download/target/cloud-framework-direct-download-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-direct-download.jar
+install -D framework/ipc/target/cloud-framework-ipc-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-ipc.jar
+install -D framework/ipc/target/cloud-framework-ipc-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-ipc-test.jar
+install -D framework/jobs/target/cloud-framework-jobs-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-jobs.jar
+install -D framework/jobs/target/cloud-framework-jobs-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-jobs-test.jar
+install -D framework/managed-context/target/cloud-framework-managed-context-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-managed-context.jar
+install -D framework/managed-context/target/cloud-framework-managed-context-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-managed-context-test.jar
+install -D framework/quota/target/cloud-framework-quota-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-quota.jar
+install -D framework/quota/target/cloud-framework-quota-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-quota-test.jar
+install -D framework/rest/target/cloud-framework-rest-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-rest.jar
+install -D framework/rest/target/cloud-framework-rest-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-rest-test.jar 
+install -D framework/security/target/cloud-framework-security-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-security.jar
+install -D framework/spring/module/target/cloud-framework-spring-module-%{_maventag}.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-spring-module.jar
+install -D framework/spring/module/target/cloud-framework-spring-module-%{_maventag}-tests.jar ${RPM_BUILD_ROOT}%{_datadir}/%{name}-common/lib/%{name}-framework-spring-module-test.jar
 
 install -D packaging/centos8/cloud-ipallocator.rc ${RPM_BUILD_ROOT}%{_initrddir}/%{name}-ipallocator
 install -D packaging/centos8/cloud.limits ${RPM_BUILD_ROOT}%{_sysconfdir}/security/limits.d/cloud
@@ -576,7 +605,7 @@ pip install --upgrade /usr/share/cloudstack-marvin/Marvin-*.tar.gz
 %config(noreplace) %attr(0640,root,cloud) %{_sysconfdir}/%{name}/management/server.properties
 %config(noreplace) %attr(0640,root,cloud) %{_sysconfdir}/%{name}/management/config.json
 %config(noreplace) %{_sysconfdir}/%{name}/management/log4j-cloud.xml
-%config(noreplace) %{_sysconfdir}/%{name}/management/log4j.xml
+%config(noreplace) %{_sysconfdir}/%{name}/management/log4j2.xml
 %config(noreplace) %{_sysconfdir}/%{name}/management/environment.properties
 %config(noreplace) %{_sysconfdir}/%{name}/management/java.security.ciphers
 %attr(0644,root,root) %{_unitdir}/%{name}-management.service

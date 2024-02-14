@@ -23,7 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.MapUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.cloud.agent.api.Answer;
@@ -42,7 +43,7 @@ import com.xensource.xenapi.VM;
 @ResourceWrapper(handles =  UnPlugNicCommand.class)
 public final class CitrixUnPlugNicCommandWrapper extends CommandWrapper<UnPlugNicCommand, Answer, CitrixResourceBase> {
 
-    private static final Logger s_logger = Logger.getLogger(CitrixUnPlugNicCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(CitrixUnPlugNicCommandWrapper.class);
 
     @Override
     public Answer execute(final UnPlugNicCommand command, final CitrixResourceBase citrixResourceBase) {
@@ -73,7 +74,7 @@ public final class CitrixUnPlugNicCommandWrapper extends CommandWrapper<UnPlugNi
             return new UnPlugNicAnswer(command, true, "success");
         } catch (final Exception e) {
             final String msg = " UnPlug Nic failed due to " + e.toString();
-            s_logger.warn(msg, e);
+            logger.warn(msg, e);
             return new UnPlugNicAnswer(command, false, msg);
         }
     }

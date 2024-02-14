@@ -18,7 +18,8 @@ package com.cloud.upgrade;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +41,7 @@ import com.cloud.storage.dao.GuestOSHypervisorDaoImpl;
 
 public class GuestOsMapper {
 
-    final static Logger LOG = Logger.getLogger(GuestOsMapper.class);
+    final static Logger LOG = LogManager.getLogger(GuestOsMapper.class);
 
     @Inject
     GuestOSHypervisorDao guestOSHypervisorDao;

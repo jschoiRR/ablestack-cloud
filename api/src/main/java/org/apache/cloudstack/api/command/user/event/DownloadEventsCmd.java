@@ -12,7 +12,8 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.EventResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 @APICommand(name = "downloadEvents", description = "Download one or more events.", responseObject = SuccessResponse.class, entityType = {Event.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DownloadEventsCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(DownloadEventsCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DownloadEventsCmd.class.getName());
 
     private static final String s_name = "downloadeventsresponse";
 

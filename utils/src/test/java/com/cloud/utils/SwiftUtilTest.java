@@ -46,7 +46,7 @@ public class SwiftUtilTest {
     public void testCalculateRFC2104HMAC() throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
         String inputData = "testData";
         String inputKey  = "testKey";
-        String expected  = "1d541ecb5cdb2d850716bfd55585e20a1cd8984b";
+        String expected  = "19ddbbec0f1f7f9c5a6385948f49863074bf38b0e35118c977b529322d8aecef";
         String output = SwiftUtil.calculateRFC2104HMAC(inputData, inputKey);
 
         assertEquals(expected, output);

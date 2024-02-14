@@ -26,7 +26,8 @@ import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.response.ManagementServerResponse;
 import org.apache.cloudstack.api.response.ReadyForShutdownResponse;
 import org.apache.cloudstack.shutdown.ShutdownManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import com.cloud.user.Account;
 
 @APICommand(name = ReadyForShutdownCmd.APINAME,
@@ -35,7 +36,7 @@ import com.cloud.user.Account;
             responseObject = ReadyForShutdownResponse.class,
             requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ReadyForShutdownCmd extends BaseCmd {
-    public static final Logger LOG = Logger.getLogger(ReadyForShutdownCmd.class);
+    protected static Logger LOG = LogManager.getLogger(ReadyForShutdownCmd.class);
     public static final String APINAME = "readyForShutdown";
 
     @Inject

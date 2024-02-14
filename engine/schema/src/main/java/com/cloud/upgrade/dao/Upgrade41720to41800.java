@@ -25,7 +25,8 @@ import org.apache.cloudstack.api.response.UsageTypeResponse;
 import org.apache.cloudstack.usage.UsageTypes;
 import org.apache.cloudstack.utils.reflectiontostringbuilderutils.ReflectionToStringBuilderUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -41,7 +42,7 @@ import java.util.Map;
 
 public class Upgrade41720to41800 implements DbUpgrade, DbUpgradeSystemVmTemplate {
 
-    final static Logger LOG = Logger.getLogger(Upgrade41720to41800.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41720to41800.class);
 
     private GuestOsMapper guestOsMapper = new GuestOsMapper();
 

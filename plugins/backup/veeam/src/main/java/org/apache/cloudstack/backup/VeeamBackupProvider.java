@@ -39,7 +39,8 @@ import org.apache.cloudstack.framework.config.ConfigKey;
 import org.apache.cloudstack.framework.config.Configurable;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -65,7 +66,7 @@ import com.cloud.vm.dao.VMInstanceDao;
 
 public class VeeamBackupProvider extends AdapterBase implements BackupProvider, Configurable {
 
-    private static final Logger LOG = Logger.getLogger(VeeamBackupProvider.class);
+    protected static Logger LOG = LogManager.getLogger(VeeamBackupProvider.class);
     public static final String BACKUP_IDENTIFIER = "-CSBKP-";
 
     public ConfigKey<String> VeeamUrl = new ConfigKey<>("Advanced", String.class,

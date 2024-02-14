@@ -24,14 +24,15 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.HttpUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class CloudianUtils {
 
-    private static final Logger LOG = Logger.getLogger(CloudianUtils.class);
+    protected static Logger LOG = LogManager.getLogger(CloudianUtils.class);
     private static final String HMAC_SHA256_ALGORITHM = "HmacSHA256";
 
     /**

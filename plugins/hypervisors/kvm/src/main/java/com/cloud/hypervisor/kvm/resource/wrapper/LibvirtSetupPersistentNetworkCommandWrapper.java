@@ -17,7 +17,8 @@
 
 package com.cloud.hypervisor.kvm.resource.wrapper;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.libvirt.LibvirtException;
 
 import com.cloud.agent.api.Answer;
@@ -33,7 +34,7 @@ import com.cloud.resource.ResourceWrapper;
 
 @ResourceWrapper(handles = SetupPersistentNetworkCommand.class)
 public class LibvirtSetupPersistentNetworkCommandWrapper extends CommandWrapper<SetupPersistentNetworkCommand, Answer, LibvirtComputingResource> {
-    private static final Logger s_logger = Logger.getLogger(LibvirtSetupPersistentNetworkCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(LibvirtSetupPersistentNetworkCommandWrapper.class);
 
     @Override
     public Answer execute(SetupPersistentNetworkCommand command, LibvirtComputingResource serverResource) {

@@ -44,7 +44,8 @@ import org.apache.cloudstack.framework.config.ConfigKey;
 import org.apache.cloudstack.framework.config.Configurable;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.ActionEvent;
 import com.cloud.event.EventTypes;
@@ -65,7 +66,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 public class RoleManagerImpl extends ManagerBase implements RoleService, Configurable, PluggableService {
 
-    private Logger logger = Logger.getLogger(getClass());
+    private Logger logger = LogManager.getLogger(getClass());
 
     @Inject
     private AccountDao accountDao;

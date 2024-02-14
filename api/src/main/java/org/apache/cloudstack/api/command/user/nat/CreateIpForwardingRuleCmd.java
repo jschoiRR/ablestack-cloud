@@ -18,7 +18,8 @@ package org.apache.cloudstack.api.command.user.nat;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiCommandResourceType;
@@ -45,7 +46,7 @@ import com.cloud.user.Account;
 @APICommand(name = "createIpForwardingRule", description = "Creates an IP forwarding rule", responseObject = FirewallRuleResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateIpForwardingRuleCmd extends BaseAsyncCreateCmd implements StaticNatRule {
-    public static final Logger s_logger = Logger.getLogger(CreateIpForwardingRuleCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateIpForwardingRuleCmd.class.getName());
 
 
     /////////////////////////////////////////////////////
@@ -150,7 +151,7 @@ public class CreateIpForwardingRuleCmd extends BaseAsyncCreateCmd implements Sta
             setEntityId(rule.getId());
             setEntityUuid(rule.getUuid());
         } catch (NetworkRuleConflictException e) {
-            s_logger.info("Unable to create static NAT rule due to ", e);
+            logger.info("Unable to create static NAT rule due to ", e);
             throw new ServerApiException(ApiErrorCode.NETWORK_RULE_CONFLICT_ERROR, e.getMessage());
         }
     }

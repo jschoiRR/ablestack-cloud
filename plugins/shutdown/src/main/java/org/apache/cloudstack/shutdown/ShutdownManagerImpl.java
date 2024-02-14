@@ -36,7 +36,8 @@ import org.apache.cloudstack.shutdown.command.CancelShutdownManagementServerHost
 import org.apache.cloudstack.shutdown.command.PrepareForShutdownManagementServerHostCommand;
 import org.apache.cloudstack.shutdown.command.TriggerShutdownManagementServerHostCommand;
 import org.apache.cloudstack.utils.identity.ManagementServerNode;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Command;
 import com.cloud.cluster.ClusterManager;
@@ -50,7 +51,7 @@ import com.google.gson.Gson;
 
 public class ShutdownManagerImpl extends ManagerBase implements ShutdownManager, PluggableService{
 
-    private static Logger logger = Logger.getLogger(ShutdownManagerImpl.class);
+    private static Logger logger = LogManager.getLogger(ShutdownManagerImpl.class);
     Gson gson;
 
     @Inject

@@ -19,7 +19,8 @@ package org.apache.cloudstack.network.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.network.NetworkPermissionVO;
@@ -31,7 +32,7 @@ import com.cloud.utils.db.SearchCriteria;
 
 @Component
 public class NetworkPermissionDaoImpl extends GenericDaoBase<NetworkPermissionVO, Long> implements NetworkPermissionDao {
-    private static final Logger s_logger = Logger.getLogger(NetworkPermissionDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(NetworkPermissionDaoImpl.class);
 
     private SearchBuilder<NetworkPermissionVO> NetworkAndAccountSearch;
     private SearchBuilder<NetworkPermissionVO> NetworkIdSearch;

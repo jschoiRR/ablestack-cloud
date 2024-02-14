@@ -26,7 +26,8 @@ import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.DataCenterGuestIpv6PrefixResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.ConcurrentOperationException;
@@ -45,7 +46,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
         responseHasSensitiveInfo = false,
         authorized = {RoleType.Admin})
 public class DeleteGuestNetworkIpv6PrefixCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeleteGuestNetworkIpv6PrefixCmd.class);
+    protected static Logger logger = LogManager.getLogger(DeleteGuestNetworkIpv6PrefixCmd.class);
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

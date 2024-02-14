@@ -27,7 +27,8 @@ import org.apache.cloudstack.api.response.ExtractResponse;
 import org.apache.cloudstack.api.response.TemplateResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.dc.DataCenter;
 import com.cloud.event.EventTypes;
@@ -38,7 +39,7 @@ import com.cloud.user.Account;
 @APICommand(name = "extractTemplate", description = "Extracts a template", responseObject = ExtractResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ExtractTemplateCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(ExtractTemplateCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ExtractTemplateCmd.class.getName());
 
 
     /////////////////////////////////////////////////////
@@ -129,7 +130,7 @@ public class ExtractTemplateCmd extends BaseAsyncCmd {
                 throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to extract template");
             }
         } catch (InternalErrorException ex) {
-            s_logger.warn("Exception: ", ex);
+            logger.warn("Exception: ", ex);
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, ex.getMessage());
         }
     }

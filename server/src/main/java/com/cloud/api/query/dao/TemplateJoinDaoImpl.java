@@ -48,7 +48,8 @@ import org.apache.cloudstack.storage.datastore.db.ImageStoreVO;
 import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.utils.security.DigestHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.api.ResponseObject.ResponseView;
@@ -86,7 +87,7 @@ import com.cloud.utils.db.SearchCriteria;
 @Component
 public class TemplateJoinDaoImpl extends GenericDaoBaseWithTagInformation<TemplateJoinVO, TemplateResponse> implements TemplateJoinDao {
 
-    public static final Logger s_logger = Logger.getLogger(TemplateJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(TemplateJoinDaoImpl.class);
 
     @Inject
     private ConfigurationDao  _configDao;

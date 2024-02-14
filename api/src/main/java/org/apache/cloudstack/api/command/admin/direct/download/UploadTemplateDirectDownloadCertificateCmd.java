@@ -33,7 +33,8 @@ import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.direct.download.DirectDownloadCertificate;
 import org.apache.cloudstack.direct.download.DirectDownloadManager;
 import org.apache.cloudstack.direct.download.DirectDownloadManager.HostCertificateStatus;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class UploadTemplateDirectDownloadCertificateCmd extends BaseCmd {
     @Inject
     DirectDownloadManager directDownloadManager;
 
-    private static final Logger LOG = Logger.getLogger(UploadTemplateDirectDownloadCertificateCmd.class);
+    protected static Logger LOG = LogManager.getLogger(UploadTemplateDirectDownloadCertificateCmd.class);
 
     @Parameter(name = ApiConstants.CERTIFICATE, type = BaseCmd.CommandType.STRING, required = true, length = 65535,
             description = "SSL certificate")

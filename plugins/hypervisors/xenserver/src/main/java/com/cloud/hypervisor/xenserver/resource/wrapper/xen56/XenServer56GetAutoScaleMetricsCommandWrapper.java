@@ -19,7 +19,8 @@
 
 package com.cloud.hypervisor.xenserver.resource.wrapper.xen56;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.routing.GetAutoScaleMetricsAnswer;
@@ -36,7 +37,7 @@ import java.util.List;
 @ResourceWrapper(handles = GetAutoScaleMetricsCommand.class)
 public final class XenServer56GetAutoScaleMetricsCommandWrapper extends CommandWrapper<GetAutoScaleMetricsCommand, Answer, XenServer56Resource> {
 
-    private static final Logger s_logger = Logger.getLogger(XenServer56GetAutoScaleMetricsCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(XenServer56GetAutoScaleMetricsCommandWrapper.class);
 
     @Override
     public Answer execute(final GetAutoScaleMetricsCommand command, final XenServer56Resource xenServer56) {
@@ -77,7 +78,7 @@ public final class XenServer56GetAutoScaleMetricsCommandWrapper extends CommandW
 
             return new GetAutoScaleMetricsAnswer(command, true, values);
         } catch (final Exception ex) {
-            s_logger.warn("Failed to get autoscale metrics due to ", ex);
+            logger.warn("Failed to get autoscale metrics due to ", ex);
             return new GetAutoScaleMetricsAnswer(command, false);
         }
     }

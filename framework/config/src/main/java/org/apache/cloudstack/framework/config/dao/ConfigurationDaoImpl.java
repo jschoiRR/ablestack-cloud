@@ -25,7 +25,8 @@ import javax.annotation.PostConstruct;
 import javax.naming.ConfigurationException;
 
 import org.apache.cloudstack.framework.config.impl.ConfigurationVO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.utils.component.ComponentLifecycle;
@@ -39,7 +40,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 @Component
 public class ConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, String> implements ConfigurationDao {
-    private static final Logger s_logger = Logger.getLogger(ConfigurationDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(ConfigurationDaoImpl.class);
     private Map<String, String> _configs = null;
     private boolean _premium;
 
@@ -145,7 +146,7 @@ public class ConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, String
             stmt.executeUpdate();
             return true;
         } catch (Exception e) {
-            s_logger.warn("Unable to update Configuration Value", e);
+            logger.warn("Unable to update Configuration Value", e);
         }
         return false;
     }
@@ -162,7 +163,7 @@ public class ConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, String
                 return true;
             }
         } catch (Exception e) {
-            s_logger.warn("Unable to update Configuration Value", e);
+            logger.warn("Unable to update Configuration Value", e);
         }
         return false;
     }
@@ -196,7 +197,7 @@ public class ConfigurationDaoImpl extends GenericDaoBase<ConfigurationVO, String
             }
             return returnValue;
         } catch (Exception e) {
-            s_logger.warn("Unable to update Configuration Value", e);
+            logger.warn("Unable to update Configuration Value", e);
             throw new CloudRuntimeException("Unable to initialize configuration variable: " + name);
 
         }

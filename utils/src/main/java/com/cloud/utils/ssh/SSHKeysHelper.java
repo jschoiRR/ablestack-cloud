@@ -64,7 +64,7 @@ public class SSHKeysHelper {
 
         MessageDigest md5 = null;
         try {
-            md5 = MessageDigest.getInstance("MD5");
+            md5 = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

@@ -73,7 +73,8 @@ import org.apache.cloudstack.jobs.JobInfo;
 import org.apache.cloudstack.managed.context.ManagedContextTimerTask;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import javax.naming.ConfigurationException;
@@ -92,7 +93,7 @@ import static com.cloud.org.Grouping.AllocationState.Disabled;
 
 public class ClusterDrsServiceImpl extends ManagerBase implements ClusterDrsService, PluggableService {
 
-    private static final Logger logger = Logger.getLogger(ClusterDrsServiceImpl.class);
+    protected static Logger logger = LogManager.getLogger(ClusterDrsServiceImpl.class);
 
     private static final String CLUSTER_LOCK_STR = "drs.plan.cluster.%s";
 

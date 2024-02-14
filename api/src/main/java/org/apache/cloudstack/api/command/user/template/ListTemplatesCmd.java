@@ -21,7 +21,8 @@ import com.cloud.server.ResourceIcon;
 import com.cloud.server.ResourceTag;
 import org.apache.cloudstack.api.response.ResourceIconResponse;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +47,7 @@ import com.cloud.user.Account;
 @APICommand(name = "listTemplates", description = "List all public, private, and privileged templates.", responseObject = TemplateResponse.class, entityType = {VirtualMachineTemplate.class}, responseView = ResponseView.Restricted,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListTemplatesCmd extends BaseListTaggedResourcesCmd implements UserCmd {
-    public static final Logger s_logger = Logger.getLogger(ListTemplatesCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListTemplatesCmd.class.getName());
 
     private static final String s_name = "listtemplatesresponse";
 

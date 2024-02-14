@@ -25,7 +25,8 @@ import java.nio.file.Paths;
 import org.apache.cloudstack.diagnostics.CopyToSecondaryStorageAnswer;
 import org.apache.cloudstack.diagnostics.CopyToSecondaryStorageCommand;
 import org.apache.cloudstack.diagnostics.DiagnosticsService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.hypervisor.kvm.resource.LibvirtComputingResource;
@@ -37,7 +38,7 @@ import com.cloud.utils.ssh.SshHelper;
 
 @ResourceWrapper(handles = CopyToSecondaryStorageCommand.class)
 public class LibvirtCopyToSecondaryStorageWrapper extends CommandWrapper<CopyToSecondaryStorageCommand, Answer, LibvirtComputingResource> {
-    public static final Logger LOGGER = Logger.getLogger(LibvirtCopyToSecondaryStorageWrapper.class);
+    protected static Logger LOGGER = LogManager.getLogger(LibvirtCopyToSecondaryStorageWrapper.class);
 
     @Override
     public Answer execute(CopyToSecondaryStorageCommand command, LibvirtComputingResource libvirtResource) {

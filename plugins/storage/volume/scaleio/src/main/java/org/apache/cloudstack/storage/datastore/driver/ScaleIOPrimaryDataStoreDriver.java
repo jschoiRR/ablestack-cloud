@@ -59,7 +59,8 @@ import org.apache.cloudstack.storage.to.VolumeObjectTO;
 import org.apache.cloudstack.storage.volume.VolumeObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.storage.MigrateVolumeCommand;
@@ -102,7 +103,7 @@ import com.cloud.vm.dao.VMInstanceDao;
 import com.google.common.base.Preconditions;
 
 public class ScaleIOPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
-    private static final Logger LOGGER = Logger.getLogger(ScaleIOPrimaryDataStoreDriver.class);
+    protected static Logger LOGGER = LogManager.getLogger(ScaleIOPrimaryDataStoreDriver.class);
 
     @Inject
     EndPointSelector selector;

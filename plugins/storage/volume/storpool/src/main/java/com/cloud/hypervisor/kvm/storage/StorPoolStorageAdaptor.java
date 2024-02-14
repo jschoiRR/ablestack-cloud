@@ -28,7 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.cloudstack.utils.qemu.QemuImg.PhysicalDiskFormat;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.to.DiskTO;
 import com.cloud.storage.Storage;
@@ -51,7 +52,7 @@ public class StorPoolStorageAdaptor implements StorageAdaptor {
         }
     }
 
-    private static final Logger log = Logger.getLogger(StorPoolStorageAdaptor.class);
+    protected static Logger log = LogManager.getLogger(StorPoolStorageAdaptor.class);
 
     private static final Map<String, KVMStoragePool> storageUuidToStoragePool = new HashMap<String, KVMStoragePool>();
 

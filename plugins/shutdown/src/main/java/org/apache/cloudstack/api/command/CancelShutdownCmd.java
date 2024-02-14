@@ -19,7 +19,8 @@
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.BaseCmd;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.user.Account;
 
@@ -35,7 +36,7 @@ import org.apache.cloudstack.acl.RoleType;
 
 public class CancelShutdownCmd extends BaseShutdownActionCmd {
 
-    public static final Logger LOG = Logger.getLogger(CancelShutdownCmd.class);
+    protected static Logger LOG = LogManager.getLogger(CancelShutdownCmd.class);
     public static final String APINAME = "cancelShutdown";
 
     @Override

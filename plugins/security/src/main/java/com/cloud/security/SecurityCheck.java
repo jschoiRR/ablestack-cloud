@@ -23,14 +23,15 @@ package com.cloud.security;
 import java.util.Date;
 
 public interface SecurityCheck {
-    long getMsHostId();
+    long getId();
 
-    String getCheckName();
+    long getMsHostId();
 
     boolean getCheckResult();
 
-    Date getLastUpdateTime();
+    Date getCheckDate();
 
-    String getParsedCheckDetails();
+    String getCheckFailedList();
 
+    String getType();
 }

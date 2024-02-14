@@ -55,7 +55,7 @@ const user = {
     cloudian: {},
     zones: {},
     timezoneoffset: 0.0,
-    usebrowsertimezone: false,
+    usebrowsertimezone: true,
     domainStore: {},
     darkMode: false,
     defaultListViewPageSize: 20,
@@ -171,6 +171,9 @@ const user = {
     },
     SET_OAUTH_PROVIDER_USED_TO_LOGIN: (state, provider) => {
       vueProps.$localStorage.set(OAUTH_PROVIDER, provider)
+    },
+    SET_SHOW_ALERT (state, flag) {
+      state.showAlert = flag
     }
   },
 
@@ -195,7 +198,7 @@ const user = {
           commit('SET_TOKEN', result.sessionkey)
           commit('SET_TIMEZONE_OFFSET', result.timezoneoffset)
 
-          const cachedUseBrowserTimezone = vueProps.$localStorage.get(USE_BROWSER_TIMEZONE, false)
+          const cachedUseBrowserTimezone = vueProps.$localStorage.get(USE_BROWSER_TIMEZONE, true)
           commit('SET_USE_BROWSER_TIMEZONE', cachedUseBrowserTimezone)
           const darkMode = vueProps.$localStorage.get(DARK_MODE, false)
           commit('SET_DARK_MODE', darkMode)
@@ -218,6 +221,7 @@ const user = {
           commit('SET_2FA_ISSUER', result.issuerfor2fa)
           commit('SET_FIRST_LOGIN', (result.firstlogin === 'true'))
           commit('SET_LOGIN_FLAG', false)
+          commit('SET_SHOW_ALERT', true)
           notification.destroy()
 
           resolve()
@@ -264,7 +268,9 @@ const user = {
           commit('SET_2FA_ENABLED', (result.is2faenabled === 'true'))
           commit('SET_2FA_PROVIDER', result.providerfor2fa)
           commit('SET_2FA_ISSUER', result.issuerfor2fa)
+          commit('SET_FIRST_LOGIN', (result.firstlogin === 'true'))
           commit('SET_LOGIN_FLAG', false)
+          commit('SET_SHOW_ALERT', true)
           notification.destroy()
 
           resolve()
@@ -279,7 +285,7 @@ const user = {
         const cachedApis = switchDomain ? {} : vueProps.$localStorage.get(APIS, {})
         const cachedZones = vueProps.$localStorage.get(ZONES, [])
         const cachedTimezoneOffset = vueProps.$localStorage.get(TIMEZONE_OFFSET, 0.0)
-        const cachedUseBrowserTimezone = vueProps.$localStorage.get(USE_BROWSER_TIMEZONE, false)
+        const cachedUseBrowserTimezone = vueProps.$localStorage.get(USE_BROWSER_TIMEZONE, true)
         const cachedCustomColumns = vueProps.$localStorage.get(CUSTOM_COLUMNS, {})
         const domainStore = vueProps.$localStorage.get(DOMAIN_STORE, {})
         const darkMode = vueProps.$localStorage.get(DARK_MODE, false)
@@ -410,6 +416,7 @@ const user = {
           commit('SET_2FA_ISSUER', '')
           commit('SET_LOGIN_FLAG', false)
           commit('SET_FIRST_LOGIN', '')
+          commit('SET_SHOW_ALERT', false)
           vueProps.$localStorage.remove(CURRENT_PROJECT)
           vueProps.$localStorage.remove(ACCESS_TOKEN)
           vueProps.$localStorage.remove(HEADER_NOTICES)

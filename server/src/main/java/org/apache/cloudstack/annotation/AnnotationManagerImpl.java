@@ -49,7 +49,8 @@ import org.apache.cloudstack.storage.datastore.db.ImageStoreVO;
 import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.cluster.dao.ManagementServerHostDao;
 import com.cloud.dc.ClusterVO;
@@ -101,7 +102,7 @@ import com.cloud.vm.snapshot.dao.VMSnapshotDao;
  * @since 4.11
  */
 public final class AnnotationManagerImpl extends ManagerBase implements AnnotationService, Configurable, PluggableService {
-    public static final Logger LOGGER = Logger.getLogger(AnnotationManagerImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(AnnotationManagerImpl.class);
 
     @Inject
     private AnnotationDao annotationDao;

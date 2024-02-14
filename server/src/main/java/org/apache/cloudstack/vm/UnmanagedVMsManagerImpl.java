@@ -17,6 +17,41 @@
 
 package org.apache.cloudstack.vm;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+
+import org.apache.cloudstack.api.ApiConstants;
+import org.apache.cloudstack.api.ApiErrorCode;
+import org.apache.cloudstack.api.ResponseGenerator;
+import org.apache.cloudstack.api.ResponseObject;
+import org.apache.cloudstack.api.ServerApiException;
+import org.apache.cloudstack.api.command.admin.vm.ImportUnmanagedInstanceCmd;
+import org.apache.cloudstack.api.command.admin.vm.ListUnmanagedInstancesCmd;
+import org.apache.cloudstack.api.command.admin.vm.UnmanageVMInstanceCmd;
+import org.apache.cloudstack.api.response.ListResponse;
+import org.apache.cloudstack.api.response.NicResponse;
+import org.apache.cloudstack.api.response.UnmanagedInstanceDiskResponse;
+import org.apache.cloudstack.api.response.UnmanagedInstanceResponse;
+import org.apache.cloudstack.api.response.UserVmResponse;
+import org.apache.cloudstack.context.CallContext;
+import org.apache.cloudstack.engine.orchestration.service.NetworkOrchestrationService;
+import org.apache.cloudstack.engine.orchestration.service.VolumeOrchestrationService;
+import org.apache.cloudstack.framework.config.ConfigKey;
+import org.apache.cloudstack.framework.config.dao.ConfigurationDao;
+import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
+import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
+import org.apache.cloudstack.utils.volume.VirtualMachineDiskInfo;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.CheckVolumeAnswer;
@@ -186,10 +221,7 @@ import java.util.stream.Collectors;
 
 public class UnmanagedVMsManagerImpl implements UnmanagedVMsManager {
     public static final String VM_IMPORT_DEFAULT_TEMPLATE_NAME = "system-default-vm-import-dummy-template.iso";
-    public static final String KVM_VM_IMPORT_DEFAULT_TEMPLATE_NAME = "kvm-default-vm-import-dummy-template";
     private static final Logger LOGGER = Logger.getLogger(UnmanagedVMsManagerImpl.class);
-    private static final List<Hypervisor.HypervisorType> importUnmanagedInstancesSupportedHypervisors =
-            Arrays.asList(Hypervisor.HypervisorType.VMware, Hypervisor.HypervisorType.KVM);
 
     @Inject
     private AgentManager agentManager;

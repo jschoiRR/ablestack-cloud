@@ -56,14 +56,15 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.nio.TrustAllManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 
 public class CloudianClient {
-    private static final Logger LOG = Logger.getLogger(CloudianClient.class);
+    protected static Logger LOG = LogManager.getLogger(CloudianClient.class);
 
     private final HttpClient httpClient;
     private final HttpClientContext httpContext;

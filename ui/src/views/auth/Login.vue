@@ -85,7 +85,7 @@
             </template>
           </a-input-password>
         </a-form-item>
-        <a-form-item ref="domain" name="domain">
+        <a-form-item ref="domain" name="domain" v-if="!securityfeatures">
           <a-input
             size="large"
             type="text"
@@ -152,7 +152,7 @@
         @click="handleSubmit"
       >{{ $t('label.login') }}</a-button>
     </a-form-item>
-    <translation-menu/>
+    <translation-menu v-if="!securityfeatures"/>
     <div class="content" v-if="socialLogin">
       <p class="or">or</p>
     </div>
@@ -193,6 +193,7 @@ import { SERVER_MANAGER } from '@/store/mutation-types'
 import { sourceToken } from '@/utils/request'
 import { reactive, ref, toRaw } from 'vue'
 import { mapActions } from 'vuex'
+import RSAKey from '../../../public/js/rsa'
 
 export default {
   components: {
@@ -214,6 +215,9 @@ export default {
       githubredirecturi: '',
       googleclientid: '',
       githubclientid: '',
+      securityfeatures: true,
+      publickeymodulus: '',
+      publickeyexponent: '',
       loginType: 0,
       state: {
         time: 60,
@@ -303,6 +307,14 @@ export default {
           })
         }
       })
+      api('listCapabilities').then(response => {
+        if (response) {
+          const capability = response.listcapabilitiesresponse.capability || []
+          this.securityfeatures = capability.securityfeaturesenabled
+          this.publickeymodulus = capability.setpublickeymodulus
+          this.publickeyexponent = capability.setpublickeyexponent
+        }
+      })
     },
     // handler
     async handleUsernameOrEmail (rule, value) {
@@ -366,6 +378,17 @@ export default {
 
       return `${rootUrl}?${qs.toString()}`
     },
+    async getCapabilities () {
+      api('listCapabilities').then(response => {
+        if (response) {
+          const capability = response.listcapabilitiesresponse.capability || []
+          this.securityfeatures = capability.securityfeaturesenabled
+          this.publickeymodulus = capability.setpublickeymodulus
+          this.publickeyexponent = capability.setpublickeyexponent
+        }
+      })
+      return Promise.resolve()
+    },
     handleSubmit (e) {
       e.preventDefault()
       if (this.state.loginBtn) return
@@ -386,9 +409,17 @@ export default {
           if (!loginParams.domain) {
             loginParams.domain = '/'
           }
+          if (this.securityfeatures) {
+            const rsa = new RSAKey()
+            rsa.setPublic(this.publickeymodulus, this.publickeyexponent)
+            loginParams.password = rsa.encrypt(loginParams.password)
+          }
           this.Login(loginParams)
             .then((res) => this.loginSuccess(res))
             .catch(() => {
+              if (this.securityfeatures) {
+                this.getCapabilities()
+              }
               this.requestFailed()
               this.state.loginBtn = false
             })

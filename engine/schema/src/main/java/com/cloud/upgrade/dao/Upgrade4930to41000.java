@@ -23,12 +23,13 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade4930to41000 implements DbUpgrade {
-    final static Logger s_logger = Logger.getLogger(Upgrade4930to41000.class);
+    final static Logger logger = LogManager.getLogger(Upgrade4930to41000.class);
 
     public static class MemoryValues {
         long max;

@@ -28,14 +28,15 @@ import com.cloud.resource.CommandWrapper;
 import com.cloud.resource.ResourceWrapper;
 import com.cloud.storage.Storage;
 import com.cloud.utils.exception.CloudRuntimeException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Map;
 
 @ResourceWrapper(handles =  CheckStorageAvailabilityCommand.class)
 public class LibvirtCheckStorageAvailabilityWrapper extends CommandWrapper<CheckStorageAvailabilityCommand, Answer, LibvirtComputingResource> {
 
-    private static final Logger s_logger = Logger.getLogger(LibvirtCheckStorageAvailabilityWrapper.class);
+    protected static Logger logger = LogManager.getLogger(LibvirtCheckStorageAvailabilityWrapper.class);
 
     @Override
     public Answer execute(CheckStorageAvailabilityCommand command, LibvirtComputingResource resource) {
@@ -44,15 +45,15 @@ public class LibvirtCheckStorageAvailabilityWrapper extends CommandWrapper<Check
 
         for (String poolUuid : poolsMap.keySet()) {
             Storage.StoragePoolType type = poolsMap.get(poolUuid);
-            s_logger.debug("Checking if storage pool " + poolUuid + " (" + type + ") is mounted on this host");
+            logger.debug("Checking if storage pool " + poolUuid + " (" + type + ") is mounted on this host");
             try {
                 KVMStoragePool storagePool = storagePoolMgr.getStoragePool(type, poolUuid);
                 if (storagePool == null) {
-                    s_logger.info("Storage pool " + poolUuid + " is not available");
+                    logger.info("Storage pool " + poolUuid + " is not available");
                     return new Answer(command, false, "Storage pool " + poolUuid + " not available");
                 }
             } catch (CloudRuntimeException e) {
-                s_logger.info("Storage pool " + poolUuid + " is not available");
+                logger.info("Storage pool " + poolUuid + " is not available");
                 return new Answer(command, e);
             }
         }

@@ -21,13 +21,14 @@ import com.cloud.agent.api.Answer;
 import com.cloud.utils.exception.CloudRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.cloudstack.api.ApiConstants;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class DiagnosticsAnswer extends Answer {
-    public static final Logger LOGGER = Logger.getLogger(DiagnosticsAnswer.class);
+    protected static Logger LOGGER = LogManager.getLogger(DiagnosticsAnswer.class);
 
     public DiagnosticsAnswer(DiagnosticsCommand cmd, boolean result, String details) {
         super(cmd, result, details);

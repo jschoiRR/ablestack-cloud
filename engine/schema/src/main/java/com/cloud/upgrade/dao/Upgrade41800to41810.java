@@ -22,7 +22,8 @@ import com.cloud.upgrade.GuestOsMapper;
 import com.cloud.storage.GuestOSVO;
 import com.cloud.upgrade.SystemVmTemplateRegistration;
 import com.cloud.utils.exception.CloudRuntimeException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -31,7 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Upgrade41800to41810 implements DbUpgrade, DbUpgradeSystemVmTemplate {
-    final static Logger LOG = Logger.getLogger(Upgrade41800to41810.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41800to41810.class);
     private GuestOsMapper guestOsMapper = new GuestOsMapper();
 
     private SystemVmTemplateRegistration systemVmTemplateRegistration;

@@ -41,7 +41,8 @@ import org.apache.cloudstack.framework.config.ConfigKey;
 import org.apache.cloudstack.framework.config.Configurable;
 import org.apache.cloudstack.framework.messagebus.MessageBus;
 import org.apache.cloudstack.framework.messagebus.MessageSubscriber;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.domain.Domain;
 import com.cloud.domain.DomainVO;
@@ -56,7 +57,7 @@ import com.cloud.utils.component.ComponentLifecycleBase;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class CloudianConnectorImpl extends ComponentLifecycleBase implements CloudianConnector, Configurable {
-    private static final Logger LOG = Logger.getLogger(CloudianConnectorImpl.class);
+    protected static Logger LOG = LogManager.getLogger(CloudianConnectorImpl.class);
 
     @Inject
     private UserDao userDao;

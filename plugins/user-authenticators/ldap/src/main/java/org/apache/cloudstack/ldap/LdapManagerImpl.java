@@ -52,7 +52,8 @@ import org.apache.cloudstack.framework.messagebus.MessageSubscriber;
 import org.apache.cloudstack.ldap.dao.LdapConfigurationDao;
 import org.apache.cloudstack.ldap.dao.LdapTrustMapDao;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.domain.DomainVO;
@@ -65,7 +66,7 @@ import com.cloud.utils.Pair;
 
 @Component
 public class LdapManagerImpl extends ComponentLifecycleBase implements LdapManager, LdapValidator {
-    private static final Logger LOGGER = Logger.getLogger(LdapManagerImpl.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(LdapManagerImpl.class.getName());
 
     @Inject
     private LdapConfigurationDao _ldapConfigurationDao;

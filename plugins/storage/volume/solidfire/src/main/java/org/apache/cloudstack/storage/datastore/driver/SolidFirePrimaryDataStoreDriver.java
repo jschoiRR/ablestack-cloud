@@ -50,7 +50,8 @@ import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.storage.datastore.util.SolidFireUtil;
 import org.apache.cloudstack.storage.to.SnapshotObjectTO;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.to.DataObjectType;
@@ -91,7 +92,7 @@ import com.cloud.vm.VirtualMachine;
 import com.google.common.base.Preconditions;
 
 public class SolidFirePrimaryDataStoreDriver implements PrimaryDataStoreDriver {
-    private static final Logger LOGGER = Logger.getLogger(SolidFirePrimaryDataStoreDriver.class);
+    protected static Logger LOGGER = LogManager.getLogger(SolidFirePrimaryDataStoreDriver.class);
     private static final int LOWEST_HYPERVISOR_SNAPSHOT_RESERVE = 10;
     private static final long MIN_IOPS_FOR_TEMPLATE_VOLUME = 100L;
     private static final long MAX_IOPS_FOR_TEMPLATE_VOLUME = 20000L;

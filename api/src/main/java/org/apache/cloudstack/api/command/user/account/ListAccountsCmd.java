@@ -31,7 +31,8 @@ import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.AccountResponse;
 import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.ResourceIconResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.server.ResourceIcon;
@@ -41,7 +42,7 @@ import com.cloud.user.Account;
 @APICommand(name = "listAccounts", description = "Lists accounts and provides detailed account information for listed accounts", responseObject = AccountResponse.class, responseView = ResponseView.Restricted, entityType = {Account.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class ListAccountsCmd extends BaseListDomainResourcesCmd implements UserCmd {
-    public static final Logger s_logger = Logger.getLogger(ListAccountsCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListAccountsCmd.class.getName());
     private static final String s_name = "listaccountsresponse";
 
     /////////////////////////////////////////////////////

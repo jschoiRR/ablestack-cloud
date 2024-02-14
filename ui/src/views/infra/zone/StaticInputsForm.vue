@@ -117,6 +117,7 @@
 
 <script>
 import { ref, reactive, toRaw } from 'vue'
+import store from '@/store'
 
 export default {
   props: {
@@ -304,6 +305,9 @@ export default {
         if (Array.isArray(condition) && !condition.includes(fieldVal)) {
           isShow = false
         } else if (!Array.isArray(condition) && fieldVal !== condition) {
+          isShow = false
+        }
+        if (Array.isArray(condition) && condition.includes(fieldVal) && store.getters.features.securityfeaturesenabled) {
           isShow = false
         }
       })

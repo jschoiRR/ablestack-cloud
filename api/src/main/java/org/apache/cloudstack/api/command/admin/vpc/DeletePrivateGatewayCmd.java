@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.admin.vpc;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.APICommand;
@@ -41,7 +42,7 @@ import com.cloud.user.Account;
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false,
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User})
 public class DeletePrivateGatewayCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeletePrivateGatewayCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DeletePrivateGatewayCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

@@ -21,7 +21,9 @@ import java.util.List;
 
 import org.apache.cloudstack.api.command.admin.GetSecurityCheckCmd;
 import org.apache.cloudstack.api.command.admin.RunSecurityCheckCmd;
+import org.apache.cloudstack.api.command.admin.DeleteSecurityCheckResultCmd;
 import org.apache.cloudstack.api.response.GetSecurityCheckResponse;
+import com.cloud.utils.exception.CloudRuntimeException;
 
 
 public interface SecurityCheckService {
@@ -29,4 +31,6 @@ public interface SecurityCheckService {
     List<GetSecurityCheckResponse> listSecurityChecks(GetSecurityCheckCmd cmd);
 
     boolean runSecurityCheckCommand(RunSecurityCheckCmd runSecurityCheckCmd);
+
+    boolean deleteSecurityCheckResult(DeleteSecurityCheckResultCmd deleteSecurityCheckResultCmd) throws CloudRuntimeException;
 }

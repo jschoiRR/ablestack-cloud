@@ -174,7 +174,7 @@ export default {
     updateData (item) {
       if (item.name === 'api.allowed.source.ip') {
         if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(this.editableValue) ||
-        this.editableValue === '0.0.0.0') {
+        this.editableValue === '0.0.0.0' || this.editableValue === '255.255.255.255') {
           this.$message.error(this.$t('message.error.save.setting'))
           this.$notification.error({
             message: this.$t('label.error'),

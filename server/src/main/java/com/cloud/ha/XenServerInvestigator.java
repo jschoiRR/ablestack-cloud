@@ -20,7 +20,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -36,7 +37,7 @@ import com.cloud.utils.component.AdapterBase;
 import com.cloud.vm.VirtualMachine;
 
 public class XenServerInvestigator extends AdapterBase implements Investigator {
-    private final static Logger s_logger = Logger.getLogger(XenServerInvestigator.class);
+    private final static Logger logger = LogManager.getLogger(XenServerInvestigator.class);
     @Inject
     HostDao _hostDao;
     @Inject
@@ -63,7 +64,7 @@ public class XenServerInvestigator extends AdapterBase implements Investigator {
             if (answer != null && answer.getResult()) {
                 CheckOnHostAnswer ans = (CheckOnHostAnswer)answer;
                 if (!ans.isDetermined()) {
-                    s_logger.debug("Host " + neighbor + " couldn't determine the status of " + agent);
+                    logger.debug("Host " + neighbor + " couldn't determine the status of " + agent);
                     continue;
                 }
                 // even it returns true, that means host is up, but XAPI may not work

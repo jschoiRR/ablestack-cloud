@@ -17,7 +17,7 @@
   under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>cloud-client-ui</artifactId>
     <name>Apache CloudStack Client UI</name>
@@ -648,11 +648,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-           <groupId>org.apache.cloudstack</groupId>
-           <artifactId>cloud-plugin-shutdown</artifactId>
-           <version>${project.version}</version>
-       </dependency>
-       <dependency>
+            <groupId>org.apache.cloudstack</groupId>
+            <artifactId>cloud-plugin-shutdown</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.cloudstack</groupId>
             <artifactId>cloud-plugin-security</artifactId>
             <version>${project.version}</version>
@@ -746,7 +746,7 @@
                 </dependencies>
                 <configuration>
                     <supportedPackagings>
-                      <supportedPackaging>jar</supportedPackaging>
+                        <supportedPackaging>jar</supportedPackaging>
                     </supportedPackagings>
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <stopPort>9966</stopPort>
@@ -767,7 +767,7 @@
                     </webApp>
                     <systemProperties>
                         <systemProperty>
-                            <name>log4j.configuration</name>
+                            <name>log4j2.configurationFile</name>
                             <value>log4j-cloud.xml</value>
                         </systemProperty>
                     </systemProperties>
@@ -807,7 +807,7 @@
                                     <globmapper from="*.in" to="*" />
                                     <filterchain>
                                         <filterreader
-                                            classname="org.apache.tools.ant.filters.ReplaceTokens">
+                                                classname="org.apache.tools.ant.filters.ReplaceTokens">
                                             <param type="propertiesfile" value="${cs.replace.properties}" />
                                         </filterreader>
                                     </filterchain>
@@ -862,10 +862,10 @@
                             <target if="${noredist}">
                                 <echo>test</echo>
                                 <replaceregexp
-                                    file="${basedir}/target/conf/environment.properties"
-                                    match="cloud-stack-components-specification=.*"
-                                    replace="cloud-stack-components-specification=components-nonoss.xml"
-                                    byline="true" />
+                                        file="${basedir}/target/conf/environment.properties"
+                                        match="cloud-stack-components-specification=.*"
+                                        replace="cloud-stack-components-specification=components-nonoss.xml"
+                                        byline="true" />
                             </target>
                         </configuration>
                     </execution>
@@ -878,10 +878,10 @@
                         <configuration>
                             <target if="${noredist}">
                                 <replaceregexp
-                                    file="${basedir}/target/classes/META-INF/webapp/WEB-INF/web.xml"
-                                    match="classpath:componentContext.xml"
-                                    replace="classpath:nonossComponentContext.xml"
-                                    byline="true" />
+                                        file="${basedir}/target/classes/META-INF/webapp/WEB-INF/web.xml"
+                                        match="classpath:componentContext.xml"
+                                        replace="classpath:nonossComponentContext.xml"
+                                        byline="true" />
                                 <copy overwrite="true" todir="${basedir}/target/common/scripts">
                                     <fileset dir="${basedir}/../plugins/network-elements/cisco-vnmc/src/main/scripts">
                                         <include name="**/*" />
@@ -929,7 +929,7 @@
                                     <artifactId>bcpkix-jdk15on</artifactId>
                                     <overWrite>false</overWrite>
                                     <outputDirectory>${project.build.directory}/lib</outputDirectory>
-			        </artifactItem>
+                                </artifactItem>
                                 <artifactItem>
                                     <groupId>org.apache.cloudstack</groupId>
                                     <artifactId>cloud-plugin-storage-volume-storpool</artifactId>
@@ -1008,31 +1008,31 @@
                                     <resource>META-INF/spring.schemas</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                  <resource>META-INF/services/com.sun.tools.xjc.Plugin</resource>
+                                    <resource>META-INF/services/com.sun.tools.xjc.Plugin</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                  <resource>META-INF/cxf/cxf.extension</resource>
+                                    <resource>META-INF/cxf/cxf.extension</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
-                                  <resource>META-INF/extensions.xml</resource>
+                                    <resource>META-INF/extensions.xml</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
-                                  <resource>META-INF/cxf/extensions.xml</resource>
+                                    <resource>META-INF/cxf/extensions.xml</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                                  <resource>META-INF/cxf/bus-extensions.txt</resource>
+                                    <resource>META-INF/cxf/bus-extensions.txt</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
-                                  <resource>META-INF/cxf/bus-extensions.xml</resource>
+                                    <resource>META-INF/cxf/bus-extensions.xml</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
-                                  <resource>META-INF/wsdl.plugin.xml</resource>
+                                    <resource>META-INF/wsdl.plugin.xml</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
-                                  <resource>META-INF/tools.service.validator.xml</resource>
+                                    <resource>META-INF/tools.service.validator.xml</resource>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.XmlAppendingTransformer">
-                                  <resource>META-INF/cxf/java2wsbeans.xml</resource>
+                                    <resource>META-INF/cxf/java2wsbeans.xml</resource>
                                 </transformer>
                             </transformers>
                             <filters>
@@ -1163,22 +1163,22 @@
             </activation>
             <build>
                 <plugins>
-                  <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${cs.jacoco-plugin.version}</version>
-                    <executions>
-                      <execution>
-                        <id>report-aggregate</id>
-                        <phase>verify</phase>
-                        <goals>
-                          <goal>report-aggregate</goal>
-                        </goals>
-                      </execution>
-                    </executions>
-                  </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${cs.jacoco-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>report-aggregate</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>report-aggregate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
-              </build>
+            </build>
         </profile>
     </profiles>
 </project>

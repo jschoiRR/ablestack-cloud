@@ -52,7 +52,8 @@ const getters = {
   firstLogin: state => state.user.firstLogin,
   allProjects: (state) => state.app.allProjects,
   customHypervisorName: state => state.user.customHypervisorName,
-  readyForShutdownPollingJob: state => state.user.readyForShutdownPollingJob
+  readyForShutdownPollingJob: state => state.user.readyForShutdownPollingJob,
+  showAlert: state => state.user.showAlert
 }
 
 export default getters

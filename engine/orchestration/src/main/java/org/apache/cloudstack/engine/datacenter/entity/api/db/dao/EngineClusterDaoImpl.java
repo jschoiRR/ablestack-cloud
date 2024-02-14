@@ -27,7 +27,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.engine.datacenter.entity.api.DataCenterResourceEntity;
@@ -51,7 +52,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 @Component(value = "EngineClusterDao")
 public class EngineClusterDaoImpl extends GenericDaoBase<EngineClusterVO, Long> implements EngineClusterDao {
-    private static final Logger s_logger = Logger.getLogger(EngineClusterDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(EngineClusterDaoImpl.class);
 
     protected final SearchBuilder<EngineClusterVO> PodSearch;
     protected final SearchBuilder<EngineClusterVO> HyTypeWithoutGuidSearch;
@@ -272,7 +273,7 @@ public class EngineClusterDaoImpl extends GenericDaoBase<EngineClusterVO, Long> 
 
         int rows = update(vo, sc);
 
-        if (rows == 0 && s_logger.isDebugEnabled()) {
+        if (rows == 0 && logger.isDebugEnabled()) {
             EngineClusterVO dbCluster = findByIdIncludingRemoved(vo.getId());
             if (dbCluster != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(vo.toString());
@@ -299,7 +300,7 @@ public class EngineClusterDaoImpl extends GenericDaoBase<EngineClusterVO, Long> 
                     .append("; updatedTime=")
                     .append(oldUpdatedTime);
             } else {
-                s_logger.debug("Unable to update dataCenter: id=" + vo.getId() + ", as there is no such dataCenter exists in the database anymore");
+                logger.debug("Unable to update dataCenter: id=" + vo.getId() + ", as there is no such dataCenter exists in the database anymore");
             }
         }
         return rows > 0;

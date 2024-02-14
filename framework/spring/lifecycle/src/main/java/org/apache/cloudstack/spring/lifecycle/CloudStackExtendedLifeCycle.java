@@ -29,7 +29,8 @@ import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.naming.ConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.component.ComponentLifecycle;
 import com.cloud.utils.component.SystemIntegrityChecker;
@@ -39,7 +40,7 @@ import com.cloud.utils.mgmt.ManagementBean;
 
 public class CloudStackExtendedLifeCycle extends AbstractBeanCollector {
 
-    private static final Logger log = Logger.getLogger(CloudStackExtendedLifeCycle.class);
+    protected static Logger log = LogManager.getLogger(CloudStackExtendedLifeCycle.class);
 
     Map<Integer, Set<ComponentLifecycle>> sorted = new TreeMap<Integer, Set<ComponentLifecycle>>();
 

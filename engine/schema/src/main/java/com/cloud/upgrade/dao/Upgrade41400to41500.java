@@ -27,13 +27,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade41400to41500 implements DbUpgrade {
 
-    final static Logger LOG = Logger.getLogger(Upgrade41400to41500.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41400to41500.class);
 
     @Override
     public String[] getUpgradableVersionRange() {

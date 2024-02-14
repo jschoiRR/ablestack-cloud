@@ -232,12 +232,12 @@ export default {
         title: this.$t('label.failed.integrity.verification.list')
       }
     ]
-    this.columns.push({
-      key: 'actions',
-      title: '',
-      dataIndex: 'actions',
-      width: 100
-    })
+    // this.columns.push({
+    //   key: 'actions',
+    //   title: '',
+    //   dataIndex: 'actions',
+    //   width: 100
+    // })
   },
   watch: {
     loading (newData, oldData) {

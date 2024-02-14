@@ -24,13 +24,14 @@ import com.cloud.utils.db.SearchBuilder;
 import com.cloud.utils.db.SearchCriteria;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.response.ResourceIconResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResourceIconDaoImpl extends GenericDaoBase<ResourceIconVO, Long> implements ResourceIconDao {
-    public static final Logger s_logger = Logger.getLogger(ResourceIconDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(ResourceIconDaoImpl.class);
     private final SearchBuilder<ResourceIconVO> AllFieldsSearch;
 
     protected ResourceIconDaoImpl() {

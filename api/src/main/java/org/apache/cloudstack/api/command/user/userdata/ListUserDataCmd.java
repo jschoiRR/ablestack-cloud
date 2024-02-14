@@ -26,7 +26,8 @@ import org.apache.cloudstack.api.BaseListProjectAndAccountResourcesCmd;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.UserDataResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.user.UserData;
 import com.cloud.utils.Pair;
@@ -35,7 +36,7 @@ import com.cloud.utils.Pair;
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, since = "4.18",
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User})
 public class ListUserDataCmd extends BaseListProjectAndAccountResourcesCmd {
-    public static final Logger s_logger = Logger.getLogger(ListUserDataCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListUserDataCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

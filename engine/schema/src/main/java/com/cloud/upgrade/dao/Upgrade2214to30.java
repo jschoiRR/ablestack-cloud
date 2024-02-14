@@ -29,7 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.offering.NetworkOffering;
 import com.cloud.utils.crypt.DBEncryptionUtil;
@@ -38,7 +39,7 @@ import com.cloud.utils.db.TransactionLegacy;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
-    final static Logger s_logger = Logger.getLogger(Upgrade2214to30.class);
+    final static Logger logger = LogManager.getLogger(Upgrade2214to30.class);
 
     @Override
     public String[] getUpgradableVersionRange() {
@@ -183,7 +184,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmt2.setLong(1, zoneId);
                 ResultSet rsTags = pstmt2.executeQuery();
                 if (rsTags.next()) {
-                    s_logger.debug("Network tags are not empty, might have to create more than one physical network...");
+                    logger.debug("Network tags are not empty, might have to create more than one physical network...");
                     //make sure setup does not use guest vnets
 
                     if (vnet != null) {
@@ -214,7 +215,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                                 + "6. Reconfigure the vnet ranges for each physical network as desired by using updatePhysicalNetwork API \n"
                                 + "7. Start all your VMs";
 
-                            s_logger.error(message);
+                            logger.error(message);
 
                             throw new CloudRuntimeException(
                                 "Cannot upgrade this setup since it uses guest vnet and will have multiple physical networks. Please check the logs for details on how to proceed");
@@ -263,7 +264,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                             if (crtPbNtwk) {
                                 addTrafficType(conn, physicalNetworkId, "Public", xenPublicLabel, kvmPublicLabel, vmwarePublicLabel);
                             } else {
-                                s_logger.debug("Skip adding public traffic type to zone id=" + zoneId);
+                                logger.debug("Skip adding public traffic type to zone id=" + zoneId);
                             }
                             addTrafficType(conn, physicalNetworkId, "Management", xenPrivateLabel, kvmPrivateLabel, vmwarePrivateLabel);
                             addTrafficType(conn, physicalNetworkId, "Storage", xenStorageLabel, null, null);
@@ -276,9 +277,9 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                         PreparedStatement pstmt3 = conn.prepareStatement("SELECT network_id FROM `cloud`.`network_tags` where tag= ?");
                         pstmt3.setString(1,guestNetworkTag);
                         ResultSet rsNet = pstmt3.executeQuery();
-                        s_logger.debug("Adding PhysicalNetwork to VLAN");
-                        s_logger.debug("Adding PhysicalNetwork to user_ip_address");
-                        s_logger.debug("Adding PhysicalNetwork to networks");
+                        logger.debug("Adding PhysicalNetwork to VLAN");
+                        logger.debug("Adding PhysicalNetwork to user_ip_address");
+                        logger.debug("Adding PhysicalNetwork to networks");
                         while (rsNet.next()) {
                             Long networkId = rsNet.getLong(1);
                             addPhysicalNtwk_To_Ntwk_IP_Vlan(conn, physicalNetworkId, networkId);
@@ -288,7 +289,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                         // add the reference to this physical network for the default public network entries in vlan / user_ip_address tables
                         // add first physicalNetworkId to op_dc_vnet_alloc for this zone - just a placeholder since direct networking don't need this
                         if (isFirstPhysicalNtwk) {
-                            s_logger.debug("Adding PhysicalNetwork to default Public network entries in vlan and user_ip_address");
+                            logger.debug("Adding PhysicalNetwork to default Public network entries in vlan and user_ip_address");
                             pstmt3 = conn.prepareStatement("SELECT id FROM `cloud`.`networks` where traffic_type = 'Public' and data_center_id = " + zoneId);
                             ResultSet rsPubNet = pstmt3.executeQuery();
                             if (rsPubNet.next()) {
@@ -297,7 +298,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                             }
                             pstmt3.close();
 
-                            s_logger.debug("Adding PhysicalNetwork to op_dc_vnet_alloc");
+                            logger.debug("Adding PhysicalNetwork to op_dc_vnet_alloc");
                             String updateVnet = "UPDATE `cloud`.`op_dc_vnet_alloc` SET physical_network_id = " + physicalNetworkId + " WHERE data_center_id = " + zoneId;
                             pstmtUpdate = conn.prepareStatement(updateVnet);
                             pstmtUpdate.executeUpdate();
@@ -314,7 +315,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     if (crtPbNtwk) {
                         addTrafficType(conn, physicalNetworkId, "Public", xenPublicLabel, kvmPublicLabel, vmwarePublicLabel);
                     } else {
-                        s_logger.debug("Skip adding public traffic type to zone id=" + zoneId);
+                        logger.debug("Skip adding public traffic type to zone id=" + zoneId);
                     }
                     addTrafficType(conn, physicalNetworkId, "Management", xenPrivateLabel, kvmPrivateLabel, vmwarePrivateLabel);
                     addTrafficType(conn, physicalNetworkId, "Storage", xenStorageLabel, null, null);
@@ -323,28 +324,28 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     addDefaultSGProvider(conn, physicalNetworkId, zoneId, networkType, false);
 
                     // add physicalNetworkId to op_dc_vnet_alloc for this zone
-                    s_logger.debug("Adding PhysicalNetwork to op_dc_vnet_alloc");
+                    logger.debug("Adding PhysicalNetwork to op_dc_vnet_alloc");
                     String updateVnet = "UPDATE `cloud`.`op_dc_vnet_alloc` SET physical_network_id = " + physicalNetworkId + " WHERE data_center_id = " + zoneId;
                     pstmtUpdate = conn.prepareStatement(updateVnet);
                     pstmtUpdate.executeUpdate();
                     pstmtUpdate.close();
 
                     // add physicalNetworkId to vlan for this zone
-                    s_logger.debug("Adding PhysicalNetwork to VLAN");
+                    logger.debug("Adding PhysicalNetwork to VLAN");
                     String updateVLAN = "UPDATE `cloud`.`vlan` SET physical_network_id = " + physicalNetworkId + " WHERE data_center_id = " + zoneId;
                     pstmtUpdate = conn.prepareStatement(updateVLAN);
                     pstmtUpdate.executeUpdate();
                     pstmtUpdate.close();
 
                     // add physicalNetworkId to user_ip_address for this zone
-                    s_logger.debug("Adding PhysicalNetwork to user_ip_address");
+                    logger.debug("Adding PhysicalNetwork to user_ip_address");
                     String updateUsrIp = "UPDATE `cloud`.`user_ip_address` SET physical_network_id = " + physicalNetworkId + " WHERE data_center_id = " + zoneId;
                     pstmtUpdate = conn.prepareStatement(updateUsrIp);
                     pstmtUpdate.executeUpdate();
                     pstmtUpdate.close();
 
                     // add physicalNetworkId to guest networks for this zone
-                    s_logger.debug("Adding PhysicalNetwork to networks");
+                    logger.debug("Adding PhysicalNetwork to networks");
                     String updateNet =
                         "UPDATE `cloud`.`networks` SET physical_network_id = " + physicalNetworkId + " WHERE data_center_id = " + zoneId + " AND traffic_type = 'Guest'";
                     pstmtUpdate = conn.prepareStatement(updateNet);
@@ -370,17 +371,17 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
     }
 
     private void encryptData(Connection conn) {
-        s_logger.debug("Encrypting the data...");
+        logger.debug("Encrypting the data...");
         encryptConfigValues(conn);
         encryptHostDetails(conn);
         encryptVNCPassword(conn);
         encryptUserCredentials(conn);
         encryptVPNPassword(conn);
-        s_logger.debug("Done encrypting the data");
+        logger.debug("Done encrypting the data");
     }
 
     private void encryptConfigValues(Connection conn) {
-        s_logger.debug("Encrypting Config values");
+        logger.debug("Encrypting Config values");
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
@@ -412,14 +413,14 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     pstmt.close();
                 }
             } catch (SQLException e) {
-                s_logger.info("[ignored]",e);
+                logger.info("[ignored]",e);
             }
         }
-        s_logger.debug("Done encrypting Config values");
+        logger.debug("Done encrypting Config values");
     }
 
     private void encryptHostDetails(Connection conn) {
-        s_logger.debug("Encrypting host details");
+        logger.debug("Encrypting host details");
         List<PreparedStatement> pstmt2Close = new ArrayList<PreparedStatement>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -447,11 +448,11 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         } finally {
             TransactionLegacy.closePstmts(pstmt2Close);
         }
-        s_logger.debug("Done encrypting host details");
+        logger.debug("Done encrypting host details");
     }
 
     private void encryptVNCPassword(Connection conn) {
-        s_logger.debug("Encrypting vm_instance vnc_password");
+        logger.debug("Encrypting vm_instance vnc_password");
         List<PreparedStatement> pstmt2Close = new ArrayList<PreparedStatement>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -493,11 +494,11 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         } finally {
             TransactionLegacy.closePstmts(pstmt2Close);
         }
-        s_logger.debug("Done encrypting vm_instance vnc_password");
+        logger.debug("Done encrypting vm_instance vnc_password");
     }
 
     private void encryptUserCredentials(Connection conn) {
-        s_logger.debug("Encrypting user keys");
+        logger.debug("Encrypting user keys");
         List<PreparedStatement> pstmt2Close = new ArrayList<PreparedStatement>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -526,11 +527,11 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         } finally {
             TransactionLegacy.closePstmts(pstmt2Close);
         }
-        s_logger.debug("Done encrypting user keys");
+        logger.debug("Done encrypting user keys");
     }
 
     private void encryptVPNPassword(Connection conn) {
-        s_logger.debug("Encrypting vpn_users password");
+        logger.debug("Encrypting vpn_users password");
         List<PreparedStatement> pstmt2Close = new ArrayList<PreparedStatement>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -559,7 +560,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         } finally {
             TransactionLegacy.closePstmts(pstmt2Close);
         }
-        s_logger.debug("Done encrypting vpn_users password");
+        logger.debug("Done encrypting vpn_users password");
     }
 
     private void dropKeysIfExist(Connection conn) {
@@ -570,7 +571,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         uniqueKeys.put("secondary_storage_vm", keys);
 
         // drop keys
-        s_logger.debug("Dropping public_ip_address keys from `cloud`.`secondary_storage_vm` and console_proxy tables...");
+        logger.debug("Dropping public_ip_address keys from `cloud`.`secondary_storage_vm` and console_proxy tables...");
         for (String tableName : uniqueKeys.keySet()) {
             DbUpgradeUtils.dropKeysIfExist(conn, tableName, uniqueKeys.get(tableName), false);
         }
@@ -697,7 +698,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmt2Close.add(pstmt);
                 pstmt.setBoolean(1, subdomainAccess);
                 pstmt.executeUpdate();
-                s_logger.debug("Successfully updated subdomain_access field in network_domain table with value " + subdomainAccess);
+                logger.debug("Successfully updated subdomain_access field in network_domain table with value " + subdomainAccess);
             }
 
             // convert zone level 2.2.x networks to ROOT domain 3.0 access networks
@@ -710,7 +711,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmt2Close.add(pstmt);
                 pstmt.setLong(1, networkId);
                 pstmt.executeUpdate();
-                s_logger.debug("Successfully converted zone specific network id=" + networkId + " to the ROOT domain level network with subdomain access set to true");
+                logger.debug("Successfully converted zone specific network id=" + networkId + " to the ROOT domain level network with subdomain access set to true");
             }
 
         } catch (SQLException e) {
@@ -745,7 +746,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     pstmt.setString(3, provider);
                     pstmt.executeUpdate();
                 }
-                s_logger.debug("Created service/provider map for network id=" + networkId);
+                logger.debug("Created service/provider map for network id=" + networkId);
             }
         } catch (SQLException e) {
             throw new CloudRuntimeException("Unable to create service/provider map for networks", e);
@@ -757,7 +758,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
     protected void updateRouters(Connection conn) {
         PreparedStatement pstmt = null;
         try {
-            s_logger.debug("Updating domain_router table");
+            logger.debug("Updating domain_router table");
             pstmt =
                 conn.prepareStatement("UPDATE domain_router, virtual_router_providers vrp LEFT JOIN (physical_network_service_providers pnsp INNER JOIN physical_network pntwk INNER JOIN vm_instance vm INNER JOIN domain_router vr) ON (vrp.nsp_id = pnsp.id AND pnsp.physical_network_id = pntwk.id AND pntwk.data_center_id = vm.data_center_id AND vm.id=vr.id) SET vr.element_id=vrp.id;");
             pstmt.executeUpdate();
@@ -793,7 +794,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 ntwkOffCount = rs1.getLong(1);
             }
 
-            s_logger.debug("Have " + ntwkOffCount + " networkOfferings");
+            logger.debug("Have " + ntwkOffCount + " networkOfferings");
             pstmt = conn.prepareStatement("CREATE TEMPORARY TABLE `cloud`.`network_offerings2` ENGINE=MEMORY SELECT * FROM `cloud`.`network_offerings` WHERE id=1");
             pstmt2Close.add(pstmt);
             pstmt.executeUpdate();
@@ -803,7 +804,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
             while (rs.next()) {
                 long networkId = rs.getLong(1);
                 long networkOfferingId = rs.getLong(2);
-                s_logger.debug("Updating network offering for the network id=" + networkId + " as it has redundant routers");
+                logger.debug("Updating network offering for the network id=" + networkId + " as it has redundant routers");
                 Long newNetworkOfferingId = null;
 
                 if (!newNetworkOfferingMap.containsKey(networkOfferingId)) {
@@ -852,7 +853,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     pstmt.executeUpdate();
                 }
 
-                s_logger.debug("Successfully updated network offering id=" + networkId + " with new network offering id " + newNetworkOfferingId);
+                logger.debug("Successfully updated network offering id=" + networkId + " with new network offering id " + newNetworkOfferingId);
             }
 
         } catch (SQLException e) {
@@ -863,7 +864,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmt.executeUpdate();
                 pstmt.close();
             } catch (SQLException e) {
-                s_logger.info("[ignored]",e);
+                logger.info("[ignored]",e);
             }
             TransactionLegacy.closePstmts(pstmt2Close);
         }
@@ -873,7 +874,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
         List<PreparedStatement> pstmt2Close = new ArrayList<PreparedStatement>();
         PreparedStatement pstmt = null;
         try {
-            s_logger.debug("Updating op_host_capacity table, column capacity_state");
+            logger.debug("Updating op_host_capacity table, column capacity_state");
             pstmt =
                 conn.prepareStatement("UPDATE op_host_capacity, host SET op_host_capacity.capacity_state='Disabled' where host.id=op_host_capacity.host_id and op_host_capacity.capacity_type in (0,1) and host.resource_state='Disabled';");
             pstmt2Close.add(pstmt);
@@ -912,7 +913,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmt2Close.add(pstmt);
                 rs = pstmt.executeQuery();
             } catch (Exception ex) {
-                s_logger.debug("switch_to_isolated field is not present in networks table");
+                logger.debug("switch_to_isolated field is not present in networks table");
                 if (pstmt != null) {
                     pstmt.close();
                 }
@@ -932,7 +933,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 ntwkOffCount = rs1.getLong(1);
             }
 
-            s_logger.debug("Have " + ntwkOffCount + " networkOfferings");
+            logger.debug("Have " + ntwkOffCount + " networkOfferings");
             pstmt = conn.prepareStatement("CREATE TEMPORARY TABLE `cloud`.`network_offerings2` ENGINE=MEMORY SELECT * FROM `cloud`.`network_offerings` WHERE id=1");
             pstmt2Close.add(pstmt);
             pstmt.executeUpdate();
@@ -942,7 +943,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
             while (rs.next()) {
                 long networkId = rs.getLong(1);
                 long networkOfferingId = rs.getLong(2);
-                s_logger.debug("Updating network offering for the network id=" + networkId + " as it has switch_to_isolated=1");
+                logger.debug("Updating network offering for the network id=" + networkId + " as it has switch_to_isolated=1");
                 Long newNetworkOfferingId = null;
 
                 if (!newNetworkOfferingMap.containsKey(networkOfferingId)) {
@@ -983,7 +984,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     pstmt.executeUpdate();
                 }
 
-                s_logger.debug("Successfully updated network offering id=" + networkId + " with new network offering id " + newNetworkOfferingId);
+                logger.debug("Successfully updated network offering id=" + networkId + " with new network offering id " + newNetworkOfferingId);
             }
 
             try {
@@ -992,7 +993,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmt.executeUpdate();
             } catch (SQLException ex) {
                 // do nothing here
-                s_logger.debug("Caught SQLException when trying to drop switch_to_isolated column ", ex);
+                logger.debug("Caught SQLException when trying to drop switch_to_isolated column ", ex);
             }
 
         } catch (SQLException e) {
@@ -1003,7 +1004,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 pstmt.executeUpdate();
                 pstmt.close();
             } catch (SQLException e) {
-                s_logger.info("[ignored]",e);
+                logger.info("[ignored]",e);
             }
             TransactionLegacy.closePstmts(pstmt2Close);
         }
@@ -1057,7 +1058,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                     pstmt.close();
                 }
             } catch (SQLException e) {
-                s_logger.info("[ignored]",e);
+                logger.info("[ignored]",e);
             }
         }
     }
@@ -1107,7 +1108,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 while (rs.next()) {
                     long networkId = rs.getLong(1);
                     long networkOfferingId = rs.getLong(2);
-                    s_logger.debug("Updating network offering for the network id=" + networkId + " as it has switch_to_isolated=1");
+                    logger.debug("Updating network offering for the network id=" + networkId + " as it has switch_to_isolated=1");
                     Long newNetworkOfferingId = null;
                     if (!newNetworkOfferingMap.containsKey(networkOfferingId)) {
                         uniqueName = "Isolated with external providers";
@@ -1150,7 +1151,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                         pstmt.executeUpdate();
                     }
 
-                    s_logger.debug("Successfully updated network id=" + networkId + " with new network offering id " + newNetworkOfferingId);
+                    logger.debug("Successfully updated network id=" + networkId + " with new network offering id " + newNetworkOfferingId);
                 }
 
             } catch (SQLException e) {
@@ -1159,7 +1160,7 @@ public class Upgrade2214to30 extends Upgrade30xBase implements DbUpgrade {
                 try (PreparedStatement dropStatement = conn.prepareStatement("DROP TABLE `cloud`.`network_offerings2`");){
                     dropStatement.executeUpdate();
                 } catch (SQLException e) {
-                    s_logger.info("[ignored]",e);
+                    logger.info("[ignored]",e);
                 }
                 TransactionLegacy.closePstmts(pstmt2Close);
             }

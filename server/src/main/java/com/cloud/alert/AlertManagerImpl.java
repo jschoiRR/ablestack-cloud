@@ -45,7 +45,8 @@ import org.apache.cloudstack.utils.mailing.SMTPMailProperties;
 import org.apache.cloudstack.utils.mailing.SMTPMailSender;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.alert.dao.AlertDao;
 import com.cloud.api.ApiDBUtils;
@@ -84,7 +85,7 @@ import com.cloud.utils.concurrency.NamedThreadFactory;
 import com.cloud.utils.db.SearchCriteria;
 
 public class AlertManagerImpl extends ManagerBase implements AlertManager, Configurable {
-    protected Logger logger = Logger.getLogger(AlertManagerImpl.class.getName());
+    protected Logger logger = LogManager.getLogger(AlertManagerImpl.class.getName());
 
     private static final long INITIAL_CAPACITY_CHECK_DELAY = 30L * 1000L; // Thirty seconds expressed in milliseconds.
 
@@ -134,6 +135,7 @@ public class AlertManagerImpl extends ManagerBase implements AlertManager, Confi
     private double _localStorageCapacityThreshold = 0.75;
     private double _managementServerLocalStorageCapacityThreshold = 0.75;
     private double _managementServerDatabaseStorageCapacityThreshold = 0.75;
+    private double _managementServerDatabaseStorageCapacityDeleteThreshold = 0.90;
     Map<Short, Double> _capacityTypeThresholdMap = new HashMap<Short, Double>();
 
     private final ExecutorService _executor;
@@ -178,6 +180,7 @@ public class AlertManagerImpl extends ManagerBase implements AlertManager, Confi
         String localStorageCapacityThreshold = _configDao.getValue(Config.LocalStorageCapacityThreshold.key());
         String managementServerLocalStorageCapacityThreshold = _configDao.getValue(Config.ManagementServerLocalStorageCapacityThreshold.key());
         String managementServerDatabaseStorageCapacityThreshold = _configDao.getValue(Config.ManagementServerDatabaseStorageCapacityThreshold.key());
+        String managementServerDatabaseStorageCapacityDeleteThreshold = _configDao.getValue(Config.ManagementServerDatabaseStorageCapacityDeleteThreshold.key());
 
         if (publicIPCapacityThreshold != null) {
             _publicIPCapacityThreshold = Double.parseDouble(publicIPCapacityThreshold);
@@ -203,6 +206,9 @@ public class AlertManagerImpl extends ManagerBase implements AlertManager, Confi
         if (managementServerDatabaseStorageCapacityThreshold != null) {
             _managementServerDatabaseStorageCapacityThreshold = Double.parseDouble(managementServerDatabaseStorageCapacityThreshold);
         }
+        if (managementServerDatabaseStorageCapacityDeleteThreshold != null) {
+            _managementServerDatabaseStorageCapacityDeleteThreshold = Double.parseDouble(managementServerDatabaseStorageCapacityDeleteThreshold);
+        }
 
         _capacityTypeThresholdMap.put(Capacity.CAPACITY_TYPE_VIRTUAL_NETWORK_PUBLIC_IP, _publicIPCapacityThreshold);
         _capacityTypeThresholdMap.put(Capacity.CAPACITY_TYPE_PRIVATE_IP, _privateIPCapacityThreshold);
@@ -212,6 +218,7 @@ public class AlertManagerImpl extends ManagerBase implements AlertManager, Confi
         _capacityTypeThresholdMap.put(Capacity.CAPACITY_TYPE_LOCAL_STORAGE, _localStorageCapacityThreshold);
         _capacityTypeThresholdMap.put(Capacity.CAPACITY_TYPE_MANAGEMENT_LOCAL_STORAGE, _managementServerLocalStorageCapacityThreshold);
         _capacityTypeThresholdMap.put(Capacity.CAPACITY_TYPE_MANAGEMENT_DATABASE_STORAGE, _managementServerDatabaseStorageCapacityThreshold);
+        _capacityTypeThresholdMap.put(Capacity.CAPACITY_TYPE_MANAGEMENT_DATABASE_STORAGE_DELETE, _managementServerDatabaseStorageCapacityDeleteThreshold);
         _capacityTypeThresholdMap.put(Capacity.CAPACITY_TYPE_VIRTUAL_NETWORK_IPV6_SUBNET, Ipv6SubnetCapacityThreshold.value());
 
         String capacityCheckPeriodStr = configs.get("capacity.check.period");
@@ -742,7 +749,7 @@ public class AlertManagerImpl extends ManagerBase implements AlertManager, Confi
                 && (alertType != AlertManager.AlertType.ALERT_TYPE_MANAGEMENT_NODE) && (alertType != AlertManager.AlertType.ALERT_TYPE_RESOURCE_LIMIT_EXCEEDED)
                 && (alertType != AlertManager.AlertType.ALERT_TYPE_UPLOAD_FAILED) && (alertType != AlertManager.AlertType.ALERT_TYPE_OOBM_AUTH_ERROR)
                 && (alertType != AlertManager.AlertType.ALERT_TYPE_HA_ACTION) && (alertType != AlertManager.AlertType.ALERT_TYPE_CA_CERT)
-                && (alertType != AlertManager.AlertType.EVENT_USER_SESSION_BLOCK)) {
+                && (alertType != AlertManager.AlertType.EVENT_USER_SESSION_BLOCK) && (alertType != AlertManager.AlertType.EVENT_USER_SESSION_DESTROY)) {
             alert = _alertDao.getLastAlert(alertType.getType(), dataCenterId, podId, clusterId);
         }
 
@@ -757,6 +764,7 @@ public class AlertManagerImpl extends ManagerBase implements AlertManager, Confi
             newAlert.setSentCount(1);
             newAlert.setLastSent(new Date());
             newAlert.setName(alertType.getName());
+            newAlert.setShowAlert(true);
             _alertDao.persist(newAlert);
         } else {
             logger.debug("Have already sent: " + alert.getSentCount() + " emails for alert type '" + alertType + "' -- skipping send email");
@@ -823,6 +831,22 @@ public class AlertManagerImpl extends ManagerBase implements AlertManager, Confi
             return true;
         } catch (Exception ex) {
             logger.warn("Failed to generate an alert of type=" + alertType + "; msg=" + msg);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateAlert(Long id, Boolean showAlert) {
+        try {
+            AlertVO alert = _alertDao.findById(id);
+            if (alert != null) {
+                AlertVO updatedAlert = _alertDao.createForUpdate();
+                updatedAlert.setShowAlert(showAlert);
+                _alertDao.update(alert.getId(), updatedAlert);
+            }
+            return true;
+        } catch (Exception ex) {
+            logger.warn("Failed to update an alert : " + ex);
             return false;
         }
     }

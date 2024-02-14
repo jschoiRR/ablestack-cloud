@@ -37,7 +37,8 @@ import org.apache.cloudstack.utils.qemu.QemuImgException;
 import org.apache.cloudstack.utils.qemu.QemuImgFile;
 import org.apache.cloudstack.utils.qemu.QemuObject;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.libvirt.LibvirtException;
 
 import com.cloud.storage.Storage;
@@ -48,7 +49,7 @@ import com.cloud.utils.script.Script;
 import org.apache.commons.lang3.StringUtils;
 
 public class ScaleIOStorageAdaptor implements StorageAdaptor {
-    private static final Logger LOGGER = Logger.getLogger(ScaleIOStorageAdaptor.class);
+    protected static Logger LOGGER = LogManager.getLogger(ScaleIOStorageAdaptor.class);
     private static final Map<String, KVMStoragePool> MapStorageUuidToStoragePool = new HashMap<>();
     private static final int DEFAULT_DISK_WAIT_TIME_IN_SECS = 60;
 

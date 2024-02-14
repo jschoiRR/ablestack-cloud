@@ -63,11 +63,12 @@ public class TungstenFabricUtilsTest {
     @Test
     public void sendTungstenCommandSuccessTest() {
         TungstenProviderVO tungstenProviderVO = mock(TungstenProviderVO.class);
-        TungstenAnswer tungstenAnswer = MockTungstenAnswerFactory.get(true);
+        TungstenAnswer tungstenAnswer = mock(TungstenAnswer.class);
         TungstenCommand tungstenCommand = mock(TungstenCommand.class);
 
         when(tungstenProviderDao.findByZoneId(anyLong())).thenReturn(tungstenProviderVO);
         when(agentMgr.easySend(anyLong(), any(TungstenCommand.class))).thenReturn(tungstenAnswer);
+        when(tungstenAnswer.getResult()).thenReturn(true);
 
         assertEquals(tungstenAnswer, tungstenFabricUtils.sendTungstenCommand(tungstenCommand, anyLong()));
     }
@@ -92,11 +93,12 @@ public class TungstenFabricUtilsTest {
     @Test(expected = InvalidParameterValueException.class)
     public void sendTungstenCommandWithFalseAnswer() {
         TungstenProviderVO tungstenProviderVO = mock(TungstenProviderVO.class);
-        TungstenAnswer tungstenAnswer = MockTungstenAnswerFactory.get(false);
+        TungstenAnswer tungstenAnswer = mock(TungstenAnswer.class);
         TungstenCommand tungstenCommand = mock(TungstenCommand.class);
 
         when(tungstenProviderDao.findByZoneId(anyLong())).thenReturn(tungstenProviderVO);
         when(agentMgr.easySend(anyLong(), any(TungstenCommand.class))).thenReturn(tungstenAnswer);
+        when(tungstenAnswer.getResult()).thenReturn(false);
 
         tungstenFabricUtils.sendTungstenCommand(tungstenCommand, anyLong());
     }

@@ -18,13 +18,13 @@
 
 import sys
 from cloudutils.syscfg import sysConfigFactory
-from cloudutils.utilities import initLoging, UnknownSystemException
+from cloudutils.utilities import UnknownSystemException
 from cloudutils.cloudException import CloudRuntimeException, CloudInternalException
 from cloudutils.globalEnv import globalEnv
 from cloudutils.serviceConfigServer import cloudManagementConfig
 from optparse import OptionParser
 if __name__ == '__main__':
-    initLoging("@MSLOGDIR@/setupManagement.log")
+    # initLoging("@MSLOGDIR@/setupManagement.log")
     glbEnv = globalEnv()
 
     parser = OptionParser()

@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.user.address;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.APICommand;
@@ -41,7 +42,7 @@ import com.cloud.network.IpAddress;
         responseHasSensitiveInfo = false,
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User})
 public class ReleaseIPAddrCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(ReleaseIPAddrCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ReleaseIPAddrCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

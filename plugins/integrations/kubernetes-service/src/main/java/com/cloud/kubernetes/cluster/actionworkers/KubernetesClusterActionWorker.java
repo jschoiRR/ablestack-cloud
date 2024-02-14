@@ -39,8 +39,9 @@ import org.apache.cloudstack.framework.config.dao.ConfigurationDao;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.dc.DataCenterVO;
 import com.cloud.dc.dao.DataCenterDao;
@@ -108,7 +109,7 @@ public class KubernetesClusterActionWorker {
     public static final String CKS_CLUSTER_SECURITY_GROUP_NAME = "CKSSecurityGroup";
     public static final String CKS_SECURITY_GROUP_DESCRIPTION = "Security group for CKS nodes";
 
-    protected static final Logger LOGGER = Logger.getLogger(KubernetesClusterActionWorker.class);
+    protected static final Logger LOGGER = LogManager.getLogger(KubernetesClusterActionWorker.class);
 
     protected StateMachine2<KubernetesCluster.State, KubernetesCluster.Event, KubernetesCluster> _stateMachine = KubernetesCluster.State.getStateMachine();
 

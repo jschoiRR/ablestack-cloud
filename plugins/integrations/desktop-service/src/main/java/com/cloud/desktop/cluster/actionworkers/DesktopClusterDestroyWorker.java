@@ -23,7 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
 
 import com.cloud.exception.ConcurrentOperationException;
 import com.cloud.exception.ManagementServerException;

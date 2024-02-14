@@ -62,7 +62,8 @@ import org.apache.cloudstack.storage.to.VolumeObjectTO;
 import org.apache.cloudstack.storage.volume.VolumeObject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.storage.ResizeVolumeAnswer;
@@ -111,7 +112,7 @@ import com.cloud.vm.dao.VMInstanceDao;
 
 public class StorPoolPrimaryDataStoreDriver implements PrimaryDataStoreDriver {
 
-    private static final Logger log = Logger.getLogger(StorPoolPrimaryDataStoreDriver.class);
+    protected static Logger log = LogManager.getLogger(StorPoolPrimaryDataStoreDriver.class);
 
     @Inject
     private VolumeDao volumeDao;

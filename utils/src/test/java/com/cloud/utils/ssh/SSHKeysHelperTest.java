@@ -41,7 +41,7 @@ public class SSHKeysHelperTest {
         String fingerprint = SSHKeysHelper.getPublicKeyFingerprint(parsedKey);
 
         assertTrue(storedRsaKey.equals(parsedKey));
-        assertTrue("f6:96:3f:f4:78:f7:80:11:6c:f8:e3:2b:40:20:f1:14".equals(fingerprint));
+        assertTrue("b9:6f:20:d6:0a:d4:ad:39:c6:bb:a7:ba:3e:b2:fc:bb:e9:67:af:0a:3f:dd:54:30:14:cc:bd:1a:d9:0d:21:96".equals(fingerprint));
 
     }
 
@@ -67,7 +67,7 @@ public class SSHKeysHelperTest {
         String fingerprint = SSHKeysHelper.getPublicKeyFingerprint(parsedKey);
 
         assertTrue(storedDssKey.equals(parsedKey));
-        assertTrue("fc:6e:ef:31:93:f8:92:2b:a9:03:c7:06:90:f5:ec:bb".equals(fingerprint));
+        assertTrue("63:9d:01:22:f4:fc:ce:fa:a7:be:4f:d2:4e:11:07:2f:8f:1a:2a:44:58:19:e8:e3:11:e6:b0:61:c0:bc:3e:5a".equals(fingerprint));
 
     }
 }

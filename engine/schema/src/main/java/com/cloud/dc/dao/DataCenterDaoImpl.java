@@ -26,7 +26,8 @@ import javax.inject.Inject;
 import javax.naming.ConfigurationException;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.dc.DataCenter;
@@ -55,7 +56,7 @@ import com.cloud.utils.db.TransactionLegacy;
  **/
 @Component
 public class DataCenterDaoImpl extends GenericDaoBase<DataCenterVO, Long> implements DataCenterDao {
-    private static final Logger s_logger = Logger.getLogger(DataCenterDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(DataCenterDaoImpl.class);
 
     protected SearchBuilder<DataCenterVO> NameSearch;
     protected SearchBuilder<DataCenterVO> ListZonesByDomainIdSearch;
@@ -409,7 +410,7 @@ public class DataCenterDaoImpl extends GenericDaoBase<DataCenterVO, Long> implem
                     Long dcId = Long.parseLong(tokenOrIdOrName);
                     return findById(dcId);
                 } catch (NumberFormatException nfe) {
-                    s_logger.debug("Cannot parse " + tokenOrIdOrName + " into long. " + nfe);
+                    logger.debug("Cannot parse " + tokenOrIdOrName + " into long. " + nfe);
                 }
             }
         }

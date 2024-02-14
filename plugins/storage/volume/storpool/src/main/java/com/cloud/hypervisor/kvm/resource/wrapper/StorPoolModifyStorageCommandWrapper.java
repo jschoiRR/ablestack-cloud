@@ -24,7 +24,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.storage.StorPoolModifyStoragePoolAnswer;
@@ -44,7 +45,7 @@ import com.google.gson.JsonParser;
 
 @ResourceWrapper(handles =  StorPoolModifyStoragePoolCommand.class)
 public final class StorPoolModifyStorageCommandWrapper extends CommandWrapper<StorPoolModifyStoragePoolCommand, Answer, LibvirtComputingResource> {
-    private static final Logger log = Logger.getLogger(StorPoolModifyStorageCommandWrapper.class);
+    protected static Logger log = LogManager.getLogger(StorPoolModifyStorageCommandWrapper.class);
 
     @Override
     public Answer execute(final StorPoolModifyStoragePoolCommand command, final LibvirtComputingResource libvirtComputingResource) {

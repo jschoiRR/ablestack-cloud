@@ -24,7 +24,8 @@ import javax.naming.ConfigurationException;
 import org.apache.cloudstack.acl.RolePermissionEntity.Permission;
 
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.PermissionDeniedException;
 import com.cloud.exception.UnavailableCommandException;
@@ -49,7 +50,7 @@ public class ProjectRoleBasedApiAccessChecker  extends AdapterBase implements AP
     AccountService accountService;
 
     private List<PluggableService> services;
-    private static final Logger LOGGER = Logger.getLogger(ProjectRoleBasedApiAccessChecker.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(ProjectRoleBasedApiAccessChecker.class.getName());
     protected ProjectRoleBasedApiAccessChecker() {
         super();
     }

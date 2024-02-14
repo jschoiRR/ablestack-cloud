@@ -29,7 +29,7 @@ import javax.inject.Inject;
 import org.apache.cloudstack.api.InternalIdentity;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
 
 import com.cloud.dc.DataCenter;
 import com.cloud.exception.InsufficientCapacityException;

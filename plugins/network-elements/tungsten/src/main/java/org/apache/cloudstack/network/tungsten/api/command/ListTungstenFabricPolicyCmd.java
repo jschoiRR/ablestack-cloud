@@ -38,7 +38,8 @@ import org.apache.cloudstack.api.response.NetworkResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.network.tungsten.api.response.TungstenFabricPolicyResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ import javax.inject.Inject;
 @APICommand(name = ListTungstenFabricPolicyCmd.APINAME, description = "list Tungsten-Fabric policy", responseObject =
     TungstenFabricPolicyResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListTungstenFabricPolicyCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListTungstenFabricPolicyCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListTungstenFabricPolicyCmd.class.getName());
     public static final String APINAME = "listTungstenFabricPolicy";
 
     @Inject

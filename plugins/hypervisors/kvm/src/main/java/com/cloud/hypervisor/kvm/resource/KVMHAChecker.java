@@ -20,12 +20,13 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.to.HostTO;
 
 public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
-    private static final Logger s_logger = Logger.getLogger(KVMHAChecker.class);
+    protected static Logger logger = LogManager.getLogger(KVMHAChecker.class);
     private List<HAStoragePool> storagePools;
     private List<HAStoragePool> rbdStoragePools;
     private List<HAStoragePool> clvmStoragePools;
@@ -48,7 +49,7 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
     public Boolean checkingHeartBeat() {
         boolean validResult = false;
         String hostAndPools = String.format("host IP [%s] in pools [%s]", host.getPrivateNetwork().getIp(), storagePools.stream().map(pool -> pool.getPoolUUID()).collect(Collectors.joining(", ")));
-        s_logger.debug(String.format("Checking heart beat with KVMHAChecker NFS for %s", hostAndPools));
+        logger.debug(String.format("Checking heart beat with KVMHAChecker NFS for %s", hostAndPools));
         for (HAStoragePool pool : storagePools) {
             validResult = pool.getPool().checkingHeartBeat(pool, host);
             if (reportFailureIfOneStorageIsDown && !validResult) {
@@ -56,7 +57,7 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
             }
         }
         hostAndPools = String.format("host IP [%s] in RBD pools [%s]", host.getPrivateNetwork().getIp(), rbdStoragePools.stream().map(pool -> pool.monHost).collect(Collectors.joining(", ")));
-        s_logger.debug(String.format("Checking heart beat with KVMHAChecker RBD for %s", hostAndPools));
+        logger.debug(String.format("Checking heart beat with KVMHAChecker RBD for %s", hostAndPools));
         for (HAStoragePool rbdpool : rbdStoragePools) {
             validResult = rbdpool.getPool().checkingHeartBeat(rbdpool, host);
             if (reportFailureIfOneStorageIsDown && !validResult) {
@@ -64,7 +65,7 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
             }
         }
         hostAndPools = String.format("host IP [%s] in CLVM pools [%s]", host.getPrivateNetwork().getIp(), clvmStoragePools.stream().map(pool -> pool.poolIp).collect(Collectors.joining(", ")));
-        s_logger.debug(String.format("Checking heart beat with KVMHAChecker CLVM for %s", hostAndPools));
+        logger.debug(String.format("Checking heart beat with KVMHAChecker CLVM for %s", hostAndPools));
         for (HAStoragePool clvmpool : clvmStoragePools) {
             validResult = clvmpool.getPool().checkingHeartBeat(clvmpool, host);
             if (reportFailureIfOneStorageIsDown && !validResult) {
@@ -72,7 +73,7 @@ public class KVMHAChecker extends KVMHABase implements Callable<Boolean> {
             }
         }
         if (!validResult) {
-            s_logger.warn(String.format("All checks with KVMHAChecker for %s considered it as dead. It may cause a shutdown of the host.", hostAndPools));
+            logger.warn(String.format("All checks with KVMHAChecker for %s considered it as dead. It may cause a shutdown of the host.", hostAndPools));
         }
         return validResult;
     }

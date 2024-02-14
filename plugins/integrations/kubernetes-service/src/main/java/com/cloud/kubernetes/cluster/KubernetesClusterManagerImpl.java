@@ -73,8 +73,9 @@ import org.apache.cloudstack.managed.context.ManagedContextRunnable;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.api.ApiDBUtils;
 import com.cloud.api.query.dao.NetworkOfferingJoinDao;
@@ -182,7 +183,7 @@ import com.cloud.vm.dao.VMInstanceDao;
 
 public class KubernetesClusterManagerImpl extends ManagerBase implements KubernetesClusterService {
 
-    private static final Logger LOGGER = Logger.getLogger(KubernetesClusterManagerImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(KubernetesClusterManagerImpl.class);
     private static final String DEFAULT_NETWORK_OFFERING_FOR_KUBERNETES_SERVICE_NAME = "DefaultNetworkOfferingforKubernetesService";
 
     protected StateMachine2<KubernetesCluster.State, KubernetesCluster.Event, KubernetesCluster> _stateMachine = KubernetesCluster.State.getStateMachine();

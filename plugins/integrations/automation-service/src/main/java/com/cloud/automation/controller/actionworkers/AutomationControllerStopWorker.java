@@ -25,7 +25,7 @@ import com.cloud.utils.StringUtils;
 import com.cloud.utils.exception.CloudRuntimeException;
 import com.cloud.vm.VirtualMachine;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
 
 import java.io.IOException;
 import java.util.List;

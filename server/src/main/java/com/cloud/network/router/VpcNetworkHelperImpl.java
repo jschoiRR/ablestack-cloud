@@ -29,7 +29,8 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cloudstack.network.router.deployment.RouterDeploymentDefinition;
 
 import com.cloud.dc.dao.VlanDao;
@@ -53,7 +54,7 @@ import com.cloud.vm.NicProfile;
 
 public class VpcNetworkHelperImpl extends NetworkHelperImpl {
 
-    private static final Logger s_logger = Logger.getLogger(VpcNetworkHelperImpl.class);
+    protected static Logger logger = LogManager.getLogger(VpcNetworkHelperImpl.class);
 
     @Inject
     private VlanDao _vlanDao;
@@ -133,7 +134,7 @@ public class VpcNetworkHelperImpl extends NetworkHelperImpl {
                 if ((ip.getState() == IpAddress.State.Allocated  || ip.getState() == IpAddress.State.Allocating)
                         && vpcMgr.isIpAllocatedToVpc(ip)
                         && !publicVlans.contains(publicIp.getVlanTag())) {
-                    s_logger.debug("Allocating nic for router in vlan " + publicIp.getVlanTag());
+                    logger.debug("Allocating nic for router in vlan " + publicIp.getVlanTag());
                     final NicProfile publicNic = new NicProfile();
                     publicNic.setDefaultNic(false);
                     publicNic.setIPv4Address(publicIp.getAddress()

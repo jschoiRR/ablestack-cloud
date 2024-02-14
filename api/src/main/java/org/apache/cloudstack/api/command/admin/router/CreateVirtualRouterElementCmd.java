@@ -20,7 +20,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
@@ -43,7 +44,7 @@ import com.cloud.user.Account;
 @APICommand(name = "createVirtualRouterElement", responseObject = VirtualRouterProviderResponse.class, description = "Create a virtual router element.",
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateVirtualRouterElementCmd extends BaseAsyncCreateCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateVirtualRouterElementCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateVirtualRouterElementCmd.class.getName());
 
     @Inject
     private List<VirtualRouterElementService> _service;

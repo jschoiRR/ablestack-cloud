@@ -26,7 +26,8 @@ import javax.inject.Inject;
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.auth.UserAuthenticator;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.user.Account;
 import com.cloud.user.AccountManager;
@@ -38,7 +39,7 @@ import com.cloud.utils.component.AdapterBase;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class LdapAuthenticator extends AdapterBase implements UserAuthenticator {
-    private static final Logger LOGGER = Logger.getLogger(LdapAuthenticator.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(LdapAuthenticator.class.getName());
 
     @Inject
     private LdapManager _ldapManager;

@@ -40,7 +40,8 @@ import org.apache.cloudstack.storage.datastore.util.StorPoolUtil.SpConnectionDes
 import org.apache.cloudstack.storage.snapshot.StorPoolConfigurationManager;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -62,7 +63,7 @@ import com.cloud.storage.dao.StoragePoolHostDao;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class StorPoolHostListener implements HypervisorHostListener {
-    private static final Logger log = Logger.getLogger(StorPoolHostListener .class);
+    protected static Logger log = LogManager.getLogger(StorPoolHostListener .class);
 
     @Inject
     private AgentManager agentMgr;

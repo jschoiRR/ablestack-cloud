@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.admin.volume;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.APICommand;
@@ -37,7 +38,7 @@ import com.cloud.storage.Volume;
             responseHasSensitiveInfo = true)
 public class DestroyVolumeCmdByAdmin extends DestroyVolumeCmd implements AdminCmd {
 
-    public static final Logger s_logger = Logger.getLogger(DestroyVolumeCmdByAdmin.class.getName());
+    protected static Logger logger = LogManager.getLogger(DestroyVolumeCmdByAdmin.class.getName());
 
     @Override
     public void execute() {

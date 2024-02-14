@@ -33,7 +33,13 @@ export default {
     }
     return fields
   },
-  details: ['collectiontime', 'usageislocal', 'dbislocal', 'lastserverstart', 'lastserverstop', 'lastboottime', 'version', 'loginfo', 'systemtotalcpucycles', 'systemloadaverages', 'systemcycleusage', 'systemmemorytotal', 'systemmemoryfree', 'systemmemoryvirtualsize', 'availableprocessors', 'javadistribution', 'javaversion', 'osdistribution', 'kernelversion', 'agentcount', 'sessions', 'heapmemoryused', 'heapmemorytotal', 'threadsblockedcount', 'threadsdeamoncount', 'threadsnewcount', 'threadsrunnablecount', 'threadsterminatedcount', 'threadstotalcount', 'threadswaitingcount'],
+  details: () => {
+    var fields = ['collectiontime', 'usageislocal', 'dbislocal', 'lastserverstart', 'lastserverstop', 'lastboottime', 'version', 'loginfo', 'systemtotalcpucycles', 'systemloadaverages', 'systemcycleusage', 'systemmemorytotal', 'systemmemoryfree', 'systemmemoryvirtualsize', 'availableprocessors', 'javadistribution', 'javaversion', 'osdistribution', 'kernelversion', 'agentcount', 'sessions', 'heapmemoryused', 'heapmemorytotal', 'threadsblockedcount', 'threadsdeamoncount', 'threadsnewcount', 'threadsrunnablecount', 'threadsterminatedcount', 'threadstotalcount', 'threadswaitingcount']
+    if (store.getters.features.securityfeaturesenabled) {
+      fields = fields.filter((x) => x !== 'loginfo')
+    }
+    return fields
+  },
   tabs: [
     {
       name: 'details',

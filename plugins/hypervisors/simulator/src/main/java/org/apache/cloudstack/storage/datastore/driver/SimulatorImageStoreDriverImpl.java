@@ -24,7 +24,8 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import org.apache.cloudstack.storage.command.CommandResult;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.engine.subsystem.api.storage.CreateCmdResult;
 import org.apache.cloudstack.engine.subsystem.api.storage.DataObject;
@@ -48,7 +49,7 @@ import com.cloud.storage.dao.VMTemplateDao;
 import com.cloud.storage.dao.VolumeDao;
 
 public class SimulatorImageStoreDriverImpl extends NfsImageStoreDriverImpl {
-    private static final Logger s_logger = Logger.getLogger(SimulatorImageStoreDriverImpl.class);
+    protected static Logger logger = LogManager.getLogger(SimulatorImageStoreDriverImpl.class);
 
     @Inject
     TemplateDataStoreDao _templateStoreDao;
@@ -114,7 +115,7 @@ public class SimulatorImageStoreDriverImpl extends NfsImageStoreDriverImpl {
         EndPoint ep = _epSelector.select(store);
         if (ep == null) {
             String errMsg = "No remote endpoint to send command, check if host or ssvm is down?";
-            s_logger.error(errMsg);
+            logger.error(errMsg);
             return null;
         }
         // Create Symlink at ssvm

@@ -20,7 +20,8 @@ package org.apache.cloudstack.api.command;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.BaseCmd;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.user.Account;
 
@@ -34,7 +35,7 @@ import org.apache.cloudstack.acl.RoleType;
             requestHasSensitiveInfo = false, responseHasSensitiveInfo = false,
             authorized = {RoleType.Admin})
 public class PrepareForShutdownCmd extends BaseShutdownActionCmd {
-    public static final Logger LOG = Logger.getLogger(PrepareForShutdownCmd.class);
+    protected static Logger LOG = LogManager.getLogger(PrepareForShutdownCmd.class);
     public static final String APINAME = "prepareForShutdown";
 
     @Override

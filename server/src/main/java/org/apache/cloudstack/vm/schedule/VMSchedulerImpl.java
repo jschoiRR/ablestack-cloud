@@ -43,7 +43,8 @@ import org.apache.cloudstack.managed.context.ManagedContextTimerTask;
 import org.apache.cloudstack.vm.schedule.dao.VMScheduleDao;
 import org.apache.cloudstack.vm.schedule.dao.VMScheduledJobDao;
 import org.apache.commons.lang.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.scheduling.support.CronExpression;
 
 import javax.inject.Inject;
@@ -61,7 +62,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class VMSchedulerImpl extends ManagerBase implements VMScheduler, Configurable {
-    private static Logger LOGGER = Logger.getLogger(VMSchedulerImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(VMSchedulerImpl.class);
     @Inject
     private VMScheduledJobDao vmScheduledJobDao;
     @Inject

@@ -36,7 +36,8 @@ import org.apache.cloudstack.api.command.user.affinitygroup.CreateAffinityGroupC
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.framework.messagebus.MessageBus;
 import org.apache.cloudstack.framework.messagebus.PublishScope;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.domain.DomainVO;
 import com.cloud.domain.dao.DomainDao;
@@ -69,7 +70,7 @@ import com.cloud.vm.dao.UserVmDao;
 
 public class AffinityGroupServiceImpl extends ManagerBase implements AffinityGroupService, Manager, StateListener<State, VirtualMachine.Event, VirtualMachine> {
 
-    public static final Logger s_logger = Logger.getLogger(AffinityGroupServiceImpl.class);
+    protected static Logger logger = LogManager.getLogger(AffinityGroupServiceImpl.class);
     private String _name;
 
     @Inject
@@ -160,8 +161,8 @@ public class AffinityGroupServiceImpl extends ManagerBase implements AffinityGro
 
         AffinityGroupVO group = createAffinityGroup(processor, owner, aclType, affinityGroupName, affinityGroupType, description, domainLevel, domainId);
 
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Created affinity group =" + affinityGroupName);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Created affinity group =" + affinityGroupName);
         }
         CallContext.current().putContextParameter(AffinityGroup.class, group.getUuid());
 
@@ -260,8 +261,8 @@ public class AffinityGroupServiceImpl extends ManagerBase implements AffinityGro
         Pair<Class<?>, Long> params = new Pair<Class<?>, Long>(AffinityGroup.class, affinityGroupIdFinal);
         _messageBus.publish(_name, EntityManager.MESSAGE_REMOVE_ENTITY_EVENT, PublishScope.LOCAL, params);
 
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Deleted affinity group id=" + affinityGroupIdFinal);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Deleted affinity group id=" + affinityGroupIdFinal);
         }
         return true;
     }
@@ -435,7 +436,7 @@ public class AffinityGroupServiceImpl extends ManagerBase implements AffinityGro
 
         // Check that the VM is stopped
         if (!vmInstance.getState().equals(State.Stopped)) {
-            s_logger.warn("Unable to update affinity groups of the virtual machine " + vmInstance.toString() + " in state " + vmInstance.getState());
+            logger.warn("Unable to update affinity groups of the virtual machine " + vmInstance.toString() + " in state " + vmInstance.getState());
             throw new InvalidParameterValueException("Unable update affinity groups of the virtual machine " + vmInstance.toString() + " " + "in state " +
                     vmInstance.getState() + "; make sure the virtual machine is stopped and not in an error state before updating.");
         }
@@ -472,8 +473,8 @@ public class AffinityGroupServiceImpl extends ManagerBase implements AffinityGro
             }
         }
         _affinityGroupVMMapDao.updateMap(vmId, affinityGroupIds);
-        if (s_logger.isDebugEnabled()) {
-            s_logger.debug("Updated VM :" + vmId + " affinity groups to =" + affinityGroupIds);
+        if (logger.isDebugEnabled()) {
+            logger.debug("Updated VM :" + vmId + " affinity groups to =" + affinityGroupIds);
         }
         // APIResponseHelper will pull out the updated affinitygroups.
         return vmInstance;

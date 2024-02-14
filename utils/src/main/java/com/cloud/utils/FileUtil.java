@@ -37,10 +37,11 @@ import java.util.stream.Stream;
 import com.cloud.utils.exception.CloudRuntimeException;
 import com.cloud.utils.ssh.SshHelper;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class FileUtil {
-    private static final Logger s_logger = Logger.getLogger(FileUtil.class);
+    protected static Logger logger = LogManager.getLogger(FileUtil.class);
 
     public static void copyfile(File source, File destination) throws IOException {
         FileUtils.copyFile(source, destination);
@@ -61,7 +62,7 @@ public class FileUtil {
             } catch (Exception e) {
                 finalErrMsg = String.format("Failed to scp files to system VM due to, %s",
                         e.getCause() != null ? e.getCause().getLocalizedMessage() : e.getLocalizedMessage());
-                s_logger.error(finalErrMsg);
+                logger.error(finalErrMsg);
             }
         }
         throw new CloudRuntimeException(finalErrMsg);

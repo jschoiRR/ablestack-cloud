@@ -21,7 +21,7 @@
       <create-menu v-if="device === 'desktop'" />
     </span>
     <external-link class="action"/>
-    <translation-menu class="action"/>
+    <translation-menu class="action" v-if="!securityfeatures"/>
     <header-notice class="action"/>
     <label class="user-menu-server-info action" v-if="$config.multipleServer">
       <database-outlined />
@@ -113,7 +113,8 @@ export default {
       faviconStateInterval: 60000,
       faviconStateYellowCapacity: '0.75',
       faviconStateRedCapacity: '0.55',
-      faviconState: '#008000'
+      faviconState: '#008000',
+      securityfeatures: false
     }
   },
   created () {
@@ -131,6 +132,10 @@ export default {
       }
     )
     this.faviconSetting()
+    this.securityfeatures = this.$store.getters.features.securityfeaturesenabled
+    if (this.securityfeatures) {
+      this.$localStorage.set('LOCALE', 'ko_KR')
+    }
   },
   watch: {
     image () {

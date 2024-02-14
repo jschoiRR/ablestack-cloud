@@ -34,7 +34,8 @@ import org.apache.cloudstack.api.response.FirewallRuleResponse;
 import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.network.tungsten.api.response.TungstenFabricLBHealthMonitorResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ import javax.inject.Inject;
 @APICommand(name = ListTungstenFabricLBHealthMonitorCmd.APINAME, description = "list Tungsten-Fabric LB health monitor", responseObject =
     TungstenFabricLBHealthMonitorResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListTungstenFabricLBHealthMonitorCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListTungstenFabricLBHealthMonitorCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListTungstenFabricLBHealthMonitorCmd.class.getName());
     public static final String APINAME = "listTungstenFabricLBHealthMonitor";
 
     @Inject

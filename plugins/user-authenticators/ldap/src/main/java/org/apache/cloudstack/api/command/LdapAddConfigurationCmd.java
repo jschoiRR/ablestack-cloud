@@ -20,7 +20,8 @@ import javax.inject.Inject;
 
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.response.DomainResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiErrorCode;
@@ -36,7 +37,7 @@ import com.cloud.user.Account;
 @APICommand(name = "addLdapConfiguration", description = "Add a new Ldap Configuration", responseObject = LdapConfigurationResponse.class, since = "4.2.0",
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class LdapAddConfigurationCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(LdapAddConfigurationCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(LdapAddConfigurationCmd.class.getName());
     private static final String s_name = "ldapconfigurationresponse";
 
     @Inject

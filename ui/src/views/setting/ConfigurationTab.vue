@@ -230,7 +230,19 @@ export default {
             'event.delete.enabled',
             'event.purge.delay',
             'security.check.interval',
-            'integrity.verification.interval']
+            'integrity.verification.interval',
+            'management.server.localStorage.capacity.notificationthreshold',
+            'management.server.database.capacity.notificationthreshold',
+            'management.server.database.capacity.delete.notificationthreshold',
+            'cloud.kubernetes.cluster.experimental.features.enabled',
+            'cloud.kubernetes.cluster.max.size',
+            'cloud.kubernetes.cluster.network.offering',
+            'cloud.kubernetes.cluster.scale.timeout',
+            'cloud.kubernetes.cluster.start.timeout',
+            'cloud.kubernetes.cluster.upgrade.timeout',
+            'cloud.kubernetes.service.enabled',
+            'affinity.processors.exclude',
+            'affinity.processors.order']
           config = config.filter((x) => !securityArr.includes(x.name))
           // console.log('config :>> ', config)
         }

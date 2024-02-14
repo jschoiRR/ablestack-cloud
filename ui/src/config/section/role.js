@@ -16,12 +16,14 @@
 // under the License.
 
 import { shallowRef, defineAsyncComponent } from 'vue'
+import store from '@/store'
 export default {
   name: 'role',
   title: 'label.roles',
   icon: 'idcard-outlined',
   docHelp: 'adminguide/accounts.html#roles',
   permission: ['listRoles', 'listRolePermissions'],
+  show: () => { return (!store.getters.features.securityfeaturesenabled) },
   columns: ['name', 'type', 'description'],
   details: ['name', 'id', 'type', 'description', 'ispublic'],
   tabs: [{

@@ -33,14 +33,15 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 
 @APICommand(name = DeleteTungstenFabricFirewallRuleCmd.APINAME, description = "delete Tungsten-Fabric firewall rule",
     responseObject = SuccessResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteTungstenFabricFirewallRuleCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeleteTungstenFabricFirewallRuleCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DeleteTungstenFabricFirewallRuleCmd.class.getName());
     public static final String APINAME = "deleteTungstenFabricFirewallRule";
 
     @Inject

@@ -33,7 +33,8 @@ import java.util.Set;
 import java.util.Stack;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +49,7 @@ import org.apache.cloudstack.spring.module.model.ModuleDefinitionSet;
 
 public class DefaultModuleDefinitionSet implements ModuleDefinitionSet {
 
-    private static final Logger log = Logger.getLogger(DefaultModuleDefinitionSet.class);
+    protected static Logger log = LogManager.getLogger(DefaultModuleDefinitionSet.class);
 
     public static final String DEFAULT_CONFIG_RESOURCES = "DefaultConfigResources";
     public static final String DEFAULT_CONFIG_PROPERTIES = "DefaultConfigProperties";
@@ -99,7 +100,7 @@ public class DefaultModuleDefinitionSet implements ModuleDefinitionSet {
                 try {
                     String moduleDefinitionName = def.getName();
                     log.debug(String.format("Trying to obtain module [%s] context.", moduleDefinitionName));
-                    ApplicationContext context = getApplicationContext(moduleDefinitionName);
+                    ApplicationContext context = getApplicationContext(def.getName());
                     try {
                         if (context.containsBean("moduleStartup")) {
                             Runnable runnable = context.getBean("moduleStartup", Runnable.class);
@@ -136,7 +137,6 @@ public class DefaultModuleDefinitionSet implements ModuleDefinitionSet {
                     }
                     log.debug(String.format("Trying to obtain module [%s] context.", moduleDefinitionName));
                     ApplicationContext parent = getApplicationContext(parents.peek().getName());
-                    log.debug(String.format("Trying to load module [%s] context.", moduleDefinitionName));
                     loadContext(def, parent);
                 } catch (EmptyStackException e) {
                     log.warn(String.format("Failed to obtain module context due to [%s]. Using root context instead.", e.getMessage()));

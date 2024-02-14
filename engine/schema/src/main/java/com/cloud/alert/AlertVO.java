@@ -79,6 +79,9 @@ public class AlertVO implements Alert {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "show_alert")
+    private boolean showAlert;
+
     public AlertVO() {
         this.uuid = UUID.randomUUID().toString();
     }
@@ -202,5 +205,14 @@ public class AlertVO implements Alert {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public boolean getShowAlert() {
+        return showAlert;
+    }
+
+    public void setShowAlert(Boolean showAlert) {
+        this.showAlert = showAlert;
     }
 }

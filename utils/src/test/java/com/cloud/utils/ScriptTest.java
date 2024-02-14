@@ -23,7 +23,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import org.apache.commons.lang.SystemUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.Message;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;

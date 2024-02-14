@@ -38,7 +38,8 @@ import org.apache.cloudstack.storage.ImageStoreService;
 import org.apache.cloudstack.storage.datastore.db.ImageStoreDao;
 import org.apache.cloudstack.storage.datastore.db.ImageStoreVO;
 import org.apache.commons.lang3.EnumUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.ActionEvent;
 import com.cloud.event.EventTypes;
@@ -48,7 +49,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 public class ImageStoreServiceImpl extends ManagerBase implements ImageStoreService {
 
-    private static final Logger s_logger = Logger.getLogger(ImageStoreServiceImpl.class);
+    protected static Logger logger = LogManager.getLogger(ImageStoreServiceImpl.class);
     @Inject
     ImageStoreDao imageStoreDao;
     @Inject
@@ -112,7 +113,7 @@ public class ImageStoreServiceImpl extends ManagerBase implements ImageStoreServ
         }
 
         if (destImgStoreIds.contains(srcImgStoreId)) {
-            s_logger.debug("One of the destination stores is the same as the source image store ... Ignoring it...");
+            logger.debug("One of the destination stores is the same as the source image store ... Ignoring it...");
             destImgStoreIds.remove(srcImgStoreId);
         }
 
@@ -121,21 +122,21 @@ public class ImageStoreServiceImpl extends ManagerBase implements ImageStoreServ
         for (Long id : destImgStoreIds) {
             ImageStoreVO store = imageStoreDao.findById(id);
             if (store == null) {
-                s_logger.warn("Secondary storage with id: " + id + "is not found. Skipping it...");
+                logger.warn("Secondary storage with id: " + id + "is not found. Skipping it...");
                 continue;
             }
             if (store.isReadonly()) {
-                s_logger.warn("Secondary storage: "+ id + " cannot be considered for migration as has read-only permission, Skipping it... ");
+                logger.warn("Secondary storage: "+ id + " cannot be considered for migration as has read-only permission, Skipping it... ");
                 continue;
             }
 
             if (!store.getProviderName().equals(DataStoreProvider.NFS_IMAGE)) {
-                s_logger.warn("Destination image store : " + store.getName() + " not NFS based. Store not suitable for migration!");
+                logger.warn("Destination image store : " + store.getName() + " not NFS based. Store not suitable for migration!");
                 continue;
             }
 
             if (srcStoreDcId != null && store.getDataCenterId() != null && !srcStoreDcId.equals(store.getDataCenterId())) {
-                s_logger.warn("Source and destination stores are not in the same zone. Skipping destination store: " + store.getName());
+                logger.warn("Source and destination stores are not in the same zone. Skipping destination store: " + store.getName());
                 continue;
             }
 

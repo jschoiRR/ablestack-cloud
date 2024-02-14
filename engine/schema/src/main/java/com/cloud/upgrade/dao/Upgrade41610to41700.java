@@ -24,14 +24,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.upgrade.SystemVmTemplateRegistration;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade41610to41700 implements DbUpgrade, DbUpgradeSystemVmTemplate {
 
-    final static Logger LOG = Logger.getLogger(Upgrade41700to41710.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41700to41710.class);
     private SystemVmTemplateRegistration systemVmTemplateRegistration;
 
     @Override

@@ -31,7 +31,8 @@ import org.apache.cloudstack.api.response.AccountResponse;
 import org.apache.cloudstack.api.response.SuccessResponse;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.region.RegionService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.user.Account;
@@ -39,7 +40,7 @@ import com.cloud.user.Account;
 @APICommand(name = "deleteAccount", description = "Deletes a account, and all users associated with this account", responseObject = SuccessResponse.class, entityType = {Account.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteAccountCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(DeleteAccountCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(DeleteAccountCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

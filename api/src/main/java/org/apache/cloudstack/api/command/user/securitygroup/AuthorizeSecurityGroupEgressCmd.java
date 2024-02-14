@@ -22,7 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
 import org.apache.cloudstack.api.ACL;
@@ -50,7 +51,7 @@ import com.cloud.network.security.SecurityRule;
             responseHasSensitiveInfo = false)
 @SuppressWarnings("rawtypes")
 public class AuthorizeSecurityGroupEgressCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(AuthorizeSecurityGroupEgressCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(AuthorizeSecurityGroupEgressCmd.class.getName());
 
 
     // ///////////////////////////////////////////////////

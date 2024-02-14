@@ -45,7 +45,8 @@ import org.apache.cloudstack.framework.config.dao.ConfigurationDao;
 import org.apache.cloudstack.query.QueryService;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.api.ApiDBUtils;
@@ -89,7 +90,7 @@ import com.cloud.vm.dao.VbmcDao;
 
 @Component
 public class UserVmJoinDaoImpl extends GenericDaoBaseWithTagInformation<UserVmJoinVO, UserVmResponse> implements UserVmJoinDao {
-    public static final Logger s_logger = Logger.getLogger(UserVmJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(UserVmJoinDaoImpl.class);
 
     @Inject
     private ConfigurationDao _configDao;

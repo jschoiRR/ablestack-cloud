@@ -27,8 +27,9 @@ import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.NetworkACLResponse;
 import org.apache.cloudstack.api.response.VpcResponse;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.InvalidParameterValueException;
@@ -41,7 +42,7 @@ import com.cloud.user.Account;
         responseObject = NetworkACLResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateNetworkACLListCmd extends BaseAsyncCreateCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateNetworkACLListCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateNetworkACLListCmd.class.getName());
 
 
     // ///////////////////////////////////////////////////

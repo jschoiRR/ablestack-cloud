@@ -20,7 +20,8 @@ import com.cloud.dc.VsphereStoragePolicyVO;
 import com.cloud.utils.db.GenericDaoBase;
 import com.cloud.utils.db.SearchBuilder;
 import com.cloud.utils.db.SearchCriteria;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
 @Component
 public class VsphereStoragePolicyDaoImpl extends GenericDaoBase<VsphereStoragePolicyVO, Long> implements VsphereStoragePolicyDao {
 
-    protected static final Logger LOGGER = Logger.getLogger(VsphereStoragePolicyDaoImpl.class);
+    protected static final Logger LOGGER = LogManager.getLogger(VsphereStoragePolicyDaoImpl.class);
 
     private final SearchBuilder<VsphereStoragePolicyVO> zoneSearch;
     private final SearchBuilder<VsphereStoragePolicyVO> policySearch;

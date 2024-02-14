@@ -16,8 +16,6 @@
 // under the License.
 package org.apache.cloudstack.api.command.user.template;
 
-import org.apache.log4j.Logger;
-
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.BaseUpdateTemplateOrIsoPermissionsCmd;
 import org.apache.cloudstack.api.response.SuccessResponse;
@@ -33,11 +31,6 @@ public class UpdateTemplatePermissionsCmd extends BaseUpdateTemplateOrIsoPermiss
     @Override
     protected String getResponseName() {
         return "updatetemplatepermissionsresponse";
-    }
-
-    @Override
-    protected Logger getLogger() {
-        return Logger.getLogger(UpdateTemplatePermissionsCmd.class.getName());
     }
 
     @Override

@@ -280,6 +280,8 @@ public class EventTypes {
     public static final String EVENT_USER_ENABLE = "USER.ENABLE";
     public static final String EVENT_USER_LOCK = "USER.LOCK";
     public static final String EVENT_USER_SESSION_BLOCK = "USER.SESSION.BLOCK";
+    public static final String EVENT_USER_SESSION_DESTROY = "USER.SESSION.DESTROY";
+    public static final String EVENT_USER_REQUEST = "USER.REQUEST";
 
     //registering SSH keypair events
     public static final String EVENT_REGISTER_SSH_KEYPAIR = "REGISTER.SSH.KEYPAIR";
@@ -726,6 +728,7 @@ public class EventTypes {
     public static final String EVENT_SECURITY_CHECK = "SECURITY.CHECK";
     public static final String EVENT_INTEGRITY_VERIFICATION = "INTEGRITY.VERIFICATION";
     public static final String EVENT_LOG_AUTO_DELETED = "LOG.DELETED";
+    public static final String EVENT_THRESHOLD_REACHED = "THRESHOLD.REACHED";
 
     // OBJECT STORE
     public static final String EVENT_OBJECT_STORE_CREATE = "OBJECT.STORE.CREATE";
@@ -860,6 +863,8 @@ public class EventTypes {
         entityEventDetails.put(EVENT_USER_ENABLE, User.class);
         entityEventDetails.put(EVENT_USER_LOCK, User.class);
         entityEventDetails.put(EVENT_USER_SESSION_BLOCK, User.class);
+        entityEventDetails.put(EVENT_USER_SESSION_DESTROY, User.class);
+        entityEventDetails.put(EVENT_USER_REQUEST, User.class);
 
         // Template Events
         entityEventDetails.put(EVENT_TEMPLATE_CREATE, VirtualMachineTemplate.class);

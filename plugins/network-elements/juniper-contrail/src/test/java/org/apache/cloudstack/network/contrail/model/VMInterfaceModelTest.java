@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.apache.cloudstack.network.contrail.management.ContrailManagerImpl;
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import com.cloud.network.Network;
@@ -45,21 +44,26 @@ import net.juniper.contrail.api.ApiConnectorMock;
 import net.juniper.contrail.api.types.VirtualMachineInterface;
 
 public class VMInterfaceModelTest extends TestCase {
-    private static final Logger s_logger =
-            Logger.getLogger(VMInterfaceModelTest.class);
 
     @Test
     public void testCreateVMInterface() throws IOException {
 
         String uuid;
         ContrailManagerImpl contrailMgr = mock(ContrailManagerImpl.class);
-        ModelController controller = mock(ModelController.class);
+        ModelController controller      = mock(ModelController.class);
         ApiConnector api = new ApiConnectorMock(null, 0);
         when(controller.getManager()).thenReturn(contrailMgr);
         when(controller.getApiAccessor()).thenReturn(api);
 
         // Create Virtual-Network (VN)
-        NetworkVO network = MockNetworkVO.getNetwork(Network.State.Implemented);
+        NetworkVO network = mock(NetworkVO.class);
+        when(network.getName()).thenReturn("testnetwork");
+        when(network.getState()).thenReturn(Network.State.Implemented);
+        when(network.getGateway()).thenReturn("10.1.1.1");
+        when(network.getCidr()).thenReturn("10.1.1.0/24");
+        when(network.getPhysicalNetworkId()).thenReturn(42L);
+        when(network.getDomainId()).thenReturn(10L);
+        when(network.getAccountId()).thenReturn(42L);
         NetworkDao networkDao = mock(NetworkDao.class);
         when(networkDao.findById(anyLong())).thenReturn(network);
         when(controller.getNetworkDao()).thenReturn(networkDao);
@@ -82,7 +86,7 @@ public class VMInterfaceModelTest extends TestCase {
         when(vm.getState()).thenReturn(VirtualMachine.State.Running);
         when(vm.getDomainId()).thenReturn(10L);
         when(vm.getAccountId()).thenReturn(42L);
-        UserVmDao VmDao = mock(UserVmDao.class);
+        UserVmDao VmDao      = mock(UserVmDao.class);
         when(VmDao.findById(anyLong())).thenReturn(null);
         when(controller.getVmDao()).thenReturn(VmDao);
 

@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.user.template;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiCommandResourceType;
@@ -35,7 +36,7 @@ import com.cloud.user.Account;
 @APICommand(name = "updateTemplate", description = "Updates attributes of a template.", responseObject = TemplateResponse.class, responseView = ResponseView.Restricted,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateTemplateCmd extends BaseUpdateTemplateOrIsoCmd implements UserCmd {
-    public static final Logger s_logger = Logger.getLogger(UpdateTemplateCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateTemplateCmd.class.getName());
     private static final String s_name = "updatetemplateresponse";
 
     /////////////////////////////////////////////////////

@@ -19,14 +19,15 @@ package com.cloud.upgrade.dao;
 
 import com.cloud.upgrade.SystemVmTemplateRegistration;
 import com.cloud.utils.exception.CloudRuntimeException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.InputStream;
 import java.sql.Connection;
 
 public class Upgrade41600to41610 implements DbUpgrade, DbUpgradeSystemVmTemplate {
 
-    final static Logger LOG = Logger.getLogger(Upgrade41600to41610.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41600to41610.class);
     private SystemVmTemplateRegistration systemVmTemplateRegistration;
 
     @Override

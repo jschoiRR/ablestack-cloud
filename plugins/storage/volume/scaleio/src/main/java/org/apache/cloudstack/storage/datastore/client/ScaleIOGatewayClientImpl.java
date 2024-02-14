@@ -68,7 +68,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.pool.PoolStats;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.storage.Storage;
 import com.cloud.utils.exception.CloudRuntimeException;
@@ -81,7 +82,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.google.common.base.Preconditions;
 
 public class ScaleIOGatewayClientImpl implements ScaleIOGatewayClient {
-    private static final Logger LOG = Logger.getLogger(ScaleIOGatewayClientImpl.class);
+    protected static Logger LOG = LogManager.getLogger(ScaleIOGatewayClientImpl.class);
 
     private final URI apiURI;
     private final HttpClient httpClient;

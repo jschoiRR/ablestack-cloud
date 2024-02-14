@@ -79,7 +79,8 @@ import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.NumbersUtil;
 import com.cloud.utils.Pair;
@@ -93,7 +94,7 @@ import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import org.apache.commons.lang3.StringUtils;
 
 public class VeeamClient {
-    private static final Logger LOG = Logger.getLogger(VeeamClient.class);
+    protected static Logger LOG = LogManager.getLogger(VeeamClient.class);
     private static final String FAILED_TO_DELETE = "Failed to delete";
 
     private final URI apiURI;

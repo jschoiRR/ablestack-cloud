@@ -27,14 +27,15 @@ import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.GuestOSCategoryResponse;
 import org.apache.cloudstack.api.response.HostResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.List;
 
 @APICommand(name = "updateHost", description = "Updates a host.", responseObject = HostResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class UpdateHostCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(UpdateHostCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateHostCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////
@@ -127,7 +128,7 @@ public class UpdateHostCmd extends BaseCmd {
             hostResponse.setResponseName(getCommandName());
             this.setResponseObject(hostResponse);
         } catch (Exception e) {
-            s_logger.debug("Failed to update host:" + getId(), e);
+            logger.debug("Failed to update host:" + getId(), e);
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to update host:" + getId() + "," + e.getMessage());
         }
     }

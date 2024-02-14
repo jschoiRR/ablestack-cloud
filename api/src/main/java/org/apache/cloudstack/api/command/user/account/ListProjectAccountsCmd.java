@@ -26,14 +26,15 @@ import org.apache.cloudstack.api.response.ProjectAccountResponse;
 import org.apache.cloudstack.api.response.ProjectResponse;
 import org.apache.cloudstack.api.response.ProjectRoleResponse;
 import org.apache.cloudstack.api.response.UserResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.user.Account;
 
 @APICommand(name = "listProjectAccounts", description = "Lists project's accounts", responseObject = ProjectResponse.class, since = "3.0.0",
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListProjectAccountsCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListProjectAccountsCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListProjectAccountsCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

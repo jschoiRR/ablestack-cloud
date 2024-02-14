@@ -1157,6 +1157,10 @@ public class ApiConstants {
     public static final String CLIENT_ID = "clientid";
     public static final String REDIRECT_URI = "redirecturi";
 
+    public static final String SHOW_ALERT = "showalert";
+    public static final String PUBLICKEY_EXPONENT = "publickeyexponent";
+    public static final String PUBLICKEY_MODULUS = "publickeymodulus";
+
     public static final String SHAREABLE = "shareable";
     public static final String VBMC_PORT = "vbmcport";
     public static final String IS_TAG_A_RULE = "istagarule";

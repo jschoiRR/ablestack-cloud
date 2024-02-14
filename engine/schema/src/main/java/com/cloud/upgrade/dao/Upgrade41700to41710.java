@@ -23,7 +23,8 @@ import java.util.List;
 import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDaoImpl;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.storage.Storage.StoragePoolType;
 import com.cloud.storage.VolumeVO;
@@ -34,7 +35,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade41700to41710 implements DbUpgrade, DbUpgradeSystemVmTemplate {
 
-    final static Logger LOG = Logger.getLogger(Upgrade41700to41710.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41700to41710.class);
     private SystemVmTemplateRegistration systemVmTemplateRegistration;
 
     private PrimaryDataStoreDao storageDao;

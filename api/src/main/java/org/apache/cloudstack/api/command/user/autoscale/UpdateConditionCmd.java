@@ -17,7 +17,8 @@
 
 package org.apache.cloudstack.api.command.user.autoscale;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
@@ -41,7 +42,7 @@ import com.cloud.user.Account;
         authorized = {RoleType.Admin, RoleType.ResourceAdmin, RoleType.DomainAdmin, RoleType.User},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, since = "4.18.0")
 public class UpdateConditionCmd extends BaseAsyncCmd {
-    public static final Logger LOGGER = Logger.getLogger(UpdateConditionCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(UpdateConditionCmd.class.getName());
 
     // ///////////////////////////////////////////////////
     // ////////////// API parameters /////////////////////

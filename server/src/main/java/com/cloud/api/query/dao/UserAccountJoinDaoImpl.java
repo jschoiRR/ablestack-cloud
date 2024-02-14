@@ -20,7 +20,8 @@ import java.util.List;
 
 
 import com.cloud.user.AccountManagerImpl;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.api.response.UserResponse;
@@ -34,7 +35,7 @@ import com.cloud.utils.db.SearchCriteria;
 
 @Component
 public class UserAccountJoinDaoImpl extends GenericDaoBase<UserAccountJoinVO, Long> implements UserAccountJoinDao {
-    public static final Logger s_logger = Logger.getLogger(UserAccountJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(UserAccountJoinDaoImpl.class);
 
     private SearchBuilder<UserAccountJoinVO> vrIdSearch;
 

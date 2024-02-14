@@ -36,7 +36,8 @@ import org.apache.cloudstack.api.command.admin.acl.project.UpdateProjectRoleCmd;
 import org.apache.cloudstack.api.command.admin.acl.project.UpdateProjectRolePermissionCmd;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.ActionEvent;
 import com.cloud.event.EventTypes;
@@ -71,7 +72,7 @@ public class ProjectRoleManagerImpl extends ManagerBase implements ProjectRoleSe
     @Inject
     AccountService accountService;
 
-    private static final Logger LOGGER = Logger.getLogger(ProjectRoleManagerImpl.class);
+    protected static Logger LOGGER = LogManager.getLogger(ProjectRoleManagerImpl.class);
 
     private Project validateProjectId(Long projectId) {
         Project project = projectDao.findById(projectId);

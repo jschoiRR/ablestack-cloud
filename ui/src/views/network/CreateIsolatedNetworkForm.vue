@@ -300,17 +300,6 @@
               :placeholder="apiParams.sourcenatipaddress?.description"/>
           </a-form-item>
           <a-form-item
-            ref="networkdomain"
-            name="networkdomain"
-            v-if="!isObjectEmpty(selectedNetworkOffering) && !selectedNetworkOffering.forvpc">
-            <template #label>
-              <tooltip-label :title="$t('label.networkdomain')" :tooltip="apiParams.networkdomain.description"/>
-            </template>
-            <a-input
-             v-model:value="form.networkdomain"
-              :placeholder="apiParams.networkdomain.description"/>
-          </a-form-item>
-          <a-form-item
             ref="account"
             name="account"
             v-if="accountVisible">
@@ -349,6 +338,7 @@ import { isAdmin, isAdminOrDomainAdmin } from '@/role'
 import { mixinForm } from '@/utils/mixin'
 import ResourceIcon from '@/components/view/ResourceIcon'
 import TooltipLabel from '@/components/widgets/TooltipLabel'
+import store from '@/store'
 
 export default {
   name: 'CreateIsolatedNetworkForm',
@@ -573,6 +563,9 @@ export default {
       this.selectedNetworkOffering = {}
       api('listNetworkOfferings', params).then(json => {
         this.networkOfferings = json.listnetworkofferingsresponse.networkoffering
+        if (store.getters.features.securityfeaturesenabled) {
+          this.networkOfferings = this.networkOfferings.filter(option => !(option.name.includes('쿠버네테스') || option.name.includes('kubernetes')))
+        }
       }).catch(error => {
         this.$notifyError(error)
       }).finally(() => {

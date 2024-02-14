@@ -32,7 +32,8 @@ import java.util.Map;
 import com.cloud.dc.DataCenter;
 import com.cloud.network.IpAddressManager;
 import com.cloud.utils.Pair;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -93,7 +94,7 @@ import junit.framework.TestCase;
  */
 @RunWith(JUnit4.class)
 public class NetworkOrchestratorTest extends TestCase {
-    static final Logger s_logger = Logger.getLogger(NetworkOrchestratorTest.class);
+    static final Logger logger = LogManager.getLogger(NetworkOrchestratorTest.class);
 
     NetworkOrchestrator testOrchastrator = Mockito.spy(new NetworkOrchestrator());
 

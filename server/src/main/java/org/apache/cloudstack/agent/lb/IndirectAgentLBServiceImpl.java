@@ -34,7 +34,8 @@ import org.apache.cloudstack.agent.lb.algorithm.IndirectAgentLBStaticAlgorithm;
 import org.apache.cloudstack.config.ApiServiceConfiguration;
 import org.apache.cloudstack.framework.config.ConfigKey;
 import org.apache.cloudstack.framework.config.Configurable;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -48,7 +49,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 
 public class IndirectAgentLBServiceImpl extends ComponentLifecycleBase implements IndirectAgentLB, Configurable {
-    public static final Logger LOG = Logger.getLogger(IndirectAgentLBServiceImpl.class);
+    protected static Logger LOG = LogManager.getLogger(IndirectAgentLBServiceImpl.class);
 
     public static final ConfigKey<String> IndirectAgentLBAlgorithm = new ConfigKey<>(String.class,
     "indirect.agent.lb.algorithm", "Advanced", "static",

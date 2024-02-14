@@ -136,6 +136,14 @@ public class CapabilitiesResponse extends BaseResponse {
     @Param(description = "A setting that enables/disables features developed for security features.")
     private boolean securityFeaturesEnabled;
 
+    @SerializedName("setpublickeymodulus")
+    @Param(description = "rsa key modulus.")
+    private String setPublicKeyModulus;
+
+    @SerializedName("setpublickeyexponent")
+    @Param(description = "rsa key exponent.")
+    private String setPublicKeyExponent;
+
     @SerializedName("host")
     @Param(description = "Management Server Host Ip")
     private String host;
@@ -274,6 +282,14 @@ public class CapabilitiesResponse extends BaseResponse {
 
     public void setSecurityFeaturesEnabled(boolean securityFeaturesEnabled) {
         this.securityFeaturesEnabled = securityFeaturesEnabled;
+    }
+
+    public void setPublicKeyModulus(String setPublicKeyModulus) {
+        this.setPublicKeyModulus = setPublicKeyModulus;
+    }
+
+    public void setPublicKeyExponent(String setPublicKeyExponent) {
+        this.setPublicKeyExponent = setPublicKeyExponent;
     }
 
     public void setHost(String host) {

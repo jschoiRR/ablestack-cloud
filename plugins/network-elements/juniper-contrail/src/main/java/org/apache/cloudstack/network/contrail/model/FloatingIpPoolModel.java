@@ -23,7 +23,8 @@ import java.util.TreeSet;
 import net.juniper.contrail.api.ApiConnector;
 import net.juniper.contrail.api.types.FloatingIpPool;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.network.contrail.management.ContrailManager;
 
@@ -31,7 +32,7 @@ import com.cloud.exception.InternalErrorException;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class FloatingIpPoolModel extends ModelObjectBase {
-    private static final Logger s_logger = Logger.getLogger(FloatingIpPoolModel.class);
+    protected static Logger logger = LogManager.getLogger(FloatingIpPoolModel.class);
 
     private String _name;
 
@@ -87,7 +88,7 @@ public class FloatingIpPoolModel extends ModelObjectBase {
             }
             _fipPool = null;
         } catch (IOException ex) {
-            s_logger.warn("floating ip pool delete", ex);
+            logger.warn("floating ip pool delete", ex);
         }
     }
 
@@ -140,7 +141,7 @@ public class FloatingIpPoolModel extends ModelObjectBase {
             try {
                 api.create(fipPool);
             } catch (Exception ex) {
-                s_logger.debug("floating ip pool create", ex);
+                logger.debug("floating ip pool create", ex);
                 throw new CloudRuntimeException("Failed to create floating ip pool", ex);
             }
             _fipPool = fipPool;
@@ -148,7 +149,7 @@ public class FloatingIpPoolModel extends ModelObjectBase {
             try {
                 api.update(fipPool);
             } catch (IOException ex) {
-                s_logger.warn("floating ip pool update", ex);
+                logger.warn("floating ip pool update", ex);
                 throw new CloudRuntimeException("Unable to update floating ip ppol object", ex);
             }
         }

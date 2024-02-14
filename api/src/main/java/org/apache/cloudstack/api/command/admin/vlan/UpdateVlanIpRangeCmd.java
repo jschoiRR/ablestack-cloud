@@ -24,7 +24,8 @@ import org.apache.cloudstack.api.BaseCmd;
 import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.VlanIpRangeResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.dc.Vlan;
 import com.cloud.exception.ConcurrentOperationException;
@@ -39,7 +40,7 @@ import com.cloud.utils.net.NetUtils;
         authorized = {RoleType.Admin})
 public class UpdateVlanIpRangeCmd extends BaseCmd {
 
-    public static final Logger s_logger = Logger.getLogger(UpdateVlanIpRangeCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateVlanIpRangeCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////
@@ -149,7 +150,7 @@ public class UpdateVlanIpRangeCmd extends BaseCmd {
                 throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, "Failed to Update vlan ip range");
             }
         } catch (ConcurrentOperationException ex) {
-            s_logger.warn("Exception: ", ex);
+            logger.warn("Exception: ", ex);
             throw new ServerApiException(ApiErrorCode.INTERNAL_ERROR, ex.getMessage());
         }
     }

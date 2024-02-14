@@ -33,7 +33,8 @@ import org.apache.cloudstack.api.response.LoadBalancerResponse;
 import org.apache.cloudstack.api.response.NetworkResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.dc.DataCenter;
 import com.cloud.dc.DataCenter.NetworkType;
@@ -52,7 +53,7 @@ import com.cloud.utils.net.NetUtils;
 @APICommand(name = "createLoadBalancerRule", description = "Creates a load balancer rule", responseObject = LoadBalancerResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateLoadBalancerRuleCmd extends BaseAsyncCreateCmd /*implements LoadBalancer */{
-    public static final Logger s_logger = Logger.getLogger(CreateLoadBalancerRuleCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateLoadBalancerRuleCmd.class.getName());
 
 
     /////////////////////////////////////////////////////
@@ -284,7 +285,7 @@ public class CreateLoadBalancerRuleCmd extends BaseAsyncCreateCmd /*implements L
             }
             lbResponse.setResponseName(getCommandName());
         } catch (Exception ex) {
-            s_logger.warn("Failed to create LB rule due to exception ", ex);
+            logger.warn("Failed to create LB rule due to exception ", ex);
         } finally {
             if (!success || rule == null) {
 
@@ -309,10 +310,10 @@ public class CreateLoadBalancerRuleCmd extends BaseAsyncCreateCmd /*implements L
             this.setEntityId(result.getId());
             this.setEntityUuid(result.getUuid());
         } catch (NetworkRuleConflictException e) {
-            s_logger.warn("Exception: ", e);
+            logger.warn("Exception: ", e);
             throw new ServerApiException(ApiErrorCode.NETWORK_RULE_CONFLICT_ERROR, e.getMessage());
         } catch (InsufficientAddressCapacityException e) {
-            s_logger.warn("Exception: ", e);
+            logger.warn("Exception: ", e);
             throw new ServerApiException(ApiErrorCode.INSUFFICIENT_CAPACITY_ERROR, e.getMessage());
         } catch (InvalidParameterValueException e) {
             throw new ServerApiException(ApiErrorCode.PARAM_ERROR, e.getMessage());

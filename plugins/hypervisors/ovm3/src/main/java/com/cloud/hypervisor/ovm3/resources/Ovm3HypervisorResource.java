@@ -28,7 +28,8 @@ import org.apache.cloudstack.storage.command.AttachCommand;
 import org.apache.cloudstack.storage.command.CopyCommand;
 import org.apache.cloudstack.storage.command.CreateObjectCommand;
 import org.apache.cloudstack.storage.command.StorageSubSystemCommand;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.IAgentControl;
 import com.cloud.agent.api.Answer;
@@ -101,7 +102,7 @@ import com.cloud.vm.VirtualMachine;
 import com.cloud.vm.VirtualMachine.State;
 
 public class Ovm3HypervisorResource extends ServerResourceBase implements HypervisorResource {
-    private static final Logger LOGGER = Logger.getLogger(Ovm3HypervisorResource.class);
+    protected static Logger LOGGER = LogManager.getLogger(Ovm3HypervisorResource.class);
     @Inject
     private VirtualRoutingResource vrResource;
     private StorageSubsystemCommandHandler storageHandler;

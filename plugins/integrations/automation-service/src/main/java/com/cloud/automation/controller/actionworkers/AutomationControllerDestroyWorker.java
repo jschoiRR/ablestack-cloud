@@ -36,7 +36,7 @@ import com.cloud.uservm.UserVm;
 import com.cloud.utils.exception.CloudRuntimeException;
 import com.cloud.vm.UserVmVO;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

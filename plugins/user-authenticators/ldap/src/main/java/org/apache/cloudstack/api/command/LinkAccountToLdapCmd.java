@@ -36,7 +36,8 @@ import org.apache.cloudstack.api.response.LinkDomainToLdapResponse;
 import org.apache.cloudstack.ldap.LdapManager;
 import org.apache.cloudstack.ldap.LdapUser;
 import org.apache.cloudstack.ldap.NoLdapUserMatchingQueryException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.InvalidParameterValueException;
 import com.cloud.user.Account;
@@ -46,7 +47,7 @@ import com.cloud.user.UserAccount;
 @APICommand(name = "linkAccountToLdap", description = "link a cloudstack account to a group or OU in ldap", responseObject = LinkDomainToLdapResponse.class, since = "4.11.0",
     requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, authorized = {RoleType.Admin,RoleType.DomainAdmin})
 public class LinkAccountToLdapCmd extends BaseCmd {
-    public static final Logger LOGGER = Logger.getLogger(LinkAccountToLdapCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(LinkAccountToLdapCmd.class.getName());
 
     @Parameter(name = ApiConstants.DOMAIN_ID, type = CommandType.UUID, required = true, entityType = DomainResponse.class, description = "The id of the domain that is to contain the linked account.")
     private Long domainId;

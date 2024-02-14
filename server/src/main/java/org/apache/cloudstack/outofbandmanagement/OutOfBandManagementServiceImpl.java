@@ -43,7 +43,8 @@ import org.apache.cloudstack.poll.BackgroundPollManager;
 import org.apache.cloudstack.poll.BackgroundPollTask;
 import org.apache.cloudstack.utils.identity.ManagementServerNode;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.alert.AlertManager;
@@ -75,7 +76,7 @@ import com.google.common.collect.ImmutableMap;
 
 @Component
 public class OutOfBandManagementServiceImpl extends ManagerBase implements OutOfBandManagementService, Manager, Configurable {
-    public static final Logger LOG = Logger.getLogger(OutOfBandManagementServiceImpl.class);
+    protected static Logger LOG = LogManager.getLogger(OutOfBandManagementServiceImpl.class);
 
     @Inject
     private ClusterDetailsDao clusterDetailsDao;

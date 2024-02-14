@@ -38,7 +38,8 @@ import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.storage.datastore.util.ScaleIOUtil;
 import org.apache.cloudstack.storage.to.VolumeObjectTO;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.VMSnapshotTO;
 import com.cloud.alert.AlertManager;
@@ -70,7 +71,7 @@ import com.cloud.vm.snapshot.dao.VMSnapshotDao;
 import com.cloud.vm.snapshot.dao.VMSnapshotDetailsDao;
 
 public class ScaleIOVMSnapshotStrategy extends ManagerBase implements VMSnapshotStrategy {
-    private static final Logger LOGGER = Logger.getLogger(ScaleIOVMSnapshotStrategy.class);
+    protected static Logger LOGGER = LogManager.getLogger(ScaleIOVMSnapshotStrategy.class);
     @Inject
     VMSnapshotHelper vmSnapshotHelper;
     @Inject

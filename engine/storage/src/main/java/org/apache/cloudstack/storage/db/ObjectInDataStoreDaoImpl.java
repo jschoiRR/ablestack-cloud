@@ -21,7 +21,8 @@ import java.util.Map;
 
 import javax.naming.ConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.engine.subsystem.api.storage.DataObjectInStore;
@@ -36,7 +37,7 @@ import com.cloud.utils.db.UpdateBuilder;
 
 @Component
 public class ObjectInDataStoreDaoImpl extends GenericDaoBase<ObjectInDataStoreVO, Long> implements ObjectInDataStoreDao {
-    private static final Logger s_logger = Logger.getLogger(ObjectInDataStoreDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(ObjectInDataStoreDaoImpl.class);
     private SearchBuilder<ObjectInDataStoreVO> updateStateSearch;
 
     @Override
@@ -69,7 +70,7 @@ public class ObjectInDataStoreDaoImpl extends GenericDaoBase<ObjectInDataStoreVO
         builder.set(vo, "updated", new Date());
 
         int rows = update(vo, sc);
-        if (rows == 0 && s_logger.isDebugEnabled()) {
+        if (rows == 0 && logger.isDebugEnabled()) {
             ObjectInDataStoreVO dbVol = findByIdIncludingRemoved(vo.getId());
             if (dbVol != null) {
                 StringBuilder str = new StringBuilder("Unable to update ").append(vo.toString());
@@ -102,7 +103,7 @@ public class ObjectInDataStoreDaoImpl extends GenericDaoBase<ObjectInDataStoreVO
                     .append("; updatedTime=")
                     .append(oldUpdatedTime);
             } else {
-                s_logger.debug("Unable to update objectIndatastore: id=" + vo.getId() + ", as there is no such object exists in the database anymore");
+                logger.debug("Unable to update objectIndatastore: id=" + vo.getId() + ", as there is no such object exists in the database anymore");
             }
         }
         return rows > 0;

@@ -72,6 +72,7 @@ export default {
       label: 'label.add.account',
       listView: true,
       popup: true,
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       component: shallowRef(defineAsyncComponent(() => import('@/views/iam/AddAccount.vue')))
     },
     {

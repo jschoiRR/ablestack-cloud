@@ -19,7 +19,8 @@
 
 package com.cloud.hypervisor.xenserver.resource.wrapper.xenbase;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.agent.api.OvsVpcPhysicalTopologyConfigCommand;
@@ -32,7 +33,7 @@ import com.xensource.xenapi.Network;
 @ResourceWrapper(handles =  OvsVpcPhysicalTopologyConfigCommand.class)
 public final class CitrixOvsVpcPhysicalTopologyConfigCommandWrapper extends CommandWrapper<OvsVpcPhysicalTopologyConfigCommand, Answer, CitrixResourceBase> {
 
-    private static final Logger s_logger = Logger.getLogger(CitrixOvsVpcPhysicalTopologyConfigCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(CitrixOvsVpcPhysicalTopologyConfigCommandWrapper.class);
 
     @Override
     public Answer execute(final OvsVpcPhysicalTopologyConfigCommand command, final CitrixResourceBase citrixResourceBase) {
@@ -52,7 +53,7 @@ public final class CitrixOvsVpcPhysicalTopologyConfigCommandWrapper extends Comm
                 return new Answer(command, false, result);
             }
         } catch  (final Exception e) {
-            s_logger.warn("caught exception while updating host with latest VPC topology", e);
+            logger.warn("caught exception while updating host with latest VPC topology", e);
             return new Answer(command, false, e.getMessage());
         }
     }

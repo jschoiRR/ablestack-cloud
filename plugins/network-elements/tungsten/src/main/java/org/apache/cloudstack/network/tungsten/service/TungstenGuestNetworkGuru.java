@@ -81,7 +81,8 @@ import org.apache.cloudstack.network.tungsten.agent.api.SetupTungstenVRouterComm
 import org.apache.cloudstack.network.tungsten.agent.api.TungstenAnswer;
 import org.apache.cloudstack.network.tungsten.agent.api.TungstenCommand;
 import org.apache.cloudstack.network.tungsten.model.TungstenRule;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,7 @@ import javax.inject.Inject;
 
 public class TungstenGuestNetworkGuru extends GuestNetworkGuru implements NetworkMigrationResponder {
 
-    private static final Logger s_logger = Logger.getLogger(TungstenGuestNetworkGuru.class);
+    protected static Logger logger = LogManager.getLogger(TungstenGuestNetworkGuru.class);
 
     @Inject
     NetworkDao networkDao;
@@ -153,7 +154,7 @@ public class TungstenGuestNetworkGuru extends GuestNetworkGuru implements Networ
         DataCenter dc = _dcDao.findById(plan.getDataCenterId());
 
         if (!canHandle(offering, dc.getNetworkType(), physnet)) {
-            s_logger.debug("Refusing to design this network");
+            logger.debug("Refusing to design this network");
             return null;
         }
 

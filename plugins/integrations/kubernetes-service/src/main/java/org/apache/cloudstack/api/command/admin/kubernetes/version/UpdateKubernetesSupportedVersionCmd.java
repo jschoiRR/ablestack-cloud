@@ -29,7 +29,8 @@ import org.apache.cloudstack.api.ResponseObject;
 import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.command.admin.AdminCmd;
 import org.apache.cloudstack.api.response.KubernetesSupportedVersionResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.ConcurrentOperationException;
 import com.cloud.kubernetes.version.KubernetesSupportedVersion;
@@ -43,7 +44,7 @@ import com.cloud.utils.exception.CloudRuntimeException;
         entityType = {KubernetesSupportedVersion.class},
         authorized = {RoleType.Admin})
 public class UpdateKubernetesSupportedVersionCmd extends BaseCmd implements AdminCmd {
-    public static final Logger LOGGER = Logger.getLogger(UpdateKubernetesSupportedVersionCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(UpdateKubernetesSupportedVersionCmd.class.getName());
 
     @Inject
     private KubernetesVersionService kubernetesVersionService;

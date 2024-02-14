@@ -700,7 +700,7 @@
                         </div>
                       </a-card>
                     </a-form-item>
-                    <a-form-item :label="$t('label.affinity.groups')">
+                    <a-form-item :label="$t('label.affinity.groups')" v-if="isAllowedAffinityGroup">
                       <affinity-group-selection
                         :items="options.affinityGroups"
                         :row-count="rowCount.affinityGroups"
@@ -770,7 +770,7 @@
                         :filterOption="filterOption"
                         :options="options.instanceGroups" />
                     </a-form-item>
-                    <a-form-item :label="$t('label.keyboard')" name="keyboard" ref="keyboard">
+                    <a-form-item :label="$t('label.keyboard')" name="keyboard" ref="keyboard" v-if="!$store.getters.features.securityfeaturesenabled">
                       <a-select
                         v-model:value="form.keyboard"
                         :options="keyboardSelectOptions"
@@ -1319,7 +1319,7 @@ export default {
       return (this.networks.length > 0 && this.zone.securitygroupsenabled) || (this.zone && this.zone.networktype === 'Basic')
     },
     isUserAllowedToListSshKeys () {
-      return Boolean('listSSHKeyPairs' in this.$store.getters.apis)
+      return Boolean('listSSHKeyPairs' in this.$store.getters.apis) && (!store.getters.features.securityfeaturesenabled)
     },
     isUserAllowedToListUserDatas () {
       return Boolean('listUserData' in this.$store.getters.apis)
@@ -1332,6 +1332,9 @@ export default {
     },
     isCustomizedIOPS () {
       return this.rootDiskSelected?.iscustomizediops || this.serviceOffering?.iscustomizediops || false
+    },
+    isAllowedAffinityGroup () {
+      return Boolean(!store.getters.features.securityfeaturesenabled)
     }
   },
   watch: {

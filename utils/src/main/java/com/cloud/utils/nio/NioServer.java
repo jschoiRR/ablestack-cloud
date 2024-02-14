@@ -28,10 +28,11 @@ import java.nio.channels.spi.SelectorProvider;
 import java.util.WeakHashMap;
 
 import org.apache.cloudstack.framework.ca.CAService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class NioServer extends NioConnection {
-    private final static Logger s_logger = Logger.getLogger(NioServer.class);
+    private final static Logger logger = LogManager.getLogger(NioServer.class);
 
     protected InetSocketAddress _localAddr;
     private ServerSocketChannel _serverSocket;
@@ -61,7 +62,7 @@ public class NioServer extends NioConnection {
 
         _serverSocket.register(_selector, SelectionKey.OP_ACCEPT, null);
 
-        s_logger.info("NioServer started and listening on " + _serverSocket.socket().getLocalSocketAddress());
+        logger.info("NioServer started and listening on " + _serverSocket.socket().getLocalSocketAddress());
     }
 
     @Override
@@ -70,7 +71,7 @@ public class NioServer extends NioConnection {
         if (_serverSocket != null) {
             _serverSocket.close();
         }
-        s_logger.info("NioConnection stopped on " + _localAddr.toString());
+        logger.info("NioConnection stopped on " + _localAddr.toString());
     }
 
     @Override

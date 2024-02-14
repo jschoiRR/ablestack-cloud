@@ -25,7 +25,8 @@ import java.util.Set;
 
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.domain.Domain;
@@ -40,7 +41,7 @@ import com.cloud.utils.db.TransactionLegacy;
 
 @Component
 public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements DomainDao {
-    private static final Logger s_logger = Logger.getLogger(DomainDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(DomainDaoImpl.class);
 
     protected SearchBuilder<DomainVO> DomainNameLikeSearch;
     protected SearchBuilder<DomainVO> ParentDomainNameLikeSearch;
@@ -112,7 +113,7 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
 
         DomainVO parentDomain = findById(parent);
         if (parentDomain == null) {
-            s_logger.error("Unable to load parent domain: " + parent);
+            logger.error("Unable to load parent domain: " + parent);
             return null;
         }
 
@@ -122,7 +123,7 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
 
             parentDomain = this.lockRow(parent, true);
             if (parentDomain == null) {
-                s_logger.error("Unable to lock parent domain: " + parent);
+                logger.error("Unable to lock parent domain: " + parent);
                 return null;
             }
 
@@ -137,7 +138,7 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
             txn.commit();
             return domain;
         } catch (Exception e) {
-            s_logger.error("Unable to create domain due to " + e.getMessage(), e);
+            logger.error("Unable to create domain due to " + e.getMessage(), e);
             txn.rollback();
             return null;
         }
@@ -148,23 +149,23 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
     public boolean remove(Long id) {
         // check for any active users / domains assigned to the given domain id and don't remove the domain if there are any
         if (id != null && id.longValue() == Domain.ROOT_DOMAIN) {
-            s_logger.error("Can not remove domain " + id + " as it is ROOT domain");
+            logger.error("Can not remove domain " + id + " as it is ROOT domain");
             return false;
         } else {
             if(id == null) {
-                s_logger.error("Can not remove domain without id.");
+                logger.error("Can not remove domain without id.");
                 return false;
             }
         }
 
         DomainVO domain = findById(id);
         if (domain == null) {
-            s_logger.info("Unable to remove domain as domain " + id + " no longer exists");
+            logger.info("Unable to remove domain as domain " + id + " no longer exists");
             return true;
         }
 
         if (domain.getParent() == null) {
-            s_logger.error("Invalid domain " + id + ", orphan?");
+            logger.error("Invalid domain " + id + ", orphan?");
             return false;
         }
 
@@ -177,7 +178,7 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
             txn.start();
             DomainVO parentDomain = super.lockRow(domain.getParent(), true);
             if (parentDomain == null) {
-                s_logger.error("Unable to load parent domain: " + domain.getParent());
+                logger.error("Unable to load parent domain: " + domain.getParent());
                 return false;
             }
 
@@ -198,7 +199,7 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
             txn.commit();
         } catch (SQLException ex) {
             success = false;
-            s_logger.error("error removing domain: " + id, ex);
+            logger.error("error removing domain: " + id, ex);
             txn.rollback();
         }
         return success;
@@ -310,7 +311,7 @@ public class DomainDaoImpl extends GenericDaoBase<DomainVO, Long> implements Dom
                     return true;
                 }
             } catch (NumberFormatException nfe) {
-                s_logger.debug(String.format("Unable to parse %s as domain ID from the list of domain IDs: %s", domainIdList.trim(), domainIdList), nfe);
+                logger.debug(String.format("Unable to parse %s as domain ID from the list of domain IDs: %s", domainIdList.trim(), domainIdList), nfe);
             }
         }
         return false;

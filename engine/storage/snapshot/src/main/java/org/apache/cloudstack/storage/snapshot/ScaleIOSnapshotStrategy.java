@@ -26,7 +26,8 @@ import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.SnapshotDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.SnapshotDataStoreVO;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.storage.DataStoreRole;
 import com.cloud.storage.Snapshot;
@@ -42,7 +43,7 @@ public class ScaleIOSnapshotStrategy extends StorageSystemSnapshotStrategy {
     @Inject
     private VolumeDao volumeDao;
 
-    private static final Logger LOG = Logger.getLogger(ScaleIOSnapshotStrategy.class);
+    protected static Logger LOG = LogManager.getLogger(ScaleIOSnapshotStrategy.class);
 
     @Override
     public StrategyPriority canHandle(Snapshot snapshot, Long zoneId, SnapshotOperation op) {

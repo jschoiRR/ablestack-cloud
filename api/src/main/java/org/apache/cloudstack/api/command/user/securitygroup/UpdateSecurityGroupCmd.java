@@ -16,7 +16,8 @@
 // under the License.
 package org.apache.cloudstack.api.command.user.securitygroup;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
@@ -37,7 +38,7 @@ import com.cloud.user.Account;
         since = "4.14.0.0",
         authorized = {RoleType.Admin})
 public class UpdateSecurityGroupCmd extends BaseCustomIdCmd {
-    public static final Logger s_logger = Logger.getLogger(UpdateSecurityGroupCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateSecurityGroupCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

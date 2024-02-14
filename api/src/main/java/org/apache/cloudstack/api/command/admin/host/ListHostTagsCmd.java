@@ -18,7 +18,8 @@
  */
 package org.apache.cloudstack.api.command.admin.host;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.api.BaseListCmd;
@@ -27,7 +28,7 @@ import org.apache.cloudstack.api.response.HostTagResponse;
 
 @APICommand(name = "listHostTags", description = "Lists host tags", responseObject = HostTagResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListHostTagsCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListHostTagsCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListHostTagsCmd.class.getName());
 
 
     // ///////////////////////////////////////////////////

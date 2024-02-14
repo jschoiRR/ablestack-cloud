@@ -16,8 +16,6 @@
 // under the License.
 package org.apache.cloudstack.api.command.user.iso;
 
-import org.apache.log4j.Logger;
-
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.BaseListTemplateOrIsoPermissionsCmd;
 import org.apache.cloudstack.api.ResponseObject.ResponseView;
@@ -38,11 +36,6 @@ public class ListIsoPermissionsCmd extends BaseListTemplateOrIsoPermissionsCmd i
     @Override
     public String getMediaType() {
         return "iso";
-    }
-
-    @Override
-    protected Logger getLogger() {
-        return Logger.getLogger(ListIsoPermissionsCmd.class.getName());
     }
 
     @Override

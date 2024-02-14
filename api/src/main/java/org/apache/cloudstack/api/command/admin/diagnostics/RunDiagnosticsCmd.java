@@ -38,7 +38,8 @@ import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.diagnostics.DiagnosticsService;
 import org.apache.cloudstack.diagnostics.DiagnosticsType;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.InsufficientCapacityException;
@@ -53,7 +54,7 @@ import com.cloud.vm.VirtualMachine;
         authorized = {RoleType.Admin},
         since = "4.12.0.0")
 public class RunDiagnosticsCmd extends BaseAsyncCmd {
-    private static final Logger LOGGER = Logger.getLogger(RunDiagnosticsCmd.class);
+    protected static Logger LOGGER = LogManager.getLogger(RunDiagnosticsCmd.class);
 
     @Inject
     private DiagnosticsService diagnosticsService;

@@ -23,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.cloudstack.network.topology.NetworkTopologyVisitor;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.ResourceUnavailableException;
 import com.cloud.network.IpAddress;
@@ -37,7 +38,7 @@ import com.cloud.vm.dao.NicDao;
 
 public class VpcIpAssociationRules extends RuleApplier {
 
-    private static final Logger s_logger = Logger.getLogger(VpcIpAssociationRules.class);
+    protected static Logger logger = LogManager.getLogger(VpcIpAssociationRules.class);
 
     private final List<? extends PublicIpAddress> _ipAddresses;
 
@@ -67,7 +68,7 @@ public class VpcIpAssociationRules extends RuleApplier {
                 if (ipAddr.getState() != IpAddress.State.Releasing) {
                     throw new CloudRuntimeException("Unable to find the nic in network " + ipAddr.getNetworkId() + "  to apply the ip address " + ipAddr + " for");
                 }
-                s_logger.debug("Not sending release for ip address " + ipAddr + " as its nic is already gone from VPC router " + _router);
+                logger.debug("Not sending release for ip address " + ipAddr + " as its nic is already gone from VPC router " + _router);
             } else {
                 macAddress = nic.getMacAddress();
                 _vlanMacAddress.put(BroadcastDomainType.getValue(BroadcastDomainType.fromString(ipAddr.getVlanTag())), macAddress);

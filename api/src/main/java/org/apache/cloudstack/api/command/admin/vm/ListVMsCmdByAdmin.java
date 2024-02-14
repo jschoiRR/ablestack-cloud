@@ -27,14 +27,15 @@ import org.apache.cloudstack.api.response.HostResponse;
 import org.apache.cloudstack.api.response.PodResponse;
 import org.apache.cloudstack.api.response.StoragePoolResponse;
 import org.apache.cloudstack.api.response.UserVmResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.vm.VirtualMachine;
 
 @APICommand(name = "listVirtualMachines", description = "List the virtual machines owned by the account.", responseObject = UserVmResponse.class, responseView = ResponseView.Full, entityType = {VirtualMachine.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class ListVMsCmdByAdmin extends ListVMsCmd implements AdminCmd {
-    public static final Logger s_logger = Logger.getLogger(ListVMsCmdByAdmin.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListVMsCmdByAdmin.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

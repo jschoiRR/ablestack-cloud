@@ -24,7 +24,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.engine.subsystem.api.storage.DataStoreManager;
@@ -43,7 +44,7 @@ import com.cloud.vm.VirtualMachineProfile;
 
 @Component
 public class ZoneWideStoragePoolAllocator extends AbstractStoragePoolAllocator {
-    private static final Logger LOGGER = Logger.getLogger(ZoneWideStoragePoolAllocator.class);
+    protected static Logger LOGGER = LogManager.getLogger(ZoneWideStoragePoolAllocator.class);
     @Inject
     private DataStoreManager dataStoreMgr;
     @Inject

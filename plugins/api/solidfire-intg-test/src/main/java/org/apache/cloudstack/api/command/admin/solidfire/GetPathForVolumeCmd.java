@@ -18,7 +18,8 @@ package org.apache.cloudstack.api.command.admin.solidfire;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.BaseCmd;
@@ -29,7 +30,7 @@ import org.apache.cloudstack.util.solidfire.SolidFireIntegrationTestUtil;
 @APICommand(name = "getPathForVolume", responseObject = ApiPathForVolumeResponse.class, description = "Get the path associated with the provided volume UUID",
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class GetPathForVolumeCmd extends BaseCmd {
-    private static final Logger LOGGER = Logger.getLogger(GetPathForVolumeCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(GetPathForVolumeCmd.class.getName());
 
     @Parameter(name = ApiConstants.VOLUME_ID, type = CommandType.STRING, description = "CloudStack Volume UUID", required = true)
     private String _volumeUuid;

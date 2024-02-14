@@ -80,12 +80,13 @@ import org.apache.cloudstack.framework.config.ConfigKey;
 import org.apache.cloudstack.framework.config.Configurable;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 public class VnfTemplateManagerImpl extends ManagerBase implements VnfTemplateManager, PluggableService, Configurable {
 
-    static final Logger LOGGER = Logger.getLogger(VnfTemplateManagerImpl.class);
+    static final Logger LOGGER = LogManager.getLogger(VnfTemplateManagerImpl.class);
 
     public static final String VNF_SECURITY_GROUP_NAME = "VNF_SecurityGroup_";
     public static final String ACCESS_METHOD_SEPARATOR = ",";

@@ -28,13 +28,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.crypt.DBEncryptionUtil;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade442to450 implements DbUpgrade {
-    final static Logger s_logger = Logger.getLogger(Upgrade442to450.class);
+    final static Logger logger = LogManager.getLogger(Upgrade442to450.class);
 
     @Override
     public String[] getUpgradableVersionRange() {
@@ -82,7 +83,7 @@ public class Upgrade442to450 implements DbUpgrade {
         } catch (UnsupportedEncodingException e) {
             throw new CloudRuntimeException("Unable encrypt configuration values ", e);
         }
-        s_logger.debug("Done updating router.ram.size config to 256");
+        logger.debug("Done updating router.ram.size config to 256");
     }
 
     private void upgradeMemoryOfVirtualRoutervmOffering(Connection conn) {
@@ -109,7 +110,7 @@ public class Upgrade442to450 implements DbUpgrade {
         } catch (SQLException e) {
             throw new CloudRuntimeException("Unable to upgrade ram_size of service offering for domain router. ", e);
         }
-        s_logger.debug("Done upgrading RAM for service offering of domain router to " + newRamSize);
+        logger.debug("Done upgrading RAM for service offering of domain router to " + newRamSize);
     }
 
     private void upgradeMemoryOfInternalLoadBalancervmOffering(Connection conn) {
@@ -134,7 +135,7 @@ public class Upgrade442to450 implements DbUpgrade {
         } catch (SQLException e) {
             throw new CloudRuntimeException("Unable to upgrade ram_size of service offering for internal loadbalancer vm. ", e);
         }
-        s_logger.debug("Done upgrading RAM for service offering of internal loadbalancer vm to " + newRamSize);
+        logger.debug("Done upgrading RAM for service offering of internal loadbalancer vm to " + newRamSize);
     }
 
     @Override
@@ -155,7 +156,7 @@ public class Upgrade442to450 implements DbUpgrade {
         keys.add("id_2");
         uniqueKeys.put("storage_pool", keys);
 
-        s_logger.debug("Dropping id_2 key from storage_pool table");
+        logger.debug("Dropping id_2 key from storage_pool table");
         for (Map.Entry<String, List<String>> entry: uniqueKeys.entrySet()) {
             DbUpgradeUtils.dropKeysIfExist(conn,entry.getKey(), entry.getValue(), false);
         }
@@ -168,7 +169,7 @@ public class Upgrade442to450 implements DbUpgrade {
         keys.add("fk_async_job_join_map__join_job_id");
         foreignKeys.put("async_job_join_map", keys);
 
-        s_logger.debug("Dropping fk_async_job_join_map__join_job_id key from async_job_join_map table");
+        logger.debug("Dropping fk_async_job_join_map__join_job_id key from async_job_join_map table");
         for (Map.Entry<String, List<String>> entry: foreignKeys.entrySet()) {
             DbUpgradeUtils.dropKeysIfExist(conn,entry.getKey(), entry.getValue(), true);
         }

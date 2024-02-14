@@ -29,7 +29,8 @@ import org.apache.cloudstack.api.command.user.UserCmd;
 import org.apache.cloudstack.api.response.AccountResponse;
 import org.apache.cloudstack.api.response.ProjectResponse;
 import org.apache.cloudstack.api.response.VolumeResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.storage.Volume;
 
@@ -38,7 +39,7 @@ import java.util.Map;
 @APICommand(name = AssignVolumeCmd.CMD_NAME, responseObject = VolumeResponse.class, description = "Changes ownership of a Volume from one account to another.", entityType = {
         Volume.class}, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, since = "4.18.0.0")
 public class AssignVolumeCmd extends BaseCmd implements UserCmd {
-    public static final Logger LOGGER = Logger.getLogger(AssignVolumeCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(AssignVolumeCmd.class.getName());
     public static final String CMD_NAME = "assignVolume";
 
     /////////////////////////////////////////////////////

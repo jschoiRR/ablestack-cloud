@@ -32,7 +32,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +60,7 @@ public class DatabaseAccessObjectTest {
 
     @Before
     public void setup() {
-        ReflectionTestUtils.setField(dao, "s_logger", loggerMock);
+        ReflectionTestUtils.setField(dao, "logger", loggerMock);
 
     }
 

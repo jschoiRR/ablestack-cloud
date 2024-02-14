@@ -43,7 +43,8 @@ import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.vm.schedule.dao.VMScheduleDao;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.scheduling.support.CronExpression;
 
 import javax.inject.Inject;
@@ -56,7 +57,7 @@ import java.util.TimeZone;
 
 public class VMScheduleManagerImpl extends MutualExclusiveIdsManagerBase implements VMScheduleManager, PluggableService {
 
-    private static Logger LOGGER = Logger.getLogger(VMScheduleManagerImpl.class);
+    private static Logger LOGGER = LogManager.getLogger(VMScheduleManagerImpl.class);
 
     @Inject
     private VMScheduleDao vmScheduleDao;

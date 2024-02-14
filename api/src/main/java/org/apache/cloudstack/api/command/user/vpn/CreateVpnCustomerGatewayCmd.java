@@ -28,7 +28,8 @@ import org.apache.cloudstack.api.response.DomainResponse;
 import org.apache.cloudstack.api.response.ProjectResponse;
 import org.apache.cloudstack.api.response.Site2SiteCustomerGatewayResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.ResourceAllocationException;
@@ -37,7 +38,7 @@ import com.cloud.network.Site2SiteCustomerGateway;
 @APICommand(name = "createVpnCustomerGateway", description = "Creates site to site vpn customer gateway", responseObject = Site2SiteCustomerGatewayResponse.class, entityType = {Site2SiteCustomerGateway.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateVpnCustomerGatewayCmd extends BaseAsyncCreateCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateVpnCustomerGatewayCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateVpnCustomerGatewayCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

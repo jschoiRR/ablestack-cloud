@@ -20,12 +20,13 @@ package com.cloud.upgrade.dao;
 import java.io.InputStream;
 import java.sql.Connection;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class Upgrade41110to41120 implements DbUpgrade {
-    final static Logger LOG = Logger.getLogger(Upgrade41110to41120.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41110to41120.class);
 
     @Override
     public String[] getUpgradableVersionRange() {

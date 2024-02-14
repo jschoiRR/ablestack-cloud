@@ -46,6 +46,7 @@ export default {
       label: 'label.add.user',
       listView: true,
       popup: true,
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       component: shallowRef(defineAsyncComponent(() => import('@/views/iam/AddUser.vue')))
     },
     {
@@ -114,7 +115,7 @@ export default {
       dataView: true,
       popup: true,
       show: (record, store) => {
-        return (record.is2faenabled === false && record.id === store.userInfo.id)
+        return (record.is2faenabled === false && record.id === store.userInfo.id) && (!store.features.securityfeaturesenabled)
       },
       component: shallowRef(defineAsyncComponent(() => import('@/views/iam/SetupTwoFaAtUserProfile.vue')))
     },
@@ -136,7 +137,7 @@ export default {
         }
       },
       show: (record, store) => {
-        return (record.is2faenabled === true) && (record.id === store.userInfo.id || ['Admin', 'DomainAdmin'].includes(store.userInfo.roletype))
+        return (record.is2faenabled === true) && (record.id === store.userInfo.id || ['Admin', 'DomainAdmin'].includes(store.userInfo.roletype) && (!store.features.securityfeaturesenabled))
       }
     },
     {

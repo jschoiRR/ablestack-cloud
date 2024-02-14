@@ -16,7 +16,7 @@
 // under the License.
 package com.cloud.storage.download;
 
-import org.apache.log4j.Level;
+import org.apache.logging.log4j.Level;
 
 import org.apache.cloudstack.storage.command.DownloadProgressCommand.RequestType;
 
@@ -31,8 +31,8 @@ public abstract class DownloadActiveState extends DownloadState {
 
     @Override
     public String handleAnswer(DownloadAnswer answer) {
-        if (s_logger.isTraceEnabled()) {
-            s_logger.trace("handleAnswer, answer status=" + answer.getDownloadStatus() + ", curr state=" + getName());
+        if (logger.isTraceEnabled()) {
+            logger.trace("handleAnswer, answer status=" + answer.getDownloadStatus() + ", curr state=" + getName());
         }
         switch (answer.getDownloadStatus()) {
         case DOWNLOAD_IN_PROGRESS:
@@ -72,7 +72,7 @@ public abstract class DownloadActiveState extends DownloadState {
 
     @Override
     public String handleTimeout(long updateMs) {
-        if (s_logger.isTraceEnabled()) {
+        if (logger.isTraceEnabled()) {
             getDownloadListener().log("handleTimeout, updateMs=" + updateMs + ", curr state= " + getName(), Level.TRACE);
         }
         String newState = getName();

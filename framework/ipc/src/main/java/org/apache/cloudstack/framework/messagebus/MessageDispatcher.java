@@ -25,10 +25,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 public class MessageDispatcher implements MessageSubscriber {
-    private static final Logger s_logger = Logger.getLogger(MessageDispatcher.class);
+    protected static Logger logger = LogManager.getLogger(MessageDispatcher.class);
 
     private static Map<Class<?>, List<Method>> s_handlerCache = new HashMap<Class<?>, List<Method>>();
 
@@ -74,13 +75,13 @@ public class MessageDispatcher implements MessageSubscriber {
         try {
             handler.invoke(target, subject, senderAddress, args);
         } catch (IllegalArgumentException e) {
-            s_logger.error("Unexpected exception when calling " + target.getClass().getName() + "." + handler.getName(), e);
+            logger.error("Unexpected exception when calling " + target.getClass().getName() + "." + handler.getName(), e);
             throw new RuntimeException("IllegalArgumentException when invoking event handler for subject: " + subject);
         } catch (IllegalAccessException e) {
-            s_logger.error("Unexpected exception when calling " + target.getClass().getName() + "." + handler.getName(), e);
+            logger.error("Unexpected exception when calling " + target.getClass().getName() + "." + handler.getName(), e);
             throw new RuntimeException("IllegalAccessException when invoking event handler for subject: " + subject);
         } catch (InvocationTargetException e) {
-            s_logger.error("Unexpected exception when calling " + target.getClass().getName() + "." + handler.getName(), e);
+            logger.error("Unexpected exception when calling " + target.getClass().getName() + "." + handler.getName(), e);
             throw new RuntimeException("InvocationTargetException when invoking event handler for subject: " + subject);
         }
 
@@ -100,7 +101,7 @@ public class MessageDispatcher implements MessageSubscriber {
                     }
                 }
             } else {
-                s_logger.error("Handler class " + handlerClz.getName() + " is not registered");
+                logger.error("Handler class " + handlerClz.getName() + " is not registered");
             }
         }
 
@@ -112,8 +113,8 @@ public class MessageDispatcher implements MessageSubscriber {
     }
 
     private void buildHandlerMethodCache(Class<?> handlerClz) {
-        if (s_logger.isInfoEnabled())
-            s_logger.info("Build message handler cache for " + handlerClz.getName());
+        if (logger.isInfoEnabled())
+            logger.info("Build message handler cache for " + handlerClz.getName());
 
         synchronized (s_handlerCache) {
             List<Method> handlerList = s_handlerCache.get(handlerClz);
@@ -130,20 +131,20 @@ public class MessageDispatcher implements MessageSubscriber {
                             method.setAccessible(true);
                             handlerList.add(method);
 
-                            if (s_logger.isInfoEnabled())
-                                s_logger.info("Add message handler " + handlerClz.getName() + "." + method.getName() + " to cache");
+                            if (logger.isInfoEnabled())
+                                logger.info("Add message handler " + handlerClz.getName() + "." + method.getName() + " to cache");
                         }
                     }
 
                     clz = clz.getSuperclass();
                 }
             } else {
-                if (s_logger.isInfoEnabled())
-                    s_logger.info("Message handler for class " + handlerClz.getName() + " is already in cache");
+                if (logger.isInfoEnabled())
+                    logger.info("Message handler for class " + handlerClz.getName() + " is already in cache");
             }
         }
 
-        if (s_logger.isInfoEnabled())
-            s_logger.info("Done building message handler cache for " + handlerClz.getName());
+        if (logger.isInfoEnabled())
+            logger.info("Done building message handler cache for " + handlerClz.getName());
     }
 }

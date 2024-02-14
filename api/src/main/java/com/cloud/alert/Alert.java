@@ -43,4 +43,6 @@ public interface Alert extends Identity, InternalIdentity {
     String getName();
 
     String getContent();
+
+    boolean getShowAlert();
 }

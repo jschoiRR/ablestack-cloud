@@ -15,6 +15,8 @@
 // specific language governing permissions and limitations
 // under the License.
 
+import store from '@/store'
+
 export default {
   name: 'config',
   title: 'label.configuration',
@@ -37,6 +39,7 @@ export default {
       icon: 'team-outlined',
       docHelp: 'adminguide/accounts.html#using-an-ldap-server-for-user-authentication',
       permission: ['listLdapConfigurations'],
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       columns: ['hostname', 'port', 'domainid'],
       details: ['hostname', 'port', 'domainid'],
       actions: [
@@ -76,6 +79,7 @@ export default {
       icon: 'login-outlined',
       docHelp: 'adminguide/accounts.html#using-an-ldap-server-for-user-authentication',
       permission: ['listOauthProvider'],
+      show: () => { return (!store.getters.features.securityfeaturesenabled) },
       columns: ['provider', 'enabled', 'description', 'clientid', 'secretkey', 'redirecturi'],
       details: ['provider', 'description', 'enabled', 'clientid', 'secretkey', 'redirecturi'],
       actions: [

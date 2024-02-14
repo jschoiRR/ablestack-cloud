@@ -32,7 +32,8 @@ import org.apache.cloudstack.api.response.NetworkACLResponse;
 import org.apache.cloudstack.api.response.NetworkResponse;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.InvalidParameterValueException;
@@ -43,7 +44,7 @@ import com.cloud.utils.net.NetUtils;
 
 @APICommand(name = "createNetworkACL", description = "Creates a ACL rule in the given network (the network has to belong to VPC)", responseObject = NetworkACLItemResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class CreateNetworkACLCmd extends BaseAsyncCreateCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateNetworkACLCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateNetworkACLCmd.class.getName());
 
 
     // ///////////////////////////////////////////////////

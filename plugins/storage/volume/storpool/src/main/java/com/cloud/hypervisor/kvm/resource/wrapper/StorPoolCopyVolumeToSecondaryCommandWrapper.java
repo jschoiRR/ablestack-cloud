@@ -29,7 +29,8 @@ import org.apache.cloudstack.storage.to.VolumeObjectTO;
 import org.apache.cloudstack.utils.qemu.QemuImg;
 import org.apache.cloudstack.utils.qemu.QemuImg.PhysicalDiskFormat;
 import org.apache.cloudstack.utils.qemu.QemuImgFile;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.storage.StorPoolCopyVolumeToSecondaryCommand;
 import com.cloud.agent.api.to.DataStoreTO;
@@ -45,7 +46,7 @@ import com.cloud.resource.ResourceWrapper;
 @ResourceWrapper(handles = StorPoolCopyVolumeToSecondaryCommand.class)
 public final class StorPoolCopyVolumeToSecondaryCommandWrapper extends CommandWrapper<StorPoolCopyVolumeToSecondaryCommand, CopyCmdAnswer, LibvirtComputingResource> {
 
-    private static final Logger s_logger = Logger.getLogger(StorPoolCopyVolumeToSecondaryCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(StorPoolCopyVolumeToSecondaryCommandWrapper.class);
 
     @Override
     public CopyCmdAnswer execute(final StorPoolCopyVolumeToSecondaryCommand cmd, final LibvirtComputingResource libvirtComputingResource) {
@@ -104,7 +105,7 @@ public final class StorPoolCopyVolumeToSecondaryCommandWrapper extends CommandWr
             return new CopyCmdAnswer(dst);
         } catch (final Exception e) {
             final String error = "Failed to copy volume to secondary storage: " + e.getMessage();
-            s_logger.debug(error);
+            logger.debug(error);
             return new CopyCmdAnswer(error);
         } finally {
             if (srcPath != null) {
@@ -116,7 +117,7 @@ public final class StorPoolCopyVolumeToSecondaryCommandWrapper extends CommandWr
                     SP_LOG("StorpoolCopyVolumeToSecondaryCommandWrapper.execute: secondaryPool=%s " , secondaryPool);
                     secondaryPool.delete();
                 } catch (final Exception e) {
-                    s_logger.debug("Failed to delete secondary storage", e);
+                    logger.debug("Failed to delete secondary storage", e);
                 }
             }
         }

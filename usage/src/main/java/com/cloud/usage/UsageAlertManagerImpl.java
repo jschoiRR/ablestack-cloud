@@ -23,7 +23,8 @@ import javax.inject.Inject;
 import javax.naming.ConfigurationException;
 
 import org.apache.cloudstack.framework.config.dao.ConfigurationDao;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.alert.AlertManager;
@@ -39,7 +40,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 @Component
 public class UsageAlertManagerImpl extends ManagerBase implements AlertManager {
-    protected Logger logger = Logger.getLogger(UsageAlertManagerImpl.class.getName());
+    protected Logger logger = LogManager.getLogger(UsageAlertManagerImpl.class.getName());
 
     private String senderAddress;
     protected SMTPMailSender mailSender;
@@ -146,6 +147,22 @@ public class UsageAlertManagerImpl extends ManagerBase implements AlertManager {
             return true;
         } catch (Exception ex) {
             logger.warn("Failed to generate an alert of type=" + alertType + "; msg=" + msg, ex);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateAlert(Long id, Boolean showAlert) {
+        try {
+            AlertVO alert = _alertDao.findById(id);
+            if (alert != null) {
+                AlertVO updatedAlert = _alertDao.createForUpdate();
+                updatedAlert.setShowAlert(showAlert);
+                _alertDao.update(alert.getId(), updatedAlert);
+            }
+            return true;
+        } catch (Exception ex) {
+            logger.warn("Failed to update an alert");
             return false;
         }
     }

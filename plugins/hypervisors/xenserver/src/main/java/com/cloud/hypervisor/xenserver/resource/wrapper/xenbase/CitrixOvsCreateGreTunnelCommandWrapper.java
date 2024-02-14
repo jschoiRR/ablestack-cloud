@@ -19,7 +19,8 @@
 
 package com.cloud.hypervisor.xenserver.resource.wrapper.xenbase;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.cloud.agent.api.Answer;
@@ -36,7 +37,7 @@ import com.xensource.xenapi.Types.XenAPIException;
 @ResourceWrapper(handles =  OvsCreateGreTunnelCommand.class)
 public final class CitrixOvsCreateGreTunnelCommandWrapper extends CommandWrapper<OvsCreateGreTunnelCommand, Answer, CitrixResourceBase> {
 
-    private static final Logger s_logger = Logger.getLogger(CitrixOvsCreateGreTunnelCommandWrapper.class);
+    protected static Logger logger = LogManager.getLogger(CitrixOvsCreateGreTunnelCommandWrapper.class);
 
     @Override
     public Answer execute(final OvsCreateGreTunnelCommand command, final CitrixResourceBase citrixResourceBase) {
@@ -57,11 +58,11 @@ public final class CitrixOvsCreateGreTunnelCommandWrapper extends CommandWrapper
                 return new OvsCreateGreTunnelAnswer(command, true, result, citrixResourceBase.getHost().getIp(), bridge, Integer.parseInt(res[1]));
             }
         } catch (final BadServerResponse e) {
-            s_logger.error("An error occurred while creating a GRE tunnel to " + command.getRemoteIp() + " on host " + citrixResourceBase.getHost().getIp(), e);
+            logger.error("An error occurred while creating a GRE tunnel to " + command.getRemoteIp() + " on host " + citrixResourceBase.getHost().getIp(), e);
         } catch (final XenAPIException e) {
-            s_logger.error("An error occurred while creating a GRE tunnel to " + command.getRemoteIp() + " on host " + citrixResourceBase.getHost().getIp(), e);
+            logger.error("An error occurred while creating a GRE tunnel to " + command.getRemoteIp() + " on host " + citrixResourceBase.getHost().getIp(), e);
         } catch (final XmlRpcException e) {
-            s_logger.error("An error occurred while creating a GRE tunnel to " + command.getRemoteIp() + " on host " + citrixResourceBase.getHost().getIp(), e);
+            logger.error("An error occurred while creating a GRE tunnel to " + command.getRemoteIp() + " on host " + citrixResourceBase.getHost().getIp(), e);
         }
 
         return new OvsCreateGreTunnelAnswer(command, false, "EXCEPTION", citrixResourceBase.getHost().getIp(), bridge);

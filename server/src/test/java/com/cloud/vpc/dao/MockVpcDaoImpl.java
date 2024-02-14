@@ -22,7 +22,8 @@ import com.cloud.network.vpc.VpcVO;
 import com.cloud.network.vpc.dao.VpcDao;
 import com.cloud.utils.db.DB;
 import com.cloud.utils.db.GenericDaoBase;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.Map;
 
 @DB()
 public class MockVpcDaoImpl extends GenericDaoBase<VpcVO, Long> implements VpcDao {
-    private static final Logger s_logger = Logger.getLogger(MockNetworkOfferingDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(MockNetworkOfferingDaoImpl.class);
 
     /* (non-Javadoc)
      * @see com.cloud.network.vpc.Dao.VpcDao#getVpcCountByOfferingId(long)
@@ -113,10 +114,10 @@ public class MockVpcDaoImpl extends GenericDaoBase<VpcVO, Long> implements VpcDa
             f.setAccessible(true);
             f.setLong(voToReturn, id);
         } catch (NoSuchFieldException ex) {
-            s_logger.warn(ex);
+            logger.warn(ex);
             return null;
         } catch (IllegalAccessException ex) {
-            s_logger.warn(ex);
+            logger.warn(ex);
             return null;
         }
 

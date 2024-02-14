@@ -29,14 +29,15 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.StoragePoolResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 
 @APICommand(name = "updateStorageCapabilities", description = "Syncs capabilities of storage pools",
         responseObject = StoragePoolResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, since = "4.16.0")
 public class UpdateStorageCapabilitiesCmd extends BaseCmd {
-    private static final Logger LOG = Logger.getLogger(UpdateStorageCapabilitiesCmd.class.getName());
+    protected static Logger LOG = LogManager.getLogger(UpdateStorageCapabilitiesCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////

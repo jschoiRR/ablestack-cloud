@@ -35,7 +35,8 @@ import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.storage.datastore.util.StorPoolUtil;
 import org.apache.cloudstack.storage.snapshot.StorPoolConfigurationManager;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.NumbersUtil;
 import com.cloud.utils.Pair;
@@ -47,7 +48,7 @@ import com.google.gson.JsonObject;
 
 public class StorPoolStatsCollector extends ManagerBase {
 
-    private static Logger log = Logger.getLogger(StorPoolStatsCollector.class);
+    private static Logger log = LogManager.getLogger(StorPoolStatsCollector.class);
 
     @Inject
     private PrimaryDataStoreDao storagePoolDao;

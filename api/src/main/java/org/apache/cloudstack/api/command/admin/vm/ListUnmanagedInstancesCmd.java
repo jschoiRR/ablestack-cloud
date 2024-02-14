@@ -32,7 +32,8 @@ import org.apache.cloudstack.api.response.UnmanagedInstanceResponse;
 import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.vm.UnmanagedInstanceTO;
 import org.apache.cloudstack.vm.VmImportService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.exception.ConcurrentOperationException;
 import com.cloud.exception.InsufficientCapacityException;
@@ -51,7 +52,7 @@ import com.cloud.user.Account;
         authorized = {RoleType.Admin},
         since = "4.14.0")
 public class ListUnmanagedInstancesCmd extends BaseListCmd {
-    public static final Logger LOGGER = Logger.getLogger(ListUnmanagedInstancesCmd.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(ListUnmanagedInstancesCmd.class.getName());
 
     @Inject
     public VmImportService vmImportService;

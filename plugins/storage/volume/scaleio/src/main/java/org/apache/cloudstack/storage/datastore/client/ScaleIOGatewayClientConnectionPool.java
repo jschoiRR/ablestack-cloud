@@ -23,14 +23,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.cloudstack.storage.datastore.db.StoragePoolDetailsDao;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.storage.StorageManager;
 import com.cloud.utils.crypt.DBEncryptionUtil;
 import com.google.common.base.Preconditions;
 
 public class ScaleIOGatewayClientConnectionPool {
-    private static final Logger LOGGER = Logger.getLogger(ScaleIOGatewayClientConnectionPool.class);
+    protected static Logger LOGGER = LogManager.getLogger(ScaleIOGatewayClientConnectionPool.class);
 
     private ConcurrentHashMap<Long, ScaleIOGatewayClient> gatewayClients;
 

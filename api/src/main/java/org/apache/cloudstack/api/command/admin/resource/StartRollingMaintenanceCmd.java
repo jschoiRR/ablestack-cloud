@@ -34,7 +34,8 @@ import org.apache.cloudstack.api.response.PodResponse;
 import org.apache.cloudstack.api.response.RollingMaintenanceResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.ConcurrentOperationException;
@@ -55,7 +56,7 @@ public class StartRollingMaintenanceCmd extends BaseAsyncCmd {
     @Inject
     RollingMaintenanceManager manager;
 
-    public static final Logger s_logger = Logger.getLogger(StartRollingMaintenanceCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(StartRollingMaintenanceCmd.class.getName());
 
 
     /////////////////////////////////////////////////////

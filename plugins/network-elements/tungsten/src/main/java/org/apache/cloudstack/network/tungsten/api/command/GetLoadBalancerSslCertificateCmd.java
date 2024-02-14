@@ -34,14 +34,15 @@ import org.apache.cloudstack.context.CallContext;
 import org.apache.cloudstack.network.tungsten.api.response.TlsDataResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 
 @APICommand(name = GetLoadBalancerSslCertificateCmd.APINAME, description = "get load balancer certificate",
     responseObject = TlsDataResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class GetLoadBalancerSslCertificateCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(GetLoadBalancerSslCertificateCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(GetLoadBalancerSslCertificateCmd.class.getName());
     public static final String APINAME = "getLoadBalancerSslCertificate";
 
     @Inject

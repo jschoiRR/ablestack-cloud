@@ -125,7 +125,7 @@
               <a-radio-button value="password">
                 {{ $t('label.password') }}
               </a-radio-button>
-              <a-radio-button value="sshkey" v-if="selectedClusterHyperVisorType === 'KVM'">
+              <a-radio-button value="sshkey" v-if="selectedClusterHyperVisorType === 'KVM' && !$store.getters.features.securityfeaturesenabled">
                 {{ $t('label.authentication.sshkey') }}
               </a-radio-button>
             </a-radio-group>
@@ -217,7 +217,7 @@
               <a-select-option v-for="tag in hostTagsList" :key="tag.name">{{ tag.name }}</a-select-option>
             </a-select>
           </a-form-item>
-          <a-form-item name="isdedicated" ref="isdedicated">
+          <a-form-item name="isdedicated" ref="isdedicated" v-if="!$store.getters.features.securityfeaturesenabled">
             <template #label>
               <tooltip-label :title="$t('label.isdedicated')"/>
             </template>

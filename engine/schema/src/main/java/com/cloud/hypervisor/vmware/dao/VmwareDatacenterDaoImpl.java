@@ -21,7 +21,8 @@ import java.util.List;
 
 
 import com.cloud.dc.dao.VmwareDatacenterDao;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.dc.VmwareDatacenterVO;
@@ -34,7 +35,7 @@ import com.cloud.utils.db.SearchCriteria.Op;
 @Component
 @DB
 public class VmwareDatacenterDaoImpl extends GenericDaoBase<VmwareDatacenterVO, Long> implements VmwareDatacenterDao {
-    protected static final Logger s_logger = Logger.getLogger(VmwareDatacenterDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(VmwareDatacenterDaoImpl.class);
 
     final SearchBuilder<VmwareDatacenterVO> nameSearch;
     final SearchBuilder<VmwareDatacenterVO> guidSearch;

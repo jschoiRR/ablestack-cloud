@@ -27,7 +27,8 @@ import javax.inject.Inject;
 import javax.naming.ConfigurationException;
 
 import org.apache.cloudstack.api.APICommand;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.apache.cloudstack.acl.RolePermissionEntity.Permission;
 
 import com.cloud.exception.PermissionDeniedException;
@@ -49,7 +50,7 @@ public class DynamicRoleBasedAPIAccessChecker extends AdapterBase implements API
     private List<PluggableService> services;
     private Map<RoleType, Set<String>> annotationRoleBasedApisMap = new HashMap<RoleType, Set<String>>();
 
-    private static final Logger LOGGER = Logger.getLogger(DynamicRoleBasedAPIAccessChecker.class.getName());
+    protected static Logger LOGGER = LogManager.getLogger(DynamicRoleBasedAPIAccessChecker.class.getName());
 
     protected DynamicRoleBasedAPIAccessChecker() {
         super();

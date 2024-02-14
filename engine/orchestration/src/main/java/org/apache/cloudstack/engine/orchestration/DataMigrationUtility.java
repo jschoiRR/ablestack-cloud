@@ -46,7 +46,8 @@ import org.apache.cloudstack.storage.datastore.db.TemplateDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.TemplateDataStoreVO;
 import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.VolumeDataStoreVO;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.host.HostVO;
 import com.cloud.host.Status;
@@ -64,7 +65,7 @@ import com.cloud.vm.VirtualMachine;
 import com.cloud.vm.dao.SecondaryStorageVmDao;
 
 public class DataMigrationUtility {
-    private static Logger LOGGER = Logger.getLogger(DataMigrationUtility.class);
+    private static Logger LOGGER = LogManager.getLogger(DataMigrationUtility.class);
 
     @Inject
     SecondaryStorageVmDao secStorageVmDao;

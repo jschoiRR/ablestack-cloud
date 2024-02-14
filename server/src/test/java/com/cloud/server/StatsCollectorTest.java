@@ -62,7 +62,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 import static org.mockito.Mockito.when;
@@ -331,7 +330,7 @@ public class StatsCollectorTest {
         VmStatsVO actual = vmStatsVOCaptor.getAllValues().get(0);
         Assert.assertEquals(Long.valueOf(2L), actual.getVmId());
         Assert.assertEquals(Long.valueOf(1L), actual.getMgmtServerId());
-        Assert.assertEquals(convertJsonToOrderedMap(expectedVmStatsStr), convertJsonToOrderedMap(actual.getVmStatsData()));
+        Assert.assertEquals(expectedVmStatsStr, actual.getVmStatsData());
         Assert.assertEquals(timestamp, actual.getTimestamp());
     }
 
@@ -511,15 +510,5 @@ public class StatsCollectorTest {
     @Test
     public void testPersistVolumeStatsVmware() {
         performPersistVolumeStatsTest(Hypervisor.HypervisorType.VMware);
-    }
-
-    private Map<String, String> convertJsonToOrderedMap(String json) {
-        Map<String, String> jsonMap = new TreeMap<String, String>();
-        String[] keyValuePairs = json.replace("{", "").replace("}","").split(",");
-        for (String pair: keyValuePairs) {
-            String[] keyValue = pair.split(":");
-            jsonMap.put(keyValue[0], keyValue[1]);
-        }
-        return jsonMap;
     }
 }

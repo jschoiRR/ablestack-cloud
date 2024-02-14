@@ -21,7 +21,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.api.ApiConstants.DomainDetails;
@@ -44,7 +45,7 @@ import com.cloud.utils.db.SearchCriteria;
 
 @Component
 public class AccountJoinDaoImpl extends GenericDaoBase<AccountJoinVO, Long> implements AccountJoinDao {
-    public static final Logger s_logger = Logger.getLogger(AccountJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(AccountJoinDaoImpl.class);
 
     private final SearchBuilder<AccountJoinVO> acctIdSearch;
     @Inject

@@ -33,7 +33,8 @@ import org.apache.cloudstack.api.ServerApiException;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.network.tungsten.api.response.TungstenFabricTagResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ import javax.inject.Inject;
 @APICommand(name = ApplyTungstenFabricTagCmd.APINAME, description = "apply Tungsten-Fabric tag", responseObject =
     TungstenFabricTagResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ApplyTungstenFabricTagCmd extends BaseAsyncCmd {
-    public static final Logger s_logger = Logger.getLogger(ApplyTungstenFabricTagCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ApplyTungstenFabricTagCmd.class.getName());
     public static final String APINAME = "applyTungstenFabricTag";
 
     @Inject

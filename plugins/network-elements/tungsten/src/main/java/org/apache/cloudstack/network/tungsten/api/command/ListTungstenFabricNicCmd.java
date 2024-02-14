@@ -36,7 +36,8 @@ import org.apache.cloudstack.api.response.ListResponse;
 import org.apache.cloudstack.api.response.ZoneResponse;
 import org.apache.cloudstack.network.tungsten.api.response.TungstenFabricNicResponse;
 import org.apache.cloudstack.network.tungsten.service.TungstenService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ import javax.inject.Inject;
 @APICommand(name = ListTungstenFabricNicCmd.APINAME, description = "list Tungsten-Fabric nic", responseObject =
     TungstenFabricNicResponse.class, requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListTungstenFabricNicCmd extends BaseListCmd {
-    public static final Logger s_logger = Logger.getLogger(ListTungstenFabricNicCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListTungstenFabricNicCmd.class.getName());
     public static final String APINAME = "listTungstenFabricNic";
 
     @Inject

@@ -20,7 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.RoleType;
 import org.apache.cloudstack.api.APICommand;
@@ -51,7 +52,7 @@ import com.cloud.network.as.AutoScaleVmProfile;
             responseHasSensitiveInfo = false)
 @SuppressWarnings("rawtypes")
 public class CreateAutoScaleVmProfileCmd extends BaseAsyncCreateCmd {
-    public static final Logger s_logger = Logger.getLogger(CreateAutoScaleVmProfileCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(CreateAutoScaleVmProfileCmd.class.getName());
 
     private static final String s_name = "autoscalevmprofileresponse";
 

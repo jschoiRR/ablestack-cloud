@@ -34,7 +34,8 @@ import org.apache.cloudstack.oauth2.api.command.VerifyOAuthCodeAndGetUserCmd;
 import org.apache.cloudstack.oauth2.dao.OauthProviderDao;
 import org.apache.cloudstack.oauth2.vo.OauthProviderVO;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OAuth2AuthManagerImpl extends ManagerBase implements OAuth2AuthManager, Manager, Configurable {
-    private static final Logger s_logger = Logger.getLogger(OAuth2AuthManagerImpl.class);
+    protected static Logger logger = LogManager.getLogger(OAuth2AuthManagerImpl.class);
     @Inject
     private UserDao _userDao;
 
@@ -67,10 +68,10 @@ public class OAuth2AuthManagerImpl extends ManagerBase implements OAuth2AuthMana
     @Override
     public boolean start() {
         if (isOAuthPluginEnabled()) {
-            s_logger.info("OAUTH plugin loaded");
+            logger.info("OAUTH plugin loaded");
             initializeUserOAuth2AuthenticationProvidersMap();
         } else {
-            s_logger.info("OAUTH plugin not enabled so not loading");
+            logger.info("OAUTH plugin not enabled so not loading");
         }
         return true;
     }

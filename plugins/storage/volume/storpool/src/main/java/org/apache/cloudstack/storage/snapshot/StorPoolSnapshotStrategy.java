@@ -40,7 +40,8 @@ import org.apache.cloudstack.storage.datastore.util.StorPoolUtil;
 import org.apache.cloudstack.storage.datastore.util.StorPoolUtil.SpApiResponse;
 import org.apache.cloudstack.storage.datastore.util.StorPoolUtil.SpConnectionDesc;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.exception.InvalidParameterValueException;
@@ -60,7 +61,7 @@ import com.cloud.utils.fsm.NoTransitionException;
 
 @Component
 public class StorPoolSnapshotStrategy implements SnapshotStrategy {
-    private static final Logger log = Logger.getLogger(StorPoolSnapshotStrategy.class);
+    protected static Logger log = LogManager.getLogger(StorPoolSnapshotStrategy.class);
 
     @Inject
     private SnapshotDao _snapshotDao;

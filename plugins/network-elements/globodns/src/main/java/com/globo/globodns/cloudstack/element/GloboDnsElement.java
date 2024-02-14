@@ -28,7 +28,8 @@ import javax.naming.ConfigurationException;
 
 import org.apache.cloudstack.framework.config.ConfigKey;
 import org.apache.cloudstack.framework.config.Configurable;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import com.cloud.agent.AgentManager;
@@ -80,7 +81,7 @@ import com.globo.globodns.cloudstack.resource.GloboDnsResource;
 @Component
 public class GloboDnsElement extends AdapterBase implements ResourceStateAdapter, NetworkElement, GloboDnsElementService, Configurable {
 
-    private static final Logger s_logger = Logger.getLogger(GloboDnsElement.class);
+    protected static Logger logger = LogManager.getLogger(GloboDnsElement.class);
 
     private static final Map<Service, Map<Capability, String>> capabilities = setCapabilities();
 
@@ -132,7 +133,7 @@ public class GloboDnsElement extends AdapterBase implements ResourceStateAdapter
             throws ConcurrentOperationException, ResourceUnavailableException, InsufficientCapacityException {
 
         if (!isTypeSupported(vm.getType())) {
-            s_logger.info("GloboDNS only manages records for VMs of type User, ConsoleProxy and DomainRouter. VM " + vm + " is " + vm.getType());
+            logger.info("GloboDNS only manages records for VMs of type User, ConsoleProxy and DomainRouter. VM " + vm + " is " + vm.getType());
             return false;
         }
 
@@ -162,7 +163,7 @@ public class GloboDnsElement extends AdapterBase implements ResourceStateAdapter
             ResourceUnavailableException {
 
         if (!isTypeSupported(vm.getType())) {
-            s_logger.info("GloboDNS only manages records for VMs of type User, ConsoleProxy and DomainRouter. VM " + vm + " is " + vm.getType());
+            logger.info("GloboDNS only manages records for VMs of type User, ConsoleProxy and DomainRouter. VM " + vm + " is " + vm.getType());
             return false;
         }
 

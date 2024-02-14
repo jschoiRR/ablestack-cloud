@@ -27,7 +27,8 @@ import com.cloud.user.AccountManager;
 import org.apache.cloudstack.annotation.AnnotationService;
 import org.apache.cloudstack.annotation.dao.AnnotationDao;
 import org.apache.cloudstack.context.CallContext;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Component;
 
 import org.apache.cloudstack.api.response.ImageStoreResponse;
@@ -42,7 +43,7 @@ import com.cloud.utils.db.SearchCriteria;
 
 @Component
 public class ImageStoreJoinDaoImpl extends GenericDaoBase<ImageStoreJoinVO, Long> implements ImageStoreJoinDao {
-    public static final Logger s_logger = Logger.getLogger(ImageStoreJoinDaoImpl.class);
+    protected static Logger logger = LogManager.getLogger(ImageStoreJoinDaoImpl.class);
 
     @Inject
     private ConfigurationDao _configDao;

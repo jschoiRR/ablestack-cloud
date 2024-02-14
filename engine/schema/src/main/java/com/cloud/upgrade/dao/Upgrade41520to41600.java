@@ -28,14 +28,15 @@ import java.util.List;
 import com.cloud.upgrade.RolePermissionChecker;
 import com.cloud.upgrade.SystemVmTemplateRegistration;
 import org.apache.cloudstack.acl.RoleType;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.utils.exception.CloudRuntimeException;
 
 
 public class Upgrade41520to41600 implements DbUpgrade, DbUpgradeSystemVmTemplate {
 
-    final static Logger LOG = Logger.getLogger(Upgrade41520to41600.class);
+    final static Logger LOG = LogManager.getLogger(Upgrade41520to41600.class);
     private SystemVmTemplateRegistration systemVmTemplateRegistration;
     private RolePermissionChecker rolePermissionChecker = new RolePermissionChecker();
 

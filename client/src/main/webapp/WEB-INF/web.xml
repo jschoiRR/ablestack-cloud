@@ -16,12 +16,12 @@
   limitations under the License.
 -->
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-    version="2.5">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
 
     <context-param>
-        <param-name>log4jConfigLocation</param-name>
+        <param-name>log4jConfiguration</param-name>
         <param-value>classpath:log4j-cloud.xml</param-value>
     </context-param>
 
@@ -55,13 +55,13 @@
     </servlet>
 
     <servlet-mapping>
-         <servlet-name>apiServlet</servlet-name>
-         <url-pattern>/api/*</url-pattern>
+        <servlet-name>apiServlet</servlet-name>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-         <servlet-name>consoleServlet</servlet-name>
-         <url-pattern>/console</url-pattern>
+        <servlet-name>consoleServlet</servlet-name>
+        <url-pattern>/console</url-pattern>
     </servlet-mapping>
 
     <error-page>

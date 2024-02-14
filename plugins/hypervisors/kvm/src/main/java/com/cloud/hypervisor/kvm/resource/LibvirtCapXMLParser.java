@@ -20,7 +20,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -34,7 +35,7 @@ public class LibvirtCapXMLParser extends LibvirtXMLParser {
     private boolean _archTypex8664 = false;
     private final StringBuffer _emulator = new StringBuffer();
     private final StringBuffer _capXML = new StringBuffer();
-    private static final Logger s_logger = Logger.getLogger(LibvirtCapXMLParser.class);
+    protected static Logger logger = LogManager.getLogger(LibvirtCapXMLParser.class);
     private final ArrayList<String> guestOsTypes = new ArrayList<String>();
 
     @Override
@@ -63,7 +64,7 @@ public class LibvirtCapXMLParser extends LibvirtXMLParser {
         } else if (_osType) {
             guestOsTypes.add(new String(ch, start, length));
         } else if (_emulatorFlag) {
-            s_logger.debug("Found " + new String(ch, start, length) + " as a suiteable emulator");
+            logger.debug("Found " + new String(ch, start, length) + " as a suiteable emulator");
             _emulator.append(ch, start, length);
         }
     }
@@ -112,9 +113,9 @@ public class LibvirtCapXMLParser extends LibvirtXMLParser {
             _sp.parse(new InputSource(new StringReader(capXML)), this);
             return _capXML.toString();
         } catch (SAXException se) {
-            s_logger.warn(se.getMessage());
+            logger.warn(se.getMessage());
         } catch (IOException ie) {
-            s_logger.error(ie.getMessage());
+            logger.error(ie.getMessage());
         }
         return null;
     }

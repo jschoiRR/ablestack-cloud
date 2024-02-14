@@ -47,7 +47,8 @@ import org.apache.cloudstack.storage.datastore.client.ScaleIOGatewayClient;
 import org.apache.cloudstack.storage.datastore.db.PrimaryDataStoreDao;
 import org.apache.cloudstack.storage.datastore.db.StoragePoolVO;
 import org.apache.cloudstack.storage.volume.datastore.PrimaryDataStoreHelper;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.AgentManager;
 import com.cloud.agent.api.Answer;
@@ -75,7 +76,7 @@ import com.cloud.utils.crypt.DBEncryptionUtil;
 import com.cloud.utils.exception.CloudRuntimeException;
 
 public class ScaleIOPrimaryDataStoreLifeCycle implements PrimaryDataStoreLifeCycle {
-    private static final Logger LOGGER = Logger.getLogger(ScaleIOPrimaryDataStoreLifeCycle.class);
+    protected static Logger LOGGER = LogManager.getLogger(ScaleIOPrimaryDataStoreLifeCycle.class);
 
     @Inject
     private ClusterDao clusterDao;

@@ -41,7 +41,8 @@ import org.apache.cloudstack.vm.VmImportService;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.event.EventTypes;
 import com.cloud.exception.ConcurrentOperationException;
@@ -65,7 +66,7 @@ import com.cloud.vm.VmDetailConstants;
         authorized = {RoleType.Admin},
         since = "4.14.0")
 public class ImportUnmanagedInstanceCmd extends BaseAsyncCmd {
-    public static final Logger LOGGER = Logger.getLogger(ImportUnmanagedInstanceCmd.class);
+    protected static Logger LOGGER = LogManager.getLogger(ImportUnmanagedInstanceCmd.class);
 
     @Inject
     public VmImportService vmImportService;

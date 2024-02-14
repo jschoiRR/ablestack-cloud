@@ -19,7 +19,8 @@
 package com.cloud.hypervisor.xenserver.resource.wrapper.xenbase;
 
 import org.apache.cloudstack.diagnostics.CopyToSecondaryStorageCommand;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.agent.api.Answer;
 import com.cloud.hypervisor.xenserver.resource.CitrixResourceBase;
@@ -30,7 +31,7 @@ import com.xensource.xenapi.Connection;
 
 @ResourceWrapper(handles = CopyToSecondaryStorageCommand.class)
 public class CitrixCoppyToSecondaryStorageCommandWrapper extends CommandWrapper<CopyToSecondaryStorageCommand, Answer, CitrixResourceBase> {
-    public static final Logger LOGGER = Logger.getLogger(CitrixCoppyToSecondaryStorageCommandWrapper.class);
+    protected static Logger LOGGER = LogManager.getLogger(CitrixCoppyToSecondaryStorageCommandWrapper.class);
 
     @Override
     public Answer execute(CopyToSecondaryStorageCommand cmd, CitrixResourceBase citrixResourceBase) {

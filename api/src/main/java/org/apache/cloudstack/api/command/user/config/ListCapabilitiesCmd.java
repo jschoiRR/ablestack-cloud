@@ -21,16 +21,39 @@ import java.util.Map;
 import org.apache.cloudstack.api.APICommand;
 import org.apache.cloudstack.api.ApiConstants;
 import org.apache.cloudstack.api.BaseCmd;
+import org.apache.cloudstack.api.Parameter;
 import org.apache.cloudstack.api.response.CapabilitiesResponse;
 import org.apache.cloudstack.config.ApiServiceConfiguration;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import com.cloud.user.Account;
 
 @APICommand(name = "listCapabilities", description = "Lists capabilities", responseObject = CapabilitiesResponse.class,
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class ListCapabilitiesCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(ListCapabilitiesCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(ListCapabilitiesCmd.class.getName());
+
+    /////////////////////////////////////////////////////
+    //////////////// API parameters /////////////////////
+    /////////////////////////////////////////////////////
+    @Parameter(name = ApiConstants.PUBLICKEY_EXPONENT, type = CommandType.STRING, description = "publicKeyExponent")
+    private String publicKeyExponent;
+
+    @Parameter(name = ApiConstants.PUBLICKEY_MODULUS, type = CommandType.STRING, description = "publicKeyModulus", length = 2097152)
+    private String publicKeyModulus;
+
+    /////////////////////////////////////////////////////
+    /////////////////// Accessors ///////////////////////
+    /////////////////////////////////////////////////////
+
+    public String getPublicKeyExponent() {
+        return publicKeyExponent;
+    }
+
+    public String getPublicKeyModulus() {
+        return publicKeyModulus;
+    }
 
     @Override
     public long getEntityOwnerId() {
@@ -67,6 +90,12 @@ public class ListCapabilitiesCmd extends BaseCmd {
         response.setWallPortalPort((String)capabilities.get("wallPortalPort"));
         response.setWallPortalVmUri((String)capabilities.get("wallPortalVmUri"));
         response.setSecurityFeaturesEnabled((Boolean)capabilities.get("securityFeaturesEnabled"));
+        if (capabilities.containsKey("publicKeyModulus")) {
+            response.setPublicKeyModulus((String)capabilities.get("publicKeyModulus"));
+        }
+        if (capabilities.containsKey("publicKeyExponent")) {
+            response.setPublicKeyExponent((String)capabilities.get("publicKeyExponent"));
+        }
         response.setHost((String)capabilities.get("host"));
         response.setBalancingServiceEnabled((Boolean)capabilities.get("balancingServiceEnabled"));
         response.setEventDeleteEnabled((Boolean)capabilities.get("eventDeleteEnabled"));

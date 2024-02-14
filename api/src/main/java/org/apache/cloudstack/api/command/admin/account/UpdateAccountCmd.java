@@ -23,7 +23,8 @@ import javax.inject.Inject;
 
 import org.apache.cloudstack.api.ApiCommandResourceType;
 import org.apache.cloudstack.api.response.RoleResponse;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import org.apache.cloudstack.acl.SecurityChecker.AccessType;
 import org.apache.cloudstack.api.ACL;
@@ -43,7 +44,7 @@ import com.cloud.user.Account;
 @APICommand(name = "updateAccount", description = "Updates account information for the authenticated user", responseObject = AccountResponse.class, entityType = {Account.class},
         requestHasSensitiveInfo = false, responseHasSensitiveInfo = true)
 public class UpdateAccountCmd extends BaseCmd {
-    public static final Logger s_logger = Logger.getLogger(UpdateAccountCmd.class.getName());
+    protected static Logger logger = LogManager.getLogger(UpdateAccountCmd.class.getName());
 
     /////////////////////////////////////////////////////
     //////////////// API parameters /////////////////////
