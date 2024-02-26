@@ -4044,9 +4044,6 @@ public class UserVmManagerImpl extends ManagerBase implements UserVmManager, Vir
             volumesSize += verifyAndGetDiskSize(diskOffering, diskSize);
         }
         UserVm vm = getCheckedUserVmResource(zone, hostName, displayName, owner, diskOfferingId, diskSize, networkList, securityGroupIdList, group, httpmethod, userData, userDataId, userDataDetails, sshKeyPairs, caller, requestedIps, defaultIps, isDisplayVm, keyboard, affinityGroupIdList, customParameters, customId, dhcpOptionMap, datadiskTemplateToDiskOfferringMap, userVmOVFPropertiesMap, dynamicScalingEnabled, vmType, template, hypervisorType, accountId, offering, isIso, rootDiskOfferingId, volumesSize);
-        if (! VirtualMachineManager.ResourceCountRunningVMsonly.value()) {
-            resourceLimitCheck(owner, isDisplayVm, offering.getCpu().longValue(), offering.getRamSize().longValue());
-        }
 
         _securityGroupMgr.addInstanceToGroups(vm.getId(), securityGroupIdList);
 
