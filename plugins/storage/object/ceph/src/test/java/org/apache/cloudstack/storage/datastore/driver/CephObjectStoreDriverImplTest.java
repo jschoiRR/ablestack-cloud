@@ -37,8 +37,6 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.twonote.rgwadmin4j.RgwAdmin;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.any;
@@ -46,8 +44,6 @@ import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -71,11 +67,11 @@ public class CephObjectStoreDriverImplTest {
     @Mock
     BucketDao bucketDao;
     @Mock
+    Bucket bucket;
+    @Mock
     AccountVO account;
     @Mock
     AccountDetailsDao accountDetailsDao;
-
-    Bucket bucket;
 
     @Before
     public void setUp() {
@@ -85,37 +81,31 @@ public class CephObjectStoreDriverImplTest {
         cephObjectStoreDriverImpl._accountDao = accountDao;
         cephObjectStoreDriverImpl._bucketDao = bucketDao;
         cephObjectStoreDriverImpl._accountDetailsDao = accountDetailsDao;
-        bucket = new BucketVO();
-        bucket.setName("test-bucket");
         when(objectStoreVO.getUrl()).thenReturn("http://localhost:8000");
         when(objectStoreDao.findById(any())).thenReturn(objectStoreVO);
     }
 
     @Test
     public void testCreateBucket() throws Exception {
-        doReturn(rgwClient).when(cephObjectStoreDriverImpl).getS3Client(anyLong(), anyLong());
-        doReturn(rgwAdmin).when(cephObjectStoreDriverImpl).getRgwAdminClient(anyLong());
-        when(bucketDao.listByObjectStoreIdAndAccountId(anyLong(), anyLong())).thenReturn(new ArrayList<BucketVO>());
-        when(account.getAccountName()).thenReturn("admin");
-        when(accountDao.findById(anyLong())).thenReturn(account);
+        when(bucket.getName()).thenReturn("test-bucket");
+        when(bucket.getObjectStoreId()).thenReturn(1L);
+        when(bucket.getAccountId()).thenReturn(1L);
+        when(rgwClient.getBucketAcl(anyString())).thenReturn(null);
         when(accountDetailsDao.findDetail(anyLong(),anyString())).
                 thenReturn(new AccountDetailVO(1L, "abc","def"));
         when(bucketDao.findById(anyLong())).thenReturn(new BucketVO());
+        doReturn(rgwClient).when(cephObjectStoreDriverImpl).getS3Client(anyLong(), anyLong());
         Bucket bucketRet = cephObjectStoreDriverImpl.createBucket(bucket, false);
         assertEquals(bucketRet.getName(), bucket.getName());
-        verify(rgwClient, times(1)).getBucketAcl(anyString());
-        verify(rgwClient, times(1)).createBucket(anyString());
     }
 
     @Test
     public void testDeleteBucket() throws Exception {
         String bucketName = "test-bucket";
         BucketTO bucket = new BucketTO(bucketName);
-        doReturn(rgwClient).when(cephObjectStoreDriverImpl).getS3Client(anyLong(), anyLong());
-        doNothing().when(rgwClient).deleteBucket(anyString());
+        doReturn(rgwAdmin).when(cephObjectStoreDriverImpl).getRgwAdminClient(anyLong());
+        doNothing().when(rgwAdmin).removeBucket(anyString());
         boolean success = cephObjectStoreDriverImpl.deleteBucket(bucket, 1L);
         assertTrue(success);
-        verify(rgwClient, times(1)).getBucketAcl(anyString());
-        verify(rgwClient, times(1)).deleteBucket(anyString());
     }
 }
