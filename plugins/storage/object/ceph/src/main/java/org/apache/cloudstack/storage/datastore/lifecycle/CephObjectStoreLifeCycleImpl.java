@@ -27,7 +27,8 @@ import org.apache.cloudstack.storage.datastore.db.ObjectStoreVO;
 import org.apache.cloudstack.storage.object.datastore.ObjectStoreHelper;
 import org.apache.cloudstack.storage.object.datastore.ObjectStoreProviderManager;
 import org.apache.cloudstack.storage.object.store.lifecycle.ObjectStoreLifeCycle;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.twonote.rgwadmin4j.RgwAdmin;
 import org.twonote.rgwadmin4j.RgwAdminBuilder;
 
@@ -37,8 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CephObjectStoreLifeCycleImpl implements ObjectStoreLifeCycle {
-
-    private static final Logger s_logger = Logger.getLogger(CephObjectStoreLifeCycleImpl.class);
+    protected Logger logger = LogManager.getLogger(getClass());
 
     @Inject
     ObjectStoreHelper objectStoreHelper;
@@ -71,7 +71,7 @@ public class CephObjectStoreLifeCycleImpl implements ObjectStoreLifeCycle {
         objectStoreParameters.put("accesskey", accessKey);
         objectStoreParameters.put("secretkey", secretKey);
 
-        s_logger.info("Attempting to connect to Ceph RGW at " + url + " with access key " + accessKey);
+        logger.info("Attempting to connect to Ceph RGW at " + url + " with access key " + accessKey);
 
         RgwAdmin rgwAdmin = new RgwAdminBuilder()
                 .accessKey(accessKey)
@@ -80,10 +80,10 @@ public class CephObjectStoreLifeCycleImpl implements ObjectStoreLifeCycle {
                 .build();
         try {
             List<String> buckets = rgwAdmin.listBucket();
-            s_logger.debug("Found " + buckets + " buckets at Ceph RGW: " + url);
-            s_logger.info("Successfully connected to Ceph RGW: " + url);
+            logger.debug("Found " + buckets + " buckets at Ceph RGW: " + url);
+            logger.info("Successfully connected to Ceph RGW: " + url);
         } catch (Exception e) {
-            s_logger.debug("Error while initializing Ceph RGW Object Store: " + e.getMessage());
+            logger.debug("Error while initializing Ceph RGW Object Store: " + e.getMessage());
             throw new RuntimeException("Error while initializing Ceph RGW Object Store. Invalid credentials or URL");
         }
 
