@@ -35,8 +35,8 @@ import javax.inject.Inject;
 
 import java.util.Date;
 
-@APICommand(name = "quotaTariffCreate", responseObject = QuotaTariffResponse.class, description = "Creates a quota tariff for a resource.", since = "4.18.0.0",
-requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, authorized = {RoleType.Admin})
+@APICommand(name = "quotaTariffCreate", responseObject = QuotaTariffResponse.class, description = "Creates a quota tariff for a resource.", since = "4.18.0.0", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false, authorized = {
+        RoleType.Admin })
 public class QuotaTariffCreateCmd extends BaseCmd {
 
     @Inject
@@ -57,11 +57,13 @@ public class QuotaTariffCreateCmd extends BaseCmd {
     @Parameter(name = ApiConstants.ACTIVATION_RULE, type = CommandType.STRING, description = ApiConstants.PARAMETER_DESCRIPTION_ACTIVATION_RULE, length = 65535)
     private String activationRule;
 
-    @Parameter(name = ApiConstants.START_DATE, type = CommandType.DATE, description = "The effective start date on/after which the quota tariff is effective. Inform null to " +
+    @Parameter(name = ApiConstants.START_DATE, type = CommandType.DATE, description = "The effective start date on/after which the quota tariff is effective. Inform null to "
+            +
             "use the current date. " + ApiConstants.PARAMETER_DESCRIPTION_START_DATE_POSSIBLE_FORMATS)
     private Date startDate;
 
-    @Parameter(name = ApiConstants.END_DATE, type = CommandType.DATE, description = "The end date of the quota tariff. If not informed, the tariff will be valid indefinitely. " +
+    @Parameter(name = ApiConstants.END_DATE, type = CommandType.DATE, description = "The end date of the quota tariff. If not informed, the tariff will be valid indefinitely. "
+            +
             ApiConstants.PARAMETER_DESCRIPTION_END_DATE_POSSIBLE_FORMATS)
     private Date endDate;
 
@@ -70,7 +72,8 @@ public class QuotaTariffCreateCmd extends BaseCmd {
 
     @Override
     public void execute() {
-        CallContext.current().setEventDetails(String.format("Tariff: %s, description: %s, value: %s", getName(), getDescription(), getValue()));
+        CallContext.current().setEventDetails(
+                String.format("Tariff: %s, description: %s, value: %s", getName(), getDescription(), getValue()));
         QuotaTariffVO result = responseBuilder.createQuotaTariff(this);
 
         if (result == null) {
@@ -139,6 +142,7 @@ public class QuotaTariffCreateCmd extends BaseCmd {
     public ApiCommandResourceType getApiResourceType() {
         return ApiCommandResourceType.QuotaTariff;
     }
+
     public Integer getPosition() {
         return position;
     }
@@ -146,6 +150,5 @@ public class QuotaTariffCreateCmd extends BaseCmd {
     public void setPosition(Integer position) {
         this.position = position;
     }
-
 
 }

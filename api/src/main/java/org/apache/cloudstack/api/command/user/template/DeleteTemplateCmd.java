@@ -35,10 +35,7 @@ import com.cloud.event.EventTypes;
 import com.cloud.template.VirtualMachineTemplate;
 import com.cloud.user.Account;
 
-@APICommand(name = "deleteTemplate",
-            responseObject = SuccessResponse.class,
-            description = "Deletes a template from the system. All virtual machines using the deleted template will not be affected.",
-            requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
+@APICommand(name = "deleteTemplate", responseObject = SuccessResponse.class, description = "Deletes a template from the system. All virtual machines using the deleted template will not be affected.", requestHasSensitiveInfo = false, responseHasSensitiveInfo = false)
 public class DeleteTemplateCmd extends BaseAsyncCmd {
 
     /////////////////////////////////////////////////////
@@ -54,10 +51,11 @@ public class DeleteTemplateCmd extends BaseAsyncCmd {
     @Parameter(name = ApiConstants.FORCED, type = CommandType.BOOLEAN, required = false, description = "Force delete a template.", since = "4.9+")
     private Boolean forced;
 
-    @Parameter(name=ApiConstants.DESKTOP_CHECK, type = CommandType.BOOLEAN, required=false, description="Verify that it is a desktop template.")
+    @Parameter(name = ApiConstants.DESKTOP_CHECK, type = CommandType.BOOLEAN, required = false, description = "Verify that it is a desktop template.")
     protected Boolean isDesktop;
 
-    @Parameter(name = ApiConstants.IS_SYSTEM, type = CommandType.BOOLEAN, required = false, description = "Necessary if the template's type is system.", since = "4.20.0", authorized = {RoleType.Admin})
+    @Parameter(name = ApiConstants.IS_SYSTEM, type = CommandType.BOOLEAN, required = false, description = "Necessary if the template's type is system.", since = "4.20.0", authorized = {
+            RoleType.Admin })
     private Boolean isSystem;
 
     /////////////////////////////////////////////////////
@@ -128,7 +126,8 @@ public class DeleteTemplateCmd extends BaseAsyncCmd {
 
     @Override
     public void execute() {
-        CallContext.current().setEventDetails("Template Id: " + this._uuidMgr.getUuid(VirtualMachineTemplate.class, getId()));
+        CallContext.current()
+                .setEventDetails("Template Id: " + this._uuidMgr.getUuid(VirtualMachineTemplate.class, getId()));
         boolean result = _templateService.deleteTemplate(this);
         if (result) {
             SuccessResponse response = new SuccessResponse(getCommandName());

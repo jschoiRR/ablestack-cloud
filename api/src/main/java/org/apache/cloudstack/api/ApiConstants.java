@@ -350,7 +350,6 @@ public class ApiConstants {
     public static final String OS_MAPPING_CHECK_ENABLED = "osmappingcheckenabled";
     public static final String OUTOFBANDMANAGEMENT_POWERSTATE = "outofbandmanagementpowerstate";
     public static final String OUTOFBANDMANAGEMENT_ENABLED = "outofbandmanagementenabled";
-    public static final String LISTHOSTDEVICES = "listhostdevices";
     public static final String OUTPUT = "output";
     public static final String PROPERTIES = "properties";
     public static final String PARAMS = "params";
@@ -1222,9 +1221,16 @@ public class ApiConstants {
     public static final String WEBHOOK_NAME = "webhookname";
 
     public static final String NFS_MOUNT_OPTIONS = "nfsmountopts";
-
+    public static final String LISTHOSTDEVICES = "listhostdevices";
     public static final String PCI_NAME = "pciname";
     public static final String PCI_TEXT = "pcitext";
+    public static final String PARAMETER_DESCRIPTION_ACTIVATION_RULE = "Quota tariff's activation rule. It can receive a JS script that results in either "
+            +
+            "a boolean or a numeric value: if it results in a boolean value, the tariff value will be applied according to the result; if it results in a numeric value, the "
+            +
+            "numeric value will be applied; if the result is neither a boolean nor a numeric value, the tariff will not be applied. If the rule is not informed, the tariff "
+            +
+            "value will be applied.";
 
     /**
      * This enum specifies IO Drivers, each option controls specific policies on
