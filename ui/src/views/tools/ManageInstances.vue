@@ -82,7 +82,7 @@
                           {{ $t('label.vmware') }}
                         </a-radio-button>
                         <a-radio-button value="kvm" style="width: 50%; text-align: center">
-                          ABLESTACK
+                          CLOSTACK
                         </a-radio-button>
                       </a-radio-group>
                     </a-form-item>
@@ -572,7 +572,7 @@ export default {
       },
       {
         name: 'vmware',
-        label: 'Migrate existing instances to ABLESTACK',
+        label: 'Migrate existing instances to CLOSTACK',
         sourceDestHypervisors: {
           vmware: 'kvm'
         },
